@@ -9,6 +9,13 @@ const index = require('./routes/index')
 const users = require('./routes/users')
 const songs = require('./routes/songs')
 
+const mongoose = require('mongoose')
+mongoose.connect(
+  `mongodb://${process.env.MONGO_ATLAS_USERNAME}:${
+    process.env.MONGO_ATLAS_PASSWORD
+  }@troubadour-shard-00-00-c73g2.mongodb.net:27017,troubadour-shard-00-01-c73g2.mongodb.net:27017,troubadour-shard-00-02-c73g2.mongodb.net:27017/test?ssl=true&replicaSet=Troubadour-shard-0&authSource=admin`
+)
+
 const app = express()
 
 // view engine setup
