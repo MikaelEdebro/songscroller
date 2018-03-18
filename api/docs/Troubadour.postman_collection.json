@@ -1,0 +1,129 @@
+{
+	"info": {
+		"name": "Troubadour",
+		"_postman_id": "fa313f8b-33ee-d1ba-0cc8-551ea6c4c0bd",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User - Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9c326696-8582-4e99-80c7-68574b79d5c9",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable('token', 'Bearer ' + jsonData.token);",
+							"postman.setEnvironmentVariable('loggedInUserId', jsonData.userId);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"mikael.edebro@gmail.com\",\n\t\"password\": \"secure23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User - Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pa2FlbC5lZGVicm9AZ21haWwuY29tIiwidXNlcklkIjoiNWFhZWE0Nzk3YjNmZDAxY2U4ZWQzN2VmIiwiaWF0IjoxNTIxNDAxMjAxLCJleHAiOjE1MjE0MDQ4MDF9.JScKIB2ApoKNRZffnw3Y08KtrSPmE6piE37mGsaY_3U",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"mikael.edebro@gmail.com\",\n\t\"password\": \"secure23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/signup",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"signup"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "User - Get Logged In",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f6bb7aa-9267-469c-b018-73a15b7342e6",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"mikael.edebro@gmail.com\",\n\t\"password\": \"secure23\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/{{loggedInUserId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"{{loggedInUserId}}"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
