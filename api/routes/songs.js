@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+const checkAuth = require('../middleware/check-auth')
 
 const Song = require('../models/song')
 
@@ -34,7 +35,7 @@ router.get('/:id', (req, res, next) => {
     })
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', checkAuth, (req, res, next) => {
   const song = new Song({
     _id: new mongoose.Types.ObjectId(),
     user: new mongoose.Types.ObjectId(req.body.user),
@@ -53,7 +54,7 @@ router.post('/', (req, res, next) => {
     })
 })
 
-router.patch('/:id', (req, res, next) => {
+router.patch('/:id', checkAuth, (req, res, next) => {
   const updateOps = {}
   for (const key of Object.keys(req.body)) {
     updateOps[key] = req.body[key]
@@ -75,7 +76,7 @@ router.patch('/:id', (req, res, next) => {
     })
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', checkAuth, (req, res, next) => {
   Song.remove({
     _id: req.params.id
   })

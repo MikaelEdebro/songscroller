@@ -5,6 +5,7 @@ const User = require('../models/user')
 const Song = require('../models/song')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const checkAuth = require('../middleware/check-auth')
 
 router.get('/', (req, res, next) => {
   User.find()
@@ -16,7 +17,7 @@ router.get('/', (req, res, next) => {
     .catch(error => res.status(500).json(error))
 })
 
-router.get('/:userId', (req, res, next) => {
+router.get('/:userId', checkAuth, (req, res, next) => {
   let user
   User.findById(req.params.userId)
     .select('-__v')
@@ -57,7 +58,9 @@ router.post('/login', (req, res, next) => {
               expiresIn: '1h'
             }
           )
-          return res.status(200).json({ message: 'Auth successful', token })
+          return res
+            .status(200)
+            .json({ message: 'Auth successful', userId: users[0]._id, token })
         }
         return res.status(401).json({ message: 'Auth failed' })
       })
@@ -96,7 +99,7 @@ router.post('/signup', (req, res, next) => {
     })
 })
 
-router.delete('/:userId', (req, res, next) => {
+router.delete('/:userId', checkAuth, (req, res, next) => {
   User.remove({ _id: req.params.userId })
     .exec()
     .then(result => {
