@@ -1,92 +1,17 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
 const checkAuth = require('../middleware/check-auth')
 
-const Song = require('../models/song')
+const SongsController = require('../controllers/songs')
 
-router.get('/', (req, res, next) => {
-  Song.find()
-    .select('-__v')
-    .exec()
-    .then(docs => {
-      res.send(docs)
-    })
-    .catch(error => {
-      res.status(500).json(error)
-    })
-})
+router.get('/', SongsController.getAllSongs)
 
-router.get('/:id', (req, res, next) => {
-  Song.findById(req.params.id)
-    .select('-__v')
-    .exec()
-    .then(doc => {
-      if (doc) {
-        res.status(200).json(doc)
-      } else {
-        res.status(404).json({
-          message: 'No valid entry with the provided ID'
-        })
-      }
-    })
-    .catch(error => {
-      res.status(500).json(error)
-    })
-})
+router.get('/:id', SongsController.getSongById)
 
-router.post('/', checkAuth, (req, res, next) => {
-  const song = new Song({
-    _id: new mongoose.Types.ObjectId(),
-    user: new mongoose.Types.ObjectId(req.body.user),
-    artist: req.body.artist,
-    title: req.body.title,
-    body: req.body.body,
-    duration: req.body.duration
-  })
-  song
-    .save()
-    .then(result => {
-      res.status(201).json(result)
-    })
-    .catch(error => {
-      res.status(500).json(error)
-    })
-})
+router.post('/', checkAuth, SongsController.createSong)
 
-router.patch('/:id', checkAuth, (req, res, next) => {
-  const updateOps = {}
-  for (const key of Object.keys(req.body)) {
-    updateOps[key] = req.body[key]
-  }
-  Song.update(
-    {
-      _id: req.params.id
-    },
-    {
-      $set: updateOps
-    }
-  )
-    .exec()
-    .then(result => {
-      res.status(200).json(result)
-    })
-    .catch(error => {
-      res.status(500).json(error)
-    })
-})
+router.patch('/:id', checkAuth, SongsController.updateSong)
 
-router.delete('/:id', checkAuth, (req, res, next) => {
-  Song.remove({
-    _id: req.params.id
-  })
-    .exec()
-    .then(result => {
-      res.status(200).json(result)
-    })
-    .catch(error => {
-      res.status(500).json(error)
-    })
-})
+router.delete('/:id', checkAuth, SongsController.deleteSong)
 
 module.exports = router
