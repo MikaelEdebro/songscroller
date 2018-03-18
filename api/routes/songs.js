@@ -6,6 +6,7 @@ const Song = require('../models/song')
 
 router.get('/', (req, res, next) => {
   Song.find()
+    .select('-__v')
     .exec()
     .then(docs => {
       res.send(docs)
@@ -17,6 +18,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   Song.findById(req.params.id)
+    .select('-__v')
     .exec()
     .then(doc => {
       if (doc) {
@@ -35,9 +37,11 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const song = new Song({
     _id: new mongoose.Types.ObjectId(),
+    user: new mongoose.Types.ObjectId(req.body.user),
     artist: req.body.artist,
     title: req.body.title,
-    body: req.body.body
+    body: req.body.body,
+    duration: req.body.duration
   })
   song
     .save()
