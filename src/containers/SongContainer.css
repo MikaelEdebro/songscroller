@@ -7,8 +7,6 @@
 
 @media (min-width: 600px) {
   .scroll-panel {
-    max-width: 600px;
-    margin: 0 auto;
   }
 }
 .scroll-panel.full-height {

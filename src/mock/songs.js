@@ -86,7 +86,7 @@ Lie-la-lie la la la la lie la la la la lie
   {
     artist: 'Creedence',
     title: 'Proud Mary',
-    seconds: 200,
+    seconds: 38,
     body: `D
 Left a good job in the city,
 workin for the man every night and day
@@ -96,7 +96,7 @@ worryin' 'bout the way things might have been
 A                         Bm
 Big wheel keep on turnin, Proud  Mary keep on burnin
 D
-roll - in,  rollin,  rollin on the river
+roll - in, rollin, rollin on the river
 
 D
 Cleaned a lot of plates in Memphis
@@ -107,7 +107,7 @@ till I hitched a ride on a river boat queen
 A                         Bm
 Big wheel keep on turnin, Proud  Mary keep on burnin,
 D
-roll - in,  rollin,  rollin on the river.
+roll - in, rollin, rollin on the river.
 
 D
 if you come down to the river
@@ -118,8 +118,7 @@ people on the river are happy to give
 A                         Bm
 Big wheel keep on turnin, Proud  Mary keep on burnin
 D
-roll - in,  rollin,  rollin on the river
-
-      `,
+roll - in, rollin, rollin on the river
+`,
   },
 ]

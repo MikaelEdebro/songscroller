@@ -7,7 +7,7 @@ String.prototype.removeWhitespaceOnEndOfRow = function() {
   return this.toString().replace(/ {1,}\n/g, '\n')
 }
 String.prototype.highlightChordRows = function() {
-  let self = this.toString().replace(/\n(.*\s{2,}.*)\n/g, '\n<span class="chord-row">$1</span>\n')
+  let self = this.toString().replace(/\n(.* {2,}.*)\n/g, '\n<span class="chord-row">$1</span>\n')
   self = self.replace(/\n(\w{1,3})\n/g, '\n<span class="chord-row">$1</span>\n')
   return self
 }

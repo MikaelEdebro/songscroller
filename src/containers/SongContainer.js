@@ -12,17 +12,11 @@ class SongContainer extends React.Component {
     showControls: true,
     isScrolling: false,
     isPaused: false,
-    intervalStarted: false,
+    intervalRunning: false,
   }
 
-  decreaseFont = () => {
-    this.setState(prevState => ({ fontSize: prevState.fontSize - 1 }))
-  }
-
-  increaseFont = () => {
-    this.setState(prevState => ({
-      fontSize: prevState.fontSize + 1,
-    }))
+  changeFontSize = value => {
+    this.setState(prevState => ({ fontSize: prevState.fontSize + value }))
   }
 
   play = () => {
@@ -45,8 +39,8 @@ class SongContainer extends React.Component {
       pixelsToScrollPerInterval,
     })
 
-    if (!this.state.intervalStarted) {
-      this.setState({ intervalStarted: true })
+    if (!this.state.intervalRunning) {
+      this.setState({ intervalRunning: true })
       let scrollAmount = pixelsToScrollPerInterval
       const scrollInterval = setInterval(() => {
         if (this.state.isPaused) {
@@ -60,7 +54,12 @@ class SongContainer extends React.Component {
           parseInt(this.scrollWrapper.getBoundingClientRect().bottom, 10)
         if (shouldStopScrolling) {
           clearInterval(scrollInterval)
-          this.setState({ isPaused: false, isScrolling: false })
+          this.setState({ isPaused: false, isScrolling: false, intervalRunning: false })
+
+          setTimeout(() => {
+            this.resetScroll()
+            this.toggleControls(true)
+          }, 1000)
         }
       }, INTERVAL_TIME)
     }
@@ -71,7 +70,10 @@ class SongContainer extends React.Component {
   }
 
   resetScroll = () => {
-    this.scrollWrapper.scrollTop = 0
+    this.scrollWrapper.scroll({
+      top: 0,
+      behavior: 'smooth',
+    })
   }
 
   toggleControls = value => {
@@ -94,8 +96,8 @@ class SongContainer extends React.Component {
         </div>
         <SongControls
           show={this.state.showControls}
-          increaseFont={this.increaseFont}
-          decreaseFont={this.decreaseFont}
+          increaseFont={() => this.changeFontSize(1)}
+          decreaseFont={() => this.changeFontSize(-1)}
           play={this.play}
           pause={this.pause}
           isPaused={this.state.isPaused}
