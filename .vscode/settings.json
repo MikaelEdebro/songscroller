@@ -1,5 +1,12 @@
 {
-    "editor.formatOnSave": true,
-    "prettier.semi": false,
-    "prettier.singleQuote": true
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.disableLanguages": ["js"],
+  "eslint.autoFixOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "files.autoSave": "onFocusChange"
 }
