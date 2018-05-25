@@ -1,0 +1,14 @@
+.controls {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  background: violet;
+  transition: all linear 0.5s;
+}
+.controls.hide {
+  height: 0;
+}

@@ -1,0 +1,16 @@
+.scroll-panel {
+  height: calc(100vh - 50px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: height linear 0.5s;
+}
+
+@media (min-width: 600px) {
+  .scroll-panel {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+.scroll-panel.full-height {
+  height: 100vh;
+}

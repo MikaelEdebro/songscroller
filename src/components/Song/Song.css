@@ -1,0 +1,17 @@
+.song {
+  font-family: 'Open Sans', sans-serif;
+  padding: 10px;
+  margin: 0;
+  white-space: pre;
+  max-width: 100%;
+}
+.song header {
+  white-space: normal;
+}
+.song h3 {
+  margin: 0;
+}
+.chord-row {
+  color: violet;
+  font-weight: bold;
+}
