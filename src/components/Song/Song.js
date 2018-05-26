@@ -1,5 +1,4 @@
 import React from 'react'
-import { getMinutesFromSeconds } from 'core/helpers'
 import styled from 'styled-components'
 import SongMenu from './SongMenu'
 import Grid from '@material-ui/core/Grid'
@@ -11,8 +10,16 @@ const SongWrapper = styled.div`
   white-space: pre;
   transition: font-size 0.5s;
 
+  @media (min-width: 600px) {
+    padding: 15px 25px;
+  }
+
   h3 {
     margin: 0;
+  }
+  .time {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 16px;
   }
   .chord-row {
     color: violet;
@@ -22,7 +29,7 @@ const SongWrapper = styled.div`
 
 class Song extends React.Component {
   render() {
-    const { artist, title, seconds, body } = this.props.song
+    const { artist, title, body } = this.props.song
     const formattedSong = body
       .trim()
       .insert(0, '\n')
@@ -32,12 +39,11 @@ class Song extends React.Component {
       .replaceRowBreaks()
 
     return (
-      <SongWrapper id="song" className="song">
-        <Grid container alignItems="center" justify="space-between">
+      <SongWrapper>
+        <Grid container alignItems="flex-start" justify="space-between">
           <Grid item>
-            <Typography variant="headline" component="h3">
-              {artist} - {title} ({getMinutesFromSeconds(seconds)})
-            </Typography>
+            <Typography variant="caption">{artist}</Typography>
+            <Typography variant="title">{title}</Typography>
           </Grid>
           <Grid item>
             <SongMenu />

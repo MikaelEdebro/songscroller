@@ -57,6 +57,8 @@ class SongContainer extends React.Component {
     const pixelsToScrollPerSecond = totalPixelsToScroll / seconds
     const pixelsToScrollPerInterval = pixelsToScrollPerSecond / (1000 / INTERVAL_TIME)
 
+    console.log({ totalPixelsToScroll, wrapperHeight: wrapperPosition.height })
+
     if (!this.state.intervalRunning) {
       this.setState({ intervalRunning: true })
       let scrollAmount = pixelsToScrollPerInterval
