@@ -14,6 +14,7 @@ class SongContainer extends React.Component {
     isPaused: false,
     intervalRunning: false,
   }
+  scrollInterval = null
 
   changeFontSize = value => {
     this.setState(prevState => ({ fontSize: prevState.fontSize + value }))
@@ -23,7 +24,7 @@ class SongContainer extends React.Component {
     this.toggleControls(false)
     this.setState({ isPaused: false, isScrolling: true })
 
-    const INTERVAL_TIME = 10
+    const INTERVAL_TIME = 20
     const { seconds } = this.props.song
     const songDiv = ReactDOM.findDOMNode(this.songDiv)
     const songPosition = songDiv.getBoundingClientRect()
@@ -33,16 +34,12 @@ class SongContainer extends React.Component {
     const pixelsToScrollPerSecond = totalPixelsToScroll / seconds
     const pixelsToScrollPerInterval = pixelsToScrollPerSecond / (1000 / INTERVAL_TIME)
 
-    console.log({
-      totalPixelsToScroll,
-      pixelsToScrollPerSecond,
-      pixelsToScrollPerInterval,
-    })
-
     if (!this.state.intervalRunning) {
       this.setState({ intervalRunning: true })
       let scrollAmount = pixelsToScrollPerInterval
-      const scrollInterval = setInterval(() => {
+
+      this.scrollInterval = setInterval(() => {
+        console.log('interval')
         if (this.state.isPaused) {
           return
         }
@@ -53,7 +50,7 @@ class SongContainer extends React.Component {
           parseInt(songDiv.getBoundingClientRect().bottom, 10) <=
           parseInt(this.scrollWrapper.getBoundingClientRect().bottom, 10)
         if (shouldStopScrolling) {
-          clearInterval(scrollInterval)
+          clearInterval(this.scrollInterval)
           this.setState({ isPaused: false, isScrolling: false, intervalRunning: false })
 
           setTimeout(() => {
@@ -67,6 +64,16 @@ class SongContainer extends React.Component {
 
   pause = () => {
     this.setState({ isPaused: true, isScrolling: false })
+  }
+
+  replay = () => {
+    console.log('replay')
+    clearInterval(this.scrollInterval)
+    this.setState({ isPaused: true, isScrolling: false, intervalRunning: false })
+    this.resetScroll()
+    setTimeout(() => {
+      this.play()
+    }, 1500)
   }
 
   resetScroll = () => {
@@ -100,6 +107,7 @@ class SongContainer extends React.Component {
           decreaseFont={() => this.changeFontSize(-1)}
           play={this.play}
           pause={this.pause}
+          replay={this.replay}
           isPaused={this.state.isPaused}
           isScrolling={this.state.isScrolling}
         />

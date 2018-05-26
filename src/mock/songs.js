@@ -14,6 +14,7 @@ For a pocketful of mumbles such are promises
 All lies and jest still a man hears what he wants to hear
                     C  *riff*  G   C
 And disregards the rest
+
                                                     Am
 When I left my home and family I was no more than a boy
         G

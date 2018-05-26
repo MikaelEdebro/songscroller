@@ -4,6 +4,7 @@
   margin: 0;
   white-space: pre;
   max-width: 100%;
+  transition: font-size 0.5s;
 }
 .song header {
   white-space: normal;

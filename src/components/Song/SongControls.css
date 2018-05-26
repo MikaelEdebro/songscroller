@@ -6,9 +6,14 @@
   height: 50px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background: violet;
-  transition: all linear 0.5s;
+  transition: transform linear 0.5s;
+  padding: 4px 5px;
 }
 .controls.hide {
-  height: 0;
+  transform: translateY(50px);
+}
+.controls.column {
+  flex: 0 0 33.33%;
 }
