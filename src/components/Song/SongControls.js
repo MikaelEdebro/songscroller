@@ -42,10 +42,10 @@ const songControls = props => {
       <ControlColumn align="center">
         <MaterialIcon
           type={props.isScrolling ? 'pause_circle_outline' : 'play_circle_outline'}
-          size="36"
+          size="40"
           clicked={props.isScrolling ? props.pause : props.play}
         />
-        <MaterialIcon type="replay" size="36" clicked={props.replay} />
+        <MaterialIcon type="replay" size="40" clicked={props.replay} />
       </ControlColumn>
       <ControlColumn align="right">
         <MaterialIcon
