@@ -1,20 +1,16 @@
 import React from 'react'
 import { getMinutesFromSeconds } from 'core/helpers'
 import styled from 'styled-components'
-import MaterialIcon from 'components/UI/MaterialIcon'
+import SongMenu from './SongMenu'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 
 const SongWrapper = styled.div`
-  font-family: 'Open Sans', sans-serif;
   padding: 10px;
   margin: 0;
   white-space: pre;
-  max-width: 100%;
   transition: font-size 0.5s;
-  header {
-    white-space: normal;
-    display: flex;
-    justify-content: space-between;
-  }
+
   h3 {
     margin: 0;
   }
@@ -37,12 +33,17 @@ class Song extends React.Component {
 
     return (
       <SongWrapper id="song" className="song">
-        <header>
-          <h3>
-            {artist} - {title} ({getMinutesFromSeconds(seconds)})
-          </h3>
-          <MaterialIcon type="more_vert" />
-        </header>
+        <Grid container alignItems="center" justify="space-between">
+          <Grid item>
+            <Typography variant="headline" component="h3">
+              {artist} - {title} ({getMinutesFromSeconds(seconds)})
+            </Typography>
+          </Grid>
+          <Grid item>
+            <SongMenu />
+          </Grid>
+        </Grid>
+
         <div
           className="body"
           dangerouslySetInnerHTML={{ __html: formattedSong }}

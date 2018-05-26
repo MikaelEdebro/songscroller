@@ -4,7 +4,15 @@ import ReactDOM from 'react-dom'
 import Song from 'components/Song/Song'
 import SongControls from 'components/Song/SongControls'
 import Wrapper from 'hoc/Wrapper'
-import './SongContainer.css'
+import styled from 'styled-components'
+
+const ScrollWrapper = styled.div`
+  position: relative;
+  height: ${props => (props.showControls ? 'calc(100vh - 50px)' : '100vh')};
+  overflow-y: auto;
+  overflow-x: visible;
+  transition: height linear 0.5s;
+`
 
 class SongContainer extends React.Component {
   state = {
@@ -15,6 +23,21 @@ class SongContainer extends React.Component {
     intervalRunning: false,
   }
   scrollInterval = null
+
+  componentDidMount() {
+    this.adjustFontSizeToViewport()
+  }
+
+  adjustFontSizeToViewport = () => {
+    // todo: add implementation
+    const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+    let songWidth = ReactDOM.findDOMNode(this.songDiv).getBoundingClientRect().width
+
+    console.log('adjust', viewportWidth, songWidth)
+    if (songWidth <= viewportWidth) {
+      return
+    }
+  }
 
   changeFontSize = value => {
     this.setState(prevState => ({ fontSize: prevState.fontSize + value }))
@@ -39,7 +62,6 @@ class SongContainer extends React.Component {
       let scrollAmount = pixelsToScrollPerInterval
 
       this.scrollInterval = setInterval(() => {
-        console.log('interval')
         if (this.state.isPaused) {
           return
         }
@@ -67,7 +89,6 @@ class SongContainer extends React.Component {
   }
 
   replay = () => {
-    console.log('replay')
     clearInterval(this.scrollInterval)
     this.setState({ isPaused: true, isScrolling: false, intervalRunning: false })
     this.resetScroll()
@@ -90,17 +111,17 @@ class SongContainer extends React.Component {
   render() {
     return (
       <Wrapper>
-        <div
-          className={['scroll-panel', !this.state.showControls ? 'full-height' : null].join(' ')}
+        <ScrollWrapper
+          showControls={this.state.showControls}
           style={{ fontSize: this.state.fontSize + 'px' }}
-          ref={el => (this.scrollWrapper = el)}
+          innerRef={el => (this.scrollWrapper = el)}
         >
           <Song
             song={this.props.song}
             ref={el => (this.songDiv = el)}
             clicked={() => this.toggleControls(!this.state.showControls)}
           />
-        </div>
+        </ScrollWrapper>
         <SongControls
           show={this.state.showControls}
           increaseFont={() => this.changeFontSize(1)}

@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import './prototypes'
-import SongContainer from 'containers/SongContainer'
+import React from 'react'
+import MainHeader from 'components/Layout/MainHeader'
+import SongContainer from 'components/Song/SongContainer'
 import songs from 'mock/songs'
 
-class App extends Component {
+class App extends React.Component {
   state = {
     song: songs[0],
   }
@@ -11,6 +11,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <MainHeader />
         <SongContainer song={this.state.song} />
       </div>
     )

@@ -1,5 +1,6 @@
 import React from 'react'
-import MaterialIcon from 'components/UI/MaterialIcon'
+import Icon from '@material-ui/core/Icon'
+import Grid from '@material-ui/core/Grid'
 import styled from 'styled-components'
 
 const SongControlsWrapper = styled.div`
@@ -8,61 +9,48 @@ const SongControlsWrapper = styled.div`
   left: 0;
   width: 100vw;
   height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background: violet;
   transition: all 0.5s ease-in-out;
   padding: 6px 5px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
   transform: ${props => (!props.show ? 'translateY(55px)' : 'initial')};
 `
-const ControlColumn = styled.div`
-  flex: 0 0 33.33%;
-  text-align: ${props => props.align || 'left'};
-`
 
 const songControls = props => {
   return (
     <SongControlsWrapper show={props.show}>
-      <ControlColumn>
-        <MaterialIcon
-          type="remove_circle_outline"
-          size="30"
-          clicked={props.decreaseFont}
-          title="Decrease font"
-        />
-        <MaterialIcon type="format_size" size="32" />
-        <MaterialIcon
-          type="add_circle_outline"
-          size="30"
-          clicked={props.increaseFont}
-          title="Increase font"
-        />
-      </ControlColumn>
-      <ControlColumn align="center">
-        <MaterialIcon
-          type={props.isScrolling ? 'pause_circle_outline' : 'play_circle_outline'}
-          size="40"
-          clicked={props.isScrolling ? props.pause : props.play}
-        />
-        <MaterialIcon type="replay" size="40" clicked={props.replay} />
-      </ControlColumn>
-      <ControlColumn align="right">
-        <MaterialIcon
-          type="remove_circle_outline"
-          size="30"
-          clicked={props.decreaseFont}
-          title="Slow down"
-        />
-        <MaterialIcon type="access_time" size="32" />
-        <MaterialIcon
-          type="add_circle_outline"
-          size="30"
-          clicked={props.increaseFont}
-          title="Speed up"
-        />
-      </ControlColumn>
+      <Grid container justify="space-between" alignItems="center">
+        <Grid item>
+          <Icon style={{ fontSize: 30 }} onClick={props.decreaseFont} title="Decrease font">
+            remove_circle_outline
+          </Icon>
+          <Icon style={{ fontSize: 34 }}>format_size</Icon>
+          <Icon style={{ fontSize: 30 }} onClick={props.increaseFont} title="Increase font">
+            add_circle_outline
+          </Icon>
+        </Grid>
+        <Grid item>
+          <Icon
+            style={{ fontSize: 40 }}
+            onClick={props.isScrolling ? props.pause : props.play}
+            title={props.isScrolling ? 'Pause' : 'Play'}
+          >
+            {props.isScrolling ? 'pause_circle_outline' : 'play_circle_outline'}
+          </Icon>
+          <Icon style={{ fontSize: 30 }} onClick={props.replay} title="Replay">
+            replay
+          </Icon>
+        </Grid>
+        <Grid item>
+          <Icon style={{ fontSize: 30 }} onClick={props.decreaseFont} title="Slow down">
+            remove_circle_outline
+          </Icon>
+          <Icon style={{ fontSize: 34 }}>access_time</Icon>
+          <Icon style={{ fontSize: 30 }} onClick={props.increaseFont} title="Increase font">
+            add_circle_outline
+          </Icon>
+        </Grid>
+      </Grid>
     </SongControlsWrapper>
   )
 }
