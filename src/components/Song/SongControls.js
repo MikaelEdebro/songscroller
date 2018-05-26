@@ -14,7 +14,8 @@ const SongControlsWrapper = styled.div`
   background: violet;
   transition: all 0.5s ease-in-out;
   padding: 6px 5px;
-  transform: ${props => (!props.show ? 'translateY(50px)' : 'initial')};
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  transform: ${props => (!props.show ? 'translateY(55px)' : 'initial')};
 `
 const ControlColumn = styled.div`
   flex: 0 0 33.33%;
