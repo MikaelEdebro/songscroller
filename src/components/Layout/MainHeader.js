@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+
 import Logo from './Logo'
 
 const MainHeaderWrapper = styled.header`
@@ -9,13 +11,21 @@ const MainHeaderWrapper = styled.header`
   padding: 0;
   margin-bottom: 5px;
   height: 50px;
-  transition: all 0.5s ease-in-out;
-  transform: ${props => (!props.showControls ? 'translateY(-50px)' : 'initial')};
+  transition: all 0.5s ease-out;
+  transform: ${props => (props.show ? 'initial' : 'translateY(-50px)')};
 `
-const mainHeader = props => (
-  <MainHeaderWrapper showControls={props.showControls}>
-    <Logo />
-  </MainHeaderWrapper>
-)
+class MainHeader extends React.Component {
+  render() {
+    return (
+      <MainHeaderWrapper show={this.props.showHeader}>
+        <Logo />
+      </MainHeaderWrapper>
+    )
+  }
+}
 
-export default mainHeader
+const mapStateToProps = state => ({
+  showHeader: state.showHeader,
+})
+
+export default connect(mapStateToProps)(MainHeader)

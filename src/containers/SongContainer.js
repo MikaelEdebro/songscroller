@@ -11,19 +11,13 @@ import * as songActions from 'store/actions'
 const ScrollWrapper = styled.div`
   position: relative;
   height: ${props => (props.showControls ? 'calc(100vh - 50px)' : '100vh')};
-  padding-top: ${props => (!props.playStarted ? '50px' : '0')};
+  padding-top: ${props => (props.showHeader ? '50px' : '0')};
   overflow-y: auto;
   overflow-x: visible;
   transition: all 0.5s ease-out;
 `
 
 class SongContainer extends React.Component {
-  state = {
-    showControls: true,
-    isScrolling: false,
-    isPaused: false,
-    intervalRunning: false,
-  }
   scrollInterval = null
 
   componentWillMount() {
@@ -31,8 +25,8 @@ class SongContainer extends React.Component {
   }
 
   play = () => {
-    this.props.play()
-    this.toggleControls(false)
+    this.props.toggleHeader(false)
+    this.props.toggleControls(false)
 
     setTimeout(() => {
       this.startScroll()
@@ -40,7 +34,7 @@ class SongContainer extends React.Component {
   }
 
   startScroll = () => {
-    this.setState({ isPaused: false, isScrolling: true })
+    this.props.play()
 
     const INTERVAL_TIME = 20
     const { seconds } = this.song
@@ -52,14 +46,12 @@ class SongContainer extends React.Component {
     const pixelsToScrollPerSecond = totalPixelsToScroll / seconds
     const pixelsToScrollPerInterval = pixelsToScrollPerSecond / (1000 / INTERVAL_TIME)
 
-    console.log({ totalPixelsToScroll, wrapperHeight: wrapperPosition.height })
-
-    if (!this.state.intervalRunning) {
-      this.setState({ intervalRunning: true })
+    if (!this.props.intervalRunning) {
+      this.props.toggleInterval(true)
       let scrollAmount = pixelsToScrollPerInterval
 
       this.scrollInterval = setInterval(() => {
-        if (this.state.isPaused) {
+        if (this.props.isPaused) {
           return
         }
         scrollAmount += pixelsToScrollPerInterval
@@ -70,28 +62,24 @@ class SongContainer extends React.Component {
           parseInt(this.scrollWrapper.getBoundingClientRect().bottom, 10)
         if (shouldStopScrolling) {
           clearInterval(this.scrollInterval)
-          this.setState({
-            isPaused: false,
-            isScrolling: false,
-            intervalRunning: false,
-          })
+          this.props.toggleInterval(false)
+          this.props.scrollComplete()
 
           setTimeout(() => {
             this.resetScroll()
-            this.toggleControls(true)
+            this.props.toggleControls(true)
+
+            setTimeout(() => {
+              this.props.toggleHeader(true)
+            }, 1000)
           }, 1000)
         }
       }, INTERVAL_TIME)
     }
   }
-  pause = () => {
-    this.props.pause()
-    this.setState({ isPaused: true, isScrolling: false })
-  }
 
   replay = () => {
     clearInterval(this.scrollInterval)
-    this.setState({ isPaused: true, isScrolling: false, intervalRunning: false })
     this.resetScroll()
     this.play()
   }
@@ -103,34 +91,31 @@ class SongContainer extends React.Component {
     })
   }
 
-  toggleControls = value => {
-    this.setState({ showControls: value })
-  }
-
   render() {
     return (
       <Wrapper>
         <ScrollWrapper
           playStarted={this.props.playStarted}
-          showControls={this.state.showControls}
+          showHeader={this.props.showHeader}
+          showControls={this.props.showControls}
           style={{ fontSize: this.props.fontSize + 'px' }}
           innerRef={el => (this.scrollWrapper = el)}
         >
           <Song
             song={this.song}
             ref={el => (this.songDiv = el)}
-            clicked={() => this.toggleControls(!this.state.showControls)}
+            clicked={() => this.props.toggleControls(!this.props.showControls)}
           />
         </ScrollWrapper>
         <SongControls
-          show={this.state.showControls}
+          show={this.props.showControls}
           increaseFont={() => this.props.changeFontSize(1)}
           decreaseFont={() => this.props.changeFontSize(-1)}
-          play={this.state.intervalRunning ? this.startScroll : this.play}
-          pause={this.pause}
+          play={this.props.intervalRunning ? this.startScroll : this.play}
+          pause={this.props.pause}
           replay={this.replay}
-          isPaused={this.state.isPaused}
-          isScrolling={this.state.isScrolling}
+          isPaused={this.props.isPaused}
+          isScrolling={this.props.isScrolling}
         />
       </Wrapper>
     )
@@ -142,12 +127,21 @@ const mapStateToProps = state => ({
   selectedSong: state.selectedSong,
   playStarted: state.playStarted,
   fontSize: state.fontSize,
+  showHeader: state.showHeader,
+  showControls: state.showControls,
+  isPaused: state.isPaused,
+  isScrolling: state.isScrolling,
+  intervalRunning: state.intervalRunning,
 })
 
 const mapDispatchToProps = dispatch => ({
   play: () => dispatch(songActions.play()),
   pause: () => dispatch(songActions.pause()),
   changeFontSize: value => dispatch(songActions.changeFontSize(value)),
+  toggleControls: value => dispatch(songActions.toggleControls(value)),
+  toggleHeader: value => dispatch(songActions.toggleHeader(value)),
+  toggleInterval: value => dispatch(songActions.toggleInterval(value)),
+  scrollComplete: () => dispatch(songActions.scrollComplete()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongContainer)
