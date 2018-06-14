@@ -1,6 +1,9 @@
 import React from 'react'
+import { Switch, Route } from 'react-router-dom'
+
 import MainHeader from 'components/Layout/MainHeader'
-import SongContainer from 'components/Song/SongContainer'
+import SongsContainer from 'containers/SongsContainer'
+import SongContainer from 'containers/SongContainer'
 import songs from 'mock/songs'
 
 class App extends React.Component {
@@ -12,7 +15,11 @@ class App extends React.Component {
     return (
       <div>
         <MainHeader />
-        <SongContainer song={this.state.song} />
+
+        <Switch>
+          <Route path="/songs/:title" component={SongContainer} />
+          <Route path="/songs" component={SongsContainer} />
+        </Switch>
       </div>
     )
   }

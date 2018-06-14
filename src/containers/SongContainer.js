@@ -1,17 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { connect } from 'react-redux'
+import styled from 'styled-components'
 
 import Song from 'components/Song/Song'
 import SongControls from 'components/Song/SongControls'
 import Wrapper from 'hoc/Wrapper'
-import styled from 'styled-components'
+import * as songActions from 'store/actions'
 
 const ScrollWrapper = styled.div`
   position: relative;
   height: ${props => (props.showControls ? 'calc(100vh - 50px)' : '100vh')};
+  padding-top: ${props => (!props.playStarted ? '50px' : '0')};
   overflow-y: auto;
   overflow-x: visible;
-  transition: height linear 0.5s;
+  transition: all 0.5s ease-out;
 `
 
 class SongContainer extends React.Component {
@@ -24,6 +27,9 @@ class SongContainer extends React.Component {
   }
   scrollInterval = null
 
+  componentWillMount() {
+    this.song = this.props.songs.find(s => s.title === this.props.selectedSong)
+  }
   componentDidMount() {
     this.adjustFontSizeToViewport()
   }
@@ -44,11 +50,19 @@ class SongContainer extends React.Component {
   }
 
   play = () => {
+    this.props.play()
     this.toggleControls(false)
+
+    setTimeout(() => {
+      this.startScroll()
+    }, 2000)
+  }
+
+  startScroll = () => {
     this.setState({ isPaused: false, isScrolling: true })
 
     const INTERVAL_TIME = 20
-    const { seconds } = this.props.song
+    const { seconds } = this.song
     const songDiv = ReactDOM.findDOMNode(this.songDiv)
     const songPosition = songDiv.getBoundingClientRect()
     const wrapperPosition = this.scrollWrapper.getBoundingClientRect()
@@ -75,7 +89,11 @@ class SongContainer extends React.Component {
           parseInt(this.scrollWrapper.getBoundingClientRect().bottom, 10)
         if (shouldStopScrolling) {
           clearInterval(this.scrollInterval)
-          this.setState({ isPaused: false, isScrolling: false, intervalRunning: false })
+          this.setState({
+            isPaused: false,
+            isScrolling: false,
+            intervalRunning: false,
+          })
 
           setTimeout(() => {
             this.resetScroll()
@@ -85,8 +103,8 @@ class SongContainer extends React.Component {
       }, INTERVAL_TIME)
     }
   }
-
   pause = () => {
+    this.props.pause()
     this.setState({ isPaused: true, isScrolling: false })
   }
 
@@ -94,9 +112,7 @@ class SongContainer extends React.Component {
     clearInterval(this.scrollInterval)
     this.setState({ isPaused: true, isScrolling: false, intervalRunning: false })
     this.resetScroll()
-    setTimeout(() => {
-      this.play()
-    }, 1500)
+    this.play()
   }
 
   resetScroll = () => {
@@ -114,12 +130,13 @@ class SongContainer extends React.Component {
     return (
       <Wrapper>
         <ScrollWrapper
+          playStarted={this.props.playStarted}
           showControls={this.state.showControls}
           style={{ fontSize: this.state.fontSize + 'px' }}
           innerRef={el => (this.scrollWrapper = el)}
         >
           <Song
-            song={this.props.song}
+            song={this.song}
             ref={el => (this.songDiv = el)}
             clicked={() => this.toggleControls(!this.state.showControls)}
           />
@@ -128,7 +145,7 @@ class SongContainer extends React.Component {
           show={this.state.showControls}
           increaseFont={() => this.changeFontSize(1)}
           decreaseFont={() => this.changeFontSize(-1)}
-          play={this.play}
+          play={this.state.intervalRunning ? this.startScroll : this.play}
           pause={this.pause}
           replay={this.replay}
           isPaused={this.state.isPaused}
@@ -139,4 +156,15 @@ class SongContainer extends React.Component {
   }
 }
 
-export default SongContainer
+const mapStateToProps = state => ({
+  songs: state.songs,
+  selectedSong: state.selectedSong,
+  playStarted: state.playStarted,
+})
+
+const mapDispatchToProps = dispatch => ({
+  play: () => dispatch(songActions.play()),
+  pause: () => dispatch(songActions.pause()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SongContainer)

@@ -10,7 +10,7 @@ const SongControlsWrapper = styled.div`
   width: 100vw;
   height: 50px;
   background: violet;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-out;
   padding: 6px 5px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
   transform: ${props => (!props.show ? 'translateY(55px)' : 'initial')};
