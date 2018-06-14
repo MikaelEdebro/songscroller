@@ -19,7 +19,6 @@ const ScrollWrapper = styled.div`
 
 class SongContainer extends React.Component {
   state = {
-    fontSize: 15,
     showControls: true,
     isScrolling: false,
     isPaused: false,
@@ -29,24 +28,6 @@ class SongContainer extends React.Component {
 
   componentWillMount() {
     this.song = this.props.songs.find(s => s.title === this.props.selectedSong)
-  }
-  componentDidMount() {
-    this.adjustFontSizeToViewport()
-  }
-
-  adjustFontSizeToViewport = () => {
-    // todo: add implementation
-    const viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
-    let songWidth = ReactDOM.findDOMNode(this.songDiv).getBoundingClientRect().width
-
-    console.log('adjust', viewportWidth, songWidth)
-    if (songWidth <= viewportWidth) {
-      return
-    }
-  }
-
-  changeFontSize = value => {
-    this.setState(prevState => ({ fontSize: prevState.fontSize + value }))
   }
 
   play = () => {
@@ -132,7 +113,7 @@ class SongContainer extends React.Component {
         <ScrollWrapper
           playStarted={this.props.playStarted}
           showControls={this.state.showControls}
-          style={{ fontSize: this.state.fontSize + 'px' }}
+          style={{ fontSize: this.props.fontSize + 'px' }}
           innerRef={el => (this.scrollWrapper = el)}
         >
           <Song
@@ -143,8 +124,8 @@ class SongContainer extends React.Component {
         </ScrollWrapper>
         <SongControls
           show={this.state.showControls}
-          increaseFont={() => this.changeFontSize(1)}
-          decreaseFont={() => this.changeFontSize(-1)}
+          increaseFont={() => this.props.changeFontSize(1)}
+          decreaseFont={() => this.props.changeFontSize(-1)}
           play={this.state.intervalRunning ? this.startScroll : this.play}
           pause={this.pause}
           replay={this.replay}
@@ -160,11 +141,13 @@ const mapStateToProps = state => ({
   songs: state.songs,
   selectedSong: state.selectedSong,
   playStarted: state.playStarted,
+  fontSize: state.fontSize,
 })
 
 const mapDispatchToProps = dispatch => ({
   play: () => dispatch(songActions.play()),
   pause: () => dispatch(songActions.pause()),
+  changeFontSize: value => dispatch(songActions.changeFontSize(value)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongContainer)

@@ -1,1 +1,1 @@
-export { play, pause, selectSong } from './song'
+export { play, pause, selectSong, changeFontSize } from './song'
