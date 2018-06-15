@@ -1,24 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
 import { BrowserRouter } from 'react-router-dom'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import './prototypes'
 import './index.css'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
-import songReducer from './store/reducers/song'
+import configureStore from './store/configureStore'
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(songReducer, composeEnhancers(applyMiddleware(thunk)))
+const { store, persistor } = configureStore()
 
 const app = (
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PersistGate>
   </Provider>
 )
 

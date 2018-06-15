@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import * as songActions from 'store/actions'
+import SongListItem from 'components/Song/SongListItem'
 
 class SongsContainer extends React.Component {
   state = {}
@@ -16,9 +17,12 @@ class SongsContainer extends React.Component {
       <div>
         <h1>Songs</h1>
         {this.props.songs.map(song => (
-          <div key={song.title} onClick={() => this.goToSong(song.title)}>
-            {song.artist} - {song.title}
-          </div>
+          <SongListItem
+            key={song.title}
+            artist={song.artist}
+            title={song.title}
+            clicked={() => this.goToSong(song.title)}
+          />
         ))}
       </div>
     )
