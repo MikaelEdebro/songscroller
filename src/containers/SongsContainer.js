@@ -17,7 +17,7 @@ class SongsContainer extends React.Component {
         <h1>Songs</h1>
         {this.props.songs.map(song => (
           <div key={song.title} onClick={() => this.goToSong(song.title)}>
-            {song.title}
+            {song.artist} - {song.title}
           </div>
         ))}
       </div>
