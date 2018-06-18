@@ -1,8 +1,8 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import SongsContainer from 'containers/SongsContainer'
-import SongContainer from 'containers/SongContainer'
+import SongsContainer from './containers/SongsContainer'
+import SongContainer from './containers/SongContainer'
 
 class App extends React.Component {
   render() {
