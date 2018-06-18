@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import Song from 'components/Song/Song'
 import SongControls from 'components/Song/SongControls'
 import SongHeader from 'components/Song/SongHeader'
+import EditSong from 'components/Song/Edit/EditSong'
 import Wrapper from 'hoc/Wrapper'
 import * as songActions from 'store/actions'
 
@@ -70,6 +71,10 @@ class SongContainer extends React.Component {
             //this.resetScroll()
             this.props.toggleControls(true)
             this.props.toggleHeader(true)
+
+            setTimeout(() => {
+              this.scrollToBottom()
+            }, 1000)
           }, 1000)
         }
       }, INTERVAL_TIME)
@@ -89,26 +94,41 @@ class SongContainer extends React.Component {
     })
   }
 
+  scrollToBottom = () => {
+    this.scrollWrapper.scroll({
+      top: 2000, // todo: replace hard coded value
+      behavior: 'smooth',
+    })
+  }
+
   render() {
+    let song = (
+      <ScrollWrapper
+        playStarted={this.props.playStarted}
+        paddingTop={this.props.showSongHeader && !this.props.isPaused}
+        showControls={this.props.showControls}
+        style={{ fontSize: this.props.fontSize + 'px' }}
+        innerRef={el => (this.scrollWrapper = el)}
+      >
+        <Song
+          song={this.song}
+          ref={el => (this.songDiv = el)}
+          clicked={() => this.props.toggleControls(!this.props.showControls)}
+        />
+      </ScrollWrapper>
+    )
+
+    if (this.props.isEditMode) {
+      song = <EditSong song={this.song} />
+    }
+
     return (
       <Wrapper>
         <SongHeader show={this.props.showSongHeader || this.props.isPaused} />
 
-        <ScrollWrapper
-          playStarted={this.props.playStarted}
-          paddingTop={this.props.showSongHeader && !this.props.isPaused}
-          showControls={this.props.showControls}
-          style={{ fontSize: this.props.fontSize + 'px' }}
-          innerRef={el => (this.scrollWrapper = el)}
-        >
-          <Song
-            song={this.song}
-            ref={el => (this.songDiv = el)}
-            clicked={() => this.props.toggleControls(!this.props.showControls)}
-          />
-        </ScrollWrapper>
+        {song}
         <SongControls
-          show={this.props.showControls}
+          show={this.props.showControls && !this.props.isEditMode}
           increaseFont={() => this.props.changeFontSize(1)}
           decreaseFont={() => this.props.changeFontSize(-1)}
           play={this.props.intervalRunning ? this.startScroll : this.play}
@@ -132,6 +152,7 @@ const mapStateToProps = state => ({
   isPaused: state.isPaused,
   isScrolling: state.isScrolling,
   intervalRunning: state.intervalRunning,
+  isEditMode: state.isEditMode,
 })
 
 const mapDispatchToProps = dispatch => ({

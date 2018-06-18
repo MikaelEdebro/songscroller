@@ -10,7 +10,7 @@ class App extends React.Component {
       <div>
         <Switch>
           <Route path="/songs/:title" component={SongContainer} />
-          <Route path="/songs" component={SongsContainer} />
+          <Route path="/" component={SongsContainer} />
         </Switch>
       </div>
     )

@@ -59,3 +59,4 @@ typings/
 
 # custom files and folders
 nodemon.json
+build

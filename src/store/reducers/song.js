@@ -34,6 +34,7 @@ const songReducer = (state = initialState, action) => {
         isPaused: false,
         isScrolling: false,
         intervalRunning: false,
+        isEditMode: false,
       })
     case actionTypes.CHANGE_FONT_SIZE:
       return updateObject(state, { fontSize: state.fontSize + action.value })

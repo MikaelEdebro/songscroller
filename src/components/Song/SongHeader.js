@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Logo from 'components/Layout/Logo'
 import Icon from '@material-ui/core/Icon'
+import * as actions from 'store/actions'
 
 const SongHeaderWrapper = styled.header`
   position: absolute;
@@ -18,6 +20,10 @@ const SongHeaderWrapper = styled.header`
   z-index: 100;
 `
 class SongHeader extends React.Component {
+  goBack() {
+    this.props.setEditMode(false)
+    this.props.history.goBack()
+  }
   render() {
     return (
       <SongHeaderWrapper show={this.props.show}>
@@ -30,4 +36,8 @@ class SongHeader extends React.Component {
   }
 }
 
-export default withRouter(SongHeader)
+const mapDispatchToProps = dispatch => ({
+  setEditMode: value => dispatch(actions.setEditMode(value)),
+})
+
+export default connect(null, mapDispatchToProps)(withRouter(SongHeader))

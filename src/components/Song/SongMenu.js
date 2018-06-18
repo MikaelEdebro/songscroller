@@ -1,8 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import * as actions from 'store/actions'
 
 const ITEM_HEIGHT = 48
 
@@ -44,7 +46,7 @@ class SongMenu extends React.Component {
             },
           }}
         >
-          <MenuItem onClick={this.handleClose}>Edit</MenuItem>
+          <MenuItem onClick={() => this.props.setEditMode(true)}>Edit</MenuItem>
           <MenuItem onClick={this.handleClose}>Add to Playlist</MenuItem>
           <MenuItem onClick={this.handleClose}>Share</MenuItem>
         </Menu>
@@ -53,4 +55,8 @@ class SongMenu extends React.Component {
   }
 }
 
-export default SongMenu
+const mapDispatchToProps = dispatch => ({
+  setEditMode: value => dispatch(actions.setEditMode(value)),
+})
+
+export default connect(null, mapDispatchToProps)(SongMenu)
