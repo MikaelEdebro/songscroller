@@ -7,4 +7,5 @@ export {
   toggleHeader,
   toggleInterval,
   scrollComplete,
+  setEditMode,
 } from './song'

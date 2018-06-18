@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
 
-import Logo from './Logo'
+import Logo from 'components/Layout/Logo'
+import Icon from '@material-ui/core/Icon'
 
-const MainHeaderWrapper = styled.header`
+const SongHeaderWrapper = styled.header`
   position: absolute;
+  display: flex;
   background-color: #fafafa;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0;
@@ -16,18 +17,17 @@ const MainHeaderWrapper = styled.header`
   transform: ${props => (props.show ? 'initial' : 'translateY(-50px)')};
   z-index: 100;
 `
-class MainHeader extends React.Component {
+class SongHeader extends React.Component {
   render() {
     return (
-      <MainHeaderWrapper show={this.props.showHeader}>
+      <SongHeaderWrapper show={this.props.show}>
+        <Icon style={{ fontSize: 30 }} title="Go Back">
+          arrow_back_ios
+        </Icon>
         <Logo />
-      </MainHeaderWrapper>
+      </SongHeaderWrapper>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  showHeader: state.showHeader,
-})
-
-export default connect(mapStateToProps)(MainHeader)
+export default SongHeader

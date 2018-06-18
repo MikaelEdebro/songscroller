@@ -5,13 +5,14 @@ import { updateObject } from '../utility'
 const initialState = {
   songs,
   selectedSong: undefined,
-  showHeader: true,
+  showSongHeader: true,
   showControls: true,
   isScrolling: false,
   isPaused: false,
   intervalRunning: false,
   playStarted: false,
   fontSize: 15,
+  isEditMode: false,
 }
 
 const songReducer = (state = initialState, action) => {
@@ -27,10 +28,10 @@ const songReducer = (state = initialState, action) => {
     case actionTypes.SELECT_SONG:
       return updateObject(state, {
         selectedSong: action.id,
-        showHeader: true,
+        showSongHeader: true,
         showControls: true,
         playStarted: false,
-        isPaused: true,
+        isPaused: false,
         isScrolling: false,
         intervalRunning: false,
       })
@@ -39,16 +40,18 @@ const songReducer = (state = initialState, action) => {
     case actionTypes.TOGGLE_CONTROLS:
       return updateObject(state, { showControls: action.value })
     case actionTypes.TOGGLE_HEADER:
-      return updateObject(state, { showHeader: action.value })
+      return updateObject(state, { showSongHeader: action.value })
     case actionTypes.TOGGLE_INTERVAL:
       return updateObject(state, { intervalRunning: action.value })
     case actionTypes.SCROLL_COMPLETE:
       return updateObject(state, {
         playStarted: false,
-        isPaused: true,
+        isPaused: false,
         isScrolling: false,
         intervalRunning: false,
       })
+    case actionTypes.SET_EDIT_MODE:
+      return updateObject(state, { isEditMode: action.value })
     default:
       return state
   }

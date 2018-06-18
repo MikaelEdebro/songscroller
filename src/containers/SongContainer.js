@@ -5,13 +5,14 @@ import styled from 'styled-components'
 
 import Song from 'components/Song/Song'
 import SongControls from 'components/Song/SongControls'
+import SongHeader from 'components/Song/SongHeader'
 import Wrapper from 'hoc/Wrapper'
 import * as songActions from 'store/actions'
 
 const ScrollWrapper = styled.div`
   position: relative;
   height: ${props => (props.showControls ? 'calc(100vh - 50px)' : '100vh')};
-  padding-top: ${props => (props.showHeader ? '50px' : '0')};
+  padding-top: ${props => (props.paddingTop ? '50px' : '0')};
   overflow-y: auto;
   overflow-x: visible;
   transition: all 0.5s ease-out;
@@ -91,9 +92,11 @@ class SongContainer extends React.Component {
   render() {
     return (
       <Wrapper>
+        <SongHeader show={this.props.showSongHeader || this.props.isPaused} />
+
         <ScrollWrapper
           playStarted={this.props.playStarted}
-          showHeader={this.props.showHeader}
+          paddingTop={this.props.showSongHeader && !this.props.isPaused}
           showControls={this.props.showControls}
           style={{ fontSize: this.props.fontSize + 'px' }}
           innerRef={el => (this.scrollWrapper = el)}
@@ -124,7 +127,7 @@ const mapStateToProps = state => ({
   selectedSong: state.selectedSong,
   playStarted: state.playStarted,
   fontSize: state.fontSize,
-  showHeader: state.showHeader,
+  showSongHeader: state.showSongHeader,
   showControls: state.showControls,
   isPaused: state.isPaused,
   isScrolling: state.isScrolling,

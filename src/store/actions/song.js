@@ -36,3 +36,8 @@ export const toggleInterval = value => ({
 export const scrollComplete = () => ({
   type: actionTypes.SCROLL_COMPLETE,
 })
+
+export const setEditMode = value => ({
+  type: actionTypes.SET_EDIT_MODE,
+  value,
+})
