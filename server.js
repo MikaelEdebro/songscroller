@@ -15,17 +15,15 @@ if (isProduction) {
   app.use(compression())
 }
 
-app.use(morgan(isProduction ? 'common' : 'dev'))
-
-app.use(express.static(path.resolve(__dirname, 'build')))
-
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
-})
+app
+  .use(morgan(isProduction ? 'common' : 'dev'))
+  .use(express.static(path.resolve(__dirname, 'build')))
+  .get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+  })
 
 const server = createServer(app)
 server.listen(PORT, err => {
   if (err) throw err
-
   console.log('server started on port ' + PORT)
 })
