@@ -14,6 +14,7 @@ const MainHeaderWrapper = styled.header`
   height: 50px;
   transition: all 0.5s ease-out;
   transform: ${props => (props.show ? 'initial' : 'translateY(-50px)')};
+  z-index: 100;
 `
 class MainHeader extends React.Component {
   render() {

@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const LogoWrapper = styled.div``
+const LogoWrapper = styled.div`
+  height: 100%;
+  img {
+    max-height: 100%;
+  }
+`
 const logo = props => (
   <LogoWrapper>
     <img

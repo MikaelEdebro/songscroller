@@ -66,12 +66,9 @@ class SongContainer extends React.Component {
           this.props.scrollComplete()
 
           setTimeout(() => {
-            this.resetScroll()
+            //this.resetScroll()
             this.props.toggleControls(true)
-
-            setTimeout(() => {
-              this.props.toggleHeader(true)
-            }, 1000)
+            this.props.toggleHeader(true)
           }, 1000)
         }
       }, INTERVAL_TIME)
