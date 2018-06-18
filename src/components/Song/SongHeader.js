@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import { withRouter } from 'react-router-dom'
 import Logo from 'components/Layout/Logo'
 import Icon from '@material-ui/core/Icon'
 
@@ -21,7 +21,7 @@ class SongHeader extends React.Component {
   render() {
     return (
       <SongHeaderWrapper show={this.props.show}>
-        <Icon style={{ fontSize: 30 }} title="Go Back">
+        <Icon style={{ fontSize: 30 }} onClick={this.props.history.goBack} title="Go Back">
           arrow_back_ios
         </Icon>
         <Logo />
@@ -30,4 +30,4 @@ class SongHeader extends React.Component {
   }
 }
 
-export default SongHeader
+export default withRouter(SongHeader)
