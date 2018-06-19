@@ -1,4 +1,3 @@
-const { createServer } = require('http')
 const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
@@ -21,9 +20,7 @@ app
   .get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
   })
-
-const server = createServer(app)
-server.listen(PORT, err => {
-  if (err) throw err
-  console.log('server started on port ' + PORT)
-})
+  .listen(PORT, err => {
+    if (err) throw err
+    console.log('server started on port ' + PORT)
+  })
