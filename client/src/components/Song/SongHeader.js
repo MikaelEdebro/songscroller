@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Logo from 'components/Layout/Logo'
 import Icon from '@material-ui/core/Icon'
-import * as actions from 'store/actions'
+import * as actions from '../../actions'
 
 const SongHeaderWrapper = styled.header`
   position: absolute;

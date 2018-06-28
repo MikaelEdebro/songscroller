@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 
 // routes
 require('./routes/authRoutes')(app)
+require('./routes/songRoutes')(app)
 
 // serve up react app in prod
 if (process.env.NODE_ENV === 'production') {

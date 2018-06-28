@@ -8,7 +8,7 @@ import './prototypes'
 import './index.css'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
-import configureStore from './store/configureStore'
+import configureStore from './configureStore'
 
 const { store, persistor } = configureStore()
 

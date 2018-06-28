@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import Song from 'components/Song/Song'
-import SongControls from 'components/Song/SongControls'
-import SongHeader from 'components/Song/SongHeader'
-import EditSong from 'components/Song/Edit/EditSong'
-import Wrapper from 'hoc/Wrapper'
-import * as songActions from 'store/actions'
+import Song from './Song'
+import SongControls from './SongControls'
+import SongHeader from './SongHeader'
+import EditSong from './Edit/EditSong'
+import Wrapper from '../../hoc/Wrapper'
+import * as songActions from '../../actions'
 
 const ScrollWrapper = styled.div`
   position: relative;

@@ -1,4 +1,5 @@
 export {
+  fetchSongs,
   play,
   pause,
   selectSong,
@@ -9,3 +10,4 @@ export {
   scrollComplete,
   setEditMode,
 } from './song'
+export { fetchUser } from './auth'

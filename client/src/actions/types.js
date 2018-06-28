@@ -1,3 +1,4 @@
+export const FETCH_SONGS = 'FETCH_SONGS'
 export const PLAY = 'PLAY'
 export const PAUSE = 'PAUSE'
 export const SELECT_SONG = 'SELECT_SONG'
@@ -7,3 +8,5 @@ export const TOGGLE_HEADER = 'TOGGLE_HEADER'
 export const TOGGLE_INTERVAL = 'TOGGLE_INTERVAL'
 export const SCROLL_COMPLETE = 'SCROLL_COMPLETE'
 export const SET_EDIT_MODE = 'SET_EDIT_MODE'
+
+export const FETCH_USER = 'FETCH_USER'

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import * as actions from 'store/actions'
+import * as actions from '../../../actions'
 
 const EditSongWrapper = styled.div`
   padding: 60px 10px 10px;
