@@ -12,6 +12,7 @@ mongoose.connect(keys.mongoURI)
 
 // mongoose models
 require('./models/User')
+require('./models/Song')
 
 // passport config
 require('./services/passport')

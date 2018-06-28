@@ -21,6 +21,7 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await User.findOne({
         userId: profile.id,
+        authType: 'google',
       })
 
       if (existingUser) {
@@ -28,7 +29,8 @@ passport.use(
       }
 
       const newUser = await new User({
-        googleId: profile.id,
+        userId: profile.id,
+        authType: 'google',
       }).save()
 
       done(null, newUser)

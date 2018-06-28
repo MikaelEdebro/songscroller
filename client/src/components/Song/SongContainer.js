@@ -8,7 +8,7 @@ import SongControls from './SongControls'
 import SongHeader from './SongHeader'
 import EditSong from './Edit/EditSong'
 import Wrapper from '../../hoc/Wrapper'
-import * as songActions from '../../actions'
+import * as actions from '../../actions'
 
 const ScrollWrapper = styled.div`
   position: relative;
@@ -24,6 +24,10 @@ class SongContainer extends React.Component {
 
   componentWillMount() {
     this.song = this.props.songs.find(s => s.title === this.props.selectedSong)
+  }
+
+  componentDidMount() {
+    console.log('SongContainer')
   }
 
   play = () => {
@@ -142,27 +146,27 @@ class SongContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  songs: state.songs,
-  selectedSong: state.selectedSong,
-  playStarted: state.playStarted,
-  fontSize: state.fontSize,
-  showSongHeader: state.showSongHeader,
-  showControls: state.showControls,
-  isPaused: state.isPaused,
-  isScrolling: state.isScrolling,
-  intervalRunning: state.intervalRunning,
-  isEditMode: state.isEditMode,
+const mapStateToProps = ({ song }) => ({
+  songs: song.songs,
+  selectedSong: song.selectedSong,
+  playStarted: song.playStarted,
+  fontSize: song.fontSize,
+  showSongHeader: song.showSongHeader,
+  showControls: song.showControls,
+  isPaused: song.isPaused,
+  isScrolling: song.isScrolling,
+  intervalRunning: song.intervalRunning,
+  isEditMode: song.isEditMode,
 })
 
 const mapDispatchToProps = dispatch => ({
-  play: () => dispatch(songActions.play()),
-  pause: () => dispatch(songActions.pause()),
-  changeFontSize: value => dispatch(songActions.changeFontSize(value)),
-  toggleControls: value => dispatch(songActions.toggleControls(value)),
-  toggleHeader: value => dispatch(songActions.toggleHeader(value)),
-  toggleInterval: value => dispatch(songActions.toggleInterval(value)),
-  scrollComplete: () => dispatch(songActions.scrollComplete()),
+  play: () => dispatch(actions.play()),
+  pause: () => dispatch(actions.pause()),
+  changeFontSize: value => dispatch(actions.changeFontSize(value)),
+  toggleControls: value => dispatch(actions.toggleControls(value)),
+  toggleHeader: value => dispatch(actions.toggleHeader(value)),
+  toggleInterval: value => dispatch(actions.toggleInterval(value)),
+  scrollComplete: () => dispatch(actions.scrollComplete()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongContainer)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import SongsContainer from './components/Song/SongsContainer'
@@ -24,16 +24,19 @@ class App extends React.Component {
     if (this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path="/songs/:title" component={SongContainer} />
-          <Route path="/songs" component={SongsContainer} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/songs/:title" component={SongContainer} />
+          <Route exact path="/songs" component={SongsContainer} />
           <Route exact path="/" component={Landing} />
-          <Redirect to="/" />
         </Switch>
       )
     }
 
-    return <div>{routes}</div>
+    return (
+      <BrowserRouter>
+        <div>{routes}</div>
+      </BrowserRouter>
+    )
   }
 }
 
@@ -44,4 +47,5 @@ const mapStateToProps = ({ auth }) => ({
 const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(actions.fetchUser()),
 })
+
 export default connect(mapStateToProps, mapDispatchToProps)(App)

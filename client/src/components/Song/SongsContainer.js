@@ -7,6 +7,7 @@ import SongListItem from './SongListItem'
 class SongsContainer extends React.Component {
   componentDidMount() {
     this.props.fetchSongs()
+    console.log('SongsContainer')
   }
 
   goToSong = id => {

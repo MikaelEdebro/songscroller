@@ -1,10 +1,11 @@
 const passport = require('passport')
+const LOGIN_REDIRECT_URL = '/dashboard'
 
 module.exports = app => {
   app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
   app.get('/api/auth/google/callback', passport.authenticate('google'), (req, res) => {
-    res.redirect('/dashboard')
+    res.redirect(LOGIN_REDIRECT_URL)
   })
 
   app.get('/api/auth/logout', (req, res) => {
