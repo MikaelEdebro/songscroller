@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 5000;
 const path = require("path");
+const keys = require("./config/keys");
 
 app.get("/", (req, res) => {
-  res.send({ helloo: true });
+  res.send({ helloo: keys.test });
 });
 
 // serve up react app in prod
