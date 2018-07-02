@@ -13,7 +13,7 @@ import * as actions from '../../actions'
 const ScrollWrapper = styled.div`
   position: relative;
   height: ${props => (props.showControls ? 'calc(100vh - 50px)' : '100vh')};
-  padding-top: ${props => (props.paddingTop ? '50px' : '0')};
+  padding-top: ${props => (props.paddingTop ? '90px' : '0')};
   overflow-y: auto;
   overflow-x: visible;
   transition: all 0.5s ease-out;
@@ -24,10 +24,6 @@ class SongContainer extends React.Component {
 
   componentWillMount() {
     this.song = this.props.songs.find(s => s.title === this.props.selectedSong)
-  }
-
-  componentDidMount() {
-    console.log('SongContainer')
   }
 
   play = () => {
@@ -128,7 +124,7 @@ class SongContainer extends React.Component {
 
     return (
       <Wrapper>
-        <SongHeader show={this.props.showSongHeader || this.props.isPaused} />
+        {/* <SongHeader show={this.props.showSongHeader || this.props.isPaused} /> */}
 
         {song}
         <SongControls

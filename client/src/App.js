@@ -1,12 +1,15 @@
 import React from 'react'
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import Layout from './components/layout/Layout'
 import SongsContainer from './components/Song/SongsContainer'
 import SongContainer from './components/Song/SongContainer'
 import Landing from './components/Landing'
 import Dashboard from './components/Dashboard'
 import * as actions from './actions'
+
+const SongAdd = () => <h2>Add song</h2>
 
 class App extends React.Component {
   componentDidMount() {
@@ -15,28 +18,24 @@ class App extends React.Component {
 
   render() {
     let routes = (
-      <Switch>
+      <div>
         <Route exact path="/" component={Landing} />
-        <Redirect to="/" />
-      </Switch>
+      </div>
     )
 
     if (this.props.isAuthenticated) {
       routes = (
-        <Switch>
+        <div>
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/songs/new" component={SongAdd} />
           <Route exact path="/songs/:title" component={SongContainer} />
           <Route exact path="/songs" component={SongsContainer} />
           <Route exact path="/" component={Landing} />
-        </Switch>
+        </div>
       )
     }
 
-    return (
-      <BrowserRouter>
-        <div>{routes}</div>
-      </BrowserRouter>
-    )
+    return <Layout>{routes}</Layout>
   }
 }
 
@@ -48,4 +47,4 @@ const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(actions.fetchUser()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import Logo from 'components/Layout/Logo'
+import Logo from '../layout/Logo'
 import Icon from '@material-ui/core/Icon'
 import * as actions from '../../actions'
 

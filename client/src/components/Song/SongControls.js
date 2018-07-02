@@ -1,19 +1,22 @@
 import React from 'react'
 import Icon from '@material-ui/core/Icon'
 import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
 
 const SongControlsWrapper = styled.div`
+  display: flex;
+  align-items: center;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100vw;
-  height: 50px;
-  background: violet;
+  height: 90px;
+  background-color: #fff;
   transition: all 0.5s ease-out;
   padding: 6px 5px;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
-  transform: ${props => (!props.show ? 'translateY(55px)' : 'initial')};
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  transform: ${props => (!props.show ? 'translateY(95px)' : 'initial')};
 `
 
 const songControls = props => {
@@ -30,16 +33,21 @@ const songControls = props => {
           </Icon>
         </Grid>
         <Grid item>
-          <Icon
-            style={{ fontSize: 40 }}
-            onClick={props.isScrolling ? props.pause : props.play}
-            title={props.isScrolling ? 'Pause' : 'Play'}
-          >
-            {props.isScrolling ? 'pause_circle_outline' : 'play_circle_outline'}
-          </Icon>
-          <Icon style={{ fontSize: 30 }} onClick={props.replay} title="Replay">
-            replay
-          </Icon>
+          <Grid container alignItems="center">
+            <Button
+              variant="fab"
+              color="primary"
+              aria-label="add"
+              onClick={props.isScrolling ? props.pause : props.play}
+              title={props.isScrolling ? 'Pause' : 'Play'}
+            >
+              <Icon style={{ fontSize: 40 }}>{props.isScrolling ? 'pause' : 'play_arrow'}</Icon>
+            </Button>
+
+            <Icon style={{ fontSize: 30 }} onClick={props.replay} title="Replay">
+              replay
+            </Icon>
+          </Grid>
         </Grid>
         <Grid item>
           <Icon style={{ fontSize: 30 }} onClick={props.decreaseFont} title="Slow down">

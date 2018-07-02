@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom'
 class Dashboard extends React.Component {
   state = {}
 
+  componentDidMount() {
+    console.log('Dashboard')
+  }
+
   render() {
     return (
       <div>
