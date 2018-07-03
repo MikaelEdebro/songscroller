@@ -29,7 +29,7 @@ const SongWrapper = styled.div`
 
 class Song extends React.Component {
   render() {
-    const { artist, title, body } = this.props.song
+    const { artist, title, body, _id } = this.props.song
     const formattedSong = body
       .trim()
       .insert(0, '\n')
@@ -46,7 +46,7 @@ class Song extends React.Component {
             <Typography variant="title">{title}</Typography>
           </Grid>
           <Grid item>
-            <SongMenu />
+            <SongMenu songId={_id} />
           </Grid>
         </Grid>
 

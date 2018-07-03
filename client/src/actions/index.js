@@ -10,5 +10,6 @@ export {
   scrollComplete,
   setEditMode,
   saveSong,
+  deleteSong,
 } from './song'
 export { fetchUser } from './auth'

@@ -29,7 +29,6 @@ const styles = theme => {
 class SongsContainer extends React.Component {
   componentDidMount() {
     this.props.fetchSongs()
-    console.log('SongsContainer')
   }
 
   goToSong = id => {
@@ -47,7 +46,7 @@ class SongsContainer extends React.Component {
     }
     return this.props.songs.map(song => (
       <SongListItem
-        key={song.title}
+        key={song._id}
         artist={song.artist}
         title={song.title}
         clicked={() => this.goToSong(song.title)}

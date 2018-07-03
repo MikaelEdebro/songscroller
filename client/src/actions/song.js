@@ -49,6 +49,13 @@ export const setEditMode = value => ({
 })
 
 export const saveSong = (song, history) => async dispatch => {
-  const res = axios.post('/api/songs', song)
-  history.push('/songs/' + 'res.data.title')
+  const res = await axios.post('/api/songs', song)
+  console.log('res', res.data)
+  history.push('/songs/' + res.data.title)
+}
+
+export const deleteSong = (songId, history) => async dispatch => {
+  const res = await axios.delete('/api/songs/' + songId)
+  console.log('res', res.data)
+  history.push('/songs')
 }

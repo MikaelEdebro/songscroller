@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -19,6 +20,11 @@ class SongMenu extends React.Component {
 
   handleClose = () => {
     this.setState({ anchorEl: null })
+  }
+
+  handleDelete = () => {
+    console.log('delete song', this.props.songId)
+    this.props.deleteSong(this.props.songId, this.props.history)
   }
 
   render() {
@@ -49,6 +55,7 @@ class SongMenu extends React.Component {
           <MenuItem onClick={() => this.props.setEditMode(true)}>Edit</MenuItem>
           <MenuItem onClick={this.handleClose}>Add to Playlist</MenuItem>
           <MenuItem onClick={this.handleClose}>Share</MenuItem>
+          <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
         </Menu>
       </div>
     )
@@ -57,6 +64,7 @@ class SongMenu extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   setEditMode: value => dispatch(actions.setEditMode(value)),
+  deleteSong: (songId, history) => dispatch(actions.deleteSong(songId, history)),
 })
 
-export default connect(null, mapDispatchToProps)(SongMenu)
+export default withRouter(connect(null, mapDispatchToProps)(SongMenu))
