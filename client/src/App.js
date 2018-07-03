@@ -1,15 +1,14 @@
 import React from 'react'
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Layout from './components/layout/Layout'
 import SongsContainer from './components/Song/SongsContainer'
 import SongContainer from './components/Song/SongContainer'
+import AddSong from './components/Song/Edit/AddSong'
 import Landing from './components/Landing'
 import Dashboard from './components/Dashboard'
 import * as actions from './actions'
-
-const SongAdd = () => <h2>Add song</h2>
 
 class App extends React.Component {
   componentDidMount() {
@@ -25,13 +24,13 @@ class App extends React.Component {
 
     if (this.props.isAuthenticated) {
       routes = (
-        <div>
+        <Switch>
           <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/songs/new" component={SongAdd} />
+          <Route exact path="/songs/new" component={AddSong} />
           <Route exact path="/songs/:title" component={SongContainer} />
           <Route exact path="/songs" component={SongsContainer} />
           <Route exact path="/" component={Landing} />
-        </div>
+        </Switch>
       )
     }
 

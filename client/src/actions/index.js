@@ -9,5 +9,6 @@ export {
   toggleInterval,
   scrollComplete,
   setEditMode,
+  saveSong,
 } from './song'
 export { fetchUser } from './auth'

@@ -5,10 +5,7 @@
   "compilerOptions": {
     "target": "es2017",
     "allowSyntheticDefaultImports": false,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "baseUrl": "./"
   },
   "exclude": ["node_modules", "dist"]
 }

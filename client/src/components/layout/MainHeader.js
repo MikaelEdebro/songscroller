@@ -5,8 +5,7 @@ import BackButton from './BackButton'
 import Menu from './Menu'
 
 const MainHeaderWrapper = styled.div`
-  position: absolute;
-  top: 0;
+  position: relative;
   width: 100%;
   height: 80px;
   background-color: #ededed;
@@ -21,7 +20,6 @@ const MainHeaderWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 0 10px;
     flex: 0 0 100%;
@@ -29,7 +27,7 @@ const MainHeaderWrapper = styled.div`
 `
 const MainHeader = props => (
   <MainHeaderWrapper show={props.show}>
-    <div className="header-inner">
+    <div className="container header-inner">
       <BackButton />
       <Logo />
       <Menu />

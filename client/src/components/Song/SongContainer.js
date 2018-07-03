@@ -5,7 +5,6 @@ import styled from 'styled-components'
 
 import Song from './Song'
 import SongControls from './SongControls'
-import SongHeader from './SongHeader'
 import EditSong from './Edit/EditSong'
 import Wrapper from '../../hoc/Wrapper'
 import * as actions from '../../actions'

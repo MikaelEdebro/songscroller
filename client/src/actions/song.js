@@ -3,9 +3,9 @@ import axios from '../axios-instance'
 
 export const fetchSongs = () => async dispatch => {
   const res = await axios.get('/api/songs')
-  console.log(res.data)
   dispatch({ type: types.FETCH_SONGS, payload: res.data })
 }
+
 export const play = () => ({
   type: types.PLAY,
 })
@@ -47,3 +47,8 @@ export const setEditMode = value => ({
   type: types.SET_EDIT_MODE,
   value,
 })
+
+export const saveSong = (song, history) => async dispatch => {
+  const res = axios.post('/api/songs', song)
+  history.push('/songs/' + 'res.data.title')
+}
