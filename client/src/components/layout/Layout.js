@@ -1,6 +1,5 @@
 import React from 'react'
-import MainHeader from './MainHeader'
-import { connect } from 'react-redux'
+import AppBar from './AppBar'
 
 class Layout extends React.Component {
   state = {}
@@ -8,15 +7,11 @@ class Layout extends React.Component {
   render() {
     return (
       <div>
-        <MainHeader show={this.props.showSongHeader || this.props.isPaused} />
+        <AppBar />
         <div>{this.props.children}</div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ song }) => ({
-  showSongHeader: song.showSongHeader,
-  isPaused: song.isPaused,
-})
-export default connect(mapStateToProps)(Layout)
+export default Layout

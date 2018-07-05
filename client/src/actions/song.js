@@ -1,11 +1,6 @@
 import * as types from './types'
 import axios from '../axios-instance'
 
-export const fetchSongs = () => async dispatch => {
-  const res = await axios.get('/api/songs')
-  dispatch({ type: types.FETCH_SONGS, payload: res.data })
-}
-
 export const play = () => ({
   type: types.PLAY,
 })
@@ -48,14 +43,27 @@ export const setEditMode = value => ({
   value,
 })
 
-export const saveSong = (song, history) => async dispatch => {
-  const res = await axios.post('/api/songs', song)
-  console.log('res', res.data)
-  history.push('/songs/' + res.data.title)
+export const fetchSongs = () => async dispatch => {
+  const res = await axios.get('/api/songs')
+  dispatch({ type: types.FETCH_SONGS, payload: res.data })
 }
 
-export const deleteSong = (songId, history) => async dispatch => {
-  const res = await axios.delete('/api/songs/' + songId)
-  console.log('res', res.data)
+export const fetchSong = songId => async dispatch => {
+  const res = await axios.get('/api/songs/' + songId)
+  dispatch({ type: types.SET_CURRENT_SONG, payload: res.data })
+}
+
+export const addSong = (song, history) => async () => {
+  const res = await axios.post('/api/songs', song)
+  history.push('/songs/' + res.data._id)
+}
+
+export const editSong = (songId, values, history) => async () => {
+  const res = await axios.put('/api/songs/' + songId, values)
+  history.push('/songs/' + res.data._id)
+}
+
+export const deleteSong = (songId, history) => async () => {
+  await axios.delete('/api/songs/' + songId)
   history.push('/songs')
 }

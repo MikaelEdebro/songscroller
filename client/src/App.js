@@ -6,9 +6,11 @@ import Layout from './components/layout/Layout'
 import SongsContainer from './components/Song/SongsContainer'
 import SongContainer from './components/Song/SongContainer'
 import AddSong from './components/Song/Edit/AddSong'
+import EditSong from './components/Song/Edit/EditSong'
 import Landing from './components/Landing'
 import Dashboard from './components/Dashboard'
 import * as actions from './actions'
+import ScrollToTop from './hoc/ScrollToTop'
 
 class App extends React.Component {
   componentDidMount() {
@@ -27,14 +29,20 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/songs/new" component={AddSong} />
-          <Route exact path="/songs/:title" component={SongContainer} />
+          <Route exact path="/songs/edit/:id" component={EditSong} />
+          <Route exact path="/songs/:id" component={SongContainer} />
           <Route exact path="/songs" component={SongsContainer} />
           <Route exact path="/" component={Landing} />
         </Switch>
       )
     }
 
-    return <Layout>{routes}</Layout>
+    return (
+      <Layout>
+        <ScrollToTop />
+        {routes}
+      </Layout>
+    )
   }
 }
 

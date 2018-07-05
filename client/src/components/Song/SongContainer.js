@@ -5,24 +5,20 @@ import styled from 'styled-components'
 
 import Song from './Song'
 import SongControls from './SongControls'
-import EditSong from './Edit/EditSong'
 import Wrapper from '../../hoc/Wrapper'
 import * as actions from '../../actions'
 
 const ScrollWrapper = styled.div`
   position: relative;
-  height: ${props => (props.showControls ? 'calc(100vh - 50px)' : '100vh')};
-  padding-top: ${props => (props.paddingTop ? '90px' : '0')};
-  overflow-y: auto;
-  overflow-x: visible;
   transition: all 0.5s ease-out;
+  padding-bottom: 100px;
 `
 
 class SongContainer extends React.Component {
   scrollInterval = null
 
-  componentWillMount() {
-    this.song = this.props.songs.find(s => s.title === this.props.selectedSong)
+  componentDidMount() {
+    this.props.fetchSong(this.props.match.params.id)
   }
 
   play = () => {
@@ -38,7 +34,7 @@ class SongContainer extends React.Component {
     this.props.play()
 
     const INTERVAL_TIME = 20
-    const { seconds } = this.song
+    const { seconds } = this.props.currentSong
     const songDiv = ReactDOM.findDOMNode(this.songDiv)
     const songPosition = songDiv.getBoundingClientRect()
     const wrapperPosition = this.scrollWrapper.getBoundingClientRect()
@@ -101,31 +97,22 @@ class SongContainer extends React.Component {
   }
 
   render() {
-    let song = (
-      <ScrollWrapper
-        playStarted={this.props.playStarted}
-        paddingTop={this.props.showSongHeader && !this.props.isPaused}
-        showControls={this.props.showControls}
-        style={{ fontSize: this.props.fontSize + 'px' }}
-        innerRef={el => (this.scrollWrapper = el)}
-      >
-        <Song
-          song={this.song}
-          ref={el => (this.songDiv = el)}
-          clicked={() => this.props.toggleControls(!this.props.showControls)}
-        />
-      </ScrollWrapper>
-    )
-
-    if (this.props.isEditMode) {
-      song = <EditSong song={this.song} />
-    }
-
     return (
       <Wrapper>
-        {/* <SongHeader show={this.props.showSongHeader || this.props.isPaused} /> */}
+        <ScrollWrapper
+          playStarted={this.props.playStarted}
+          paddingTop={this.props.showSongHeader && !this.props.isPaused}
+          showControls={this.props.showControls}
+          style={{ fontSize: this.props.fontSize + 'px' }}
+          innerRef={el => (this.scrollWrapper = el)}
+        >
+          <Song
+            song={this.props.currentSong}
+            ref={el => (this.songDiv = el)}
+            clicked={() => this.props.toggleControls(!this.props.showControls)}
+          />
+        </ScrollWrapper>
 
-        {song}
         <SongControls
           show={this.props.showControls && !this.props.isEditMode}
           increaseFont={() => this.props.changeFontSize(1)}
@@ -143,6 +130,7 @@ class SongContainer extends React.Component {
 
 const mapStateToProps = ({ song }) => ({
   songs: song.songs,
+  currentSong: song.currentSong,
   selectedSong: song.selectedSong,
   playStarted: song.playStarted,
   fontSize: song.fontSize,
@@ -155,6 +143,7 @@ const mapStateToProps = ({ song }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  fetchSong: songId => dispatch(actions.fetchSong(songId)),
   play: () => dispatch(actions.play()),
   pause: () => dispatch(actions.pause()),
   changeFontSize: value => dispatch(actions.changeFontSize(value)),

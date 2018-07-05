@@ -3,6 +3,7 @@ import { updateObject } from '../core/utility'
 
 const initialState = {
   songs: [],
+  currentSong: undefined,
   selectedSong: undefined,
   showSongHeader: true,
   showControls: true,
@@ -54,6 +55,8 @@ const songReducer = (state = initialState, action) => {
       })
     case types.SET_EDIT_MODE:
       return updateObject(state, { isEditMode: action.value })
+    case types.SET_CURRENT_SONG:
+      return updateObject(state, { currentSong: action.payload })
     default:
       return state
   }

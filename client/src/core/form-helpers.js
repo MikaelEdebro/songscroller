@@ -9,6 +9,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import InputLabel from '@material-ui/core/InputLabel'
 
 export const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => {
+  console.log({ input, custom })
   return <TextField label={label} error={touched && error} {...input} {...custom} />
 }
 

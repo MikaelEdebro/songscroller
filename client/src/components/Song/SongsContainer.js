@@ -20,15 +20,16 @@ const styles = theme => {
       textAlign: 'center',
     },
     songsWrapper: {
-      maxWidth: '400px',
+      maxWidth: '500px',
       margin: '0 auto',
     },
   }
 }
 
 class SongsContainer extends React.Component {
-  componentDidMount() {
-    this.props.fetchSongs()
+  async componentDidMount() {
+    const songs = await this.props.fetchSongs()
+    console.log(songs)
   }
 
   goToSong = id => {
@@ -45,12 +46,7 @@ class SongsContainer extends React.Component {
       return null
     }
     return this.props.songs.map(song => (
-      <SongListItem
-        key={song._id}
-        artist={song.artist}
-        title={song.title}
-        clicked={() => this.goToSong(song.title)}
-      />
+      <SongListItem key={song._id} song={song} clicked={() => this.goToSong(song._id)} />
     ))
   }
 

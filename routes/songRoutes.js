@@ -10,6 +10,20 @@ module.exports = app => {
     res.send(songs)
   })
 
+  app.get('/api/songs/:id', requireLogin, async (req, res) => {
+    try {
+      const song = await Song.findById(req.params.id)
+
+      if (!song) {
+        res.status(404).send('Song not found')
+      } else {
+        res.send(song)
+      }
+    } catch (error) {
+      res.status(500).send('Song not found')
+    }
+  })
+
   app.post('/api/songs', requireLogin, async (req, res) => {
     const { artist, title, body, seconds } = req.body
     const newSong = await new Song({
@@ -24,8 +38,6 @@ module.exports = app => {
   })
 
   app.delete('/api/songs/:id', requireLogin, async (req, res) => {
-    console.log(req.user)
-    console.log(req.params)
     try {
       const deletedSong = await Song.findOneAndRemove({
         _id: req.params.id,
@@ -36,8 +48,29 @@ module.exports = app => {
       } else {
         res.status(204).send('Song successfully deleted')
       }
-    } catch (err) {
-      res.send(500).send({ error: err })
+    } catch (error) {
+      res.status(500).send({ error })
+    }
+  })
+
+  app.put('/api/songs/:id', requireLogin, async (req, res) => {
+    try {
+      const { artist, title, body } = req.body
+      const editedSong = await Song.findOneAndUpdate(
+        { _id: req.params.id, _user: req.user._id },
+        {
+          artist,
+          title,
+          body,
+        }
+      ).exec()
+      if (!editedSong) {
+        return res.status(404).send({ error: 'Couldnt edit the song' })
+      } else {
+        res.send(editedSong)
+      }
+    } catch (error) {
+      res.status(500).send({ error })
     }
   })
 }

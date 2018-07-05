@@ -12,8 +12,6 @@ const MainHeaderWrapper = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  transition: all 0.5s ease-out;
-  transform: ${props => (props.show ? 'initial' : 'translateY(-80px)')};
   z-index: 100;
 
   .header-inner {
@@ -26,7 +24,7 @@ const MainHeaderWrapper = styled.div`
   }
 `
 const MainHeader = props => (
-  <MainHeaderWrapper show={props.show}>
+  <MainHeaderWrapper>
     <div className="container header-inner">
       <BackButton />
       <Logo />

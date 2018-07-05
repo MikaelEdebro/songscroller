@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import SongMenu from './SongMenu'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const SongWrapper = styled.div`
   padding: 10px;
@@ -29,6 +30,10 @@ const SongWrapper = styled.div`
 
 class Song extends React.Component {
   render() {
+    if (!this.props.song) {
+      return <CircularProgress size={50} />
+    }
+
     const { artist, title, body, _id } = this.props.song
     const formattedSong = body
       .trim()

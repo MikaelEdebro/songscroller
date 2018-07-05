@@ -1,87 +1,93 @@
 import React from 'react'
-import styled from 'styled-components'
+import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
+import { renderTextField } from '../../../core/form-helpers'
 import Button from '@material-ui/core/Button'
 import * as actions from '../../../actions'
+import songFields from './songFields'
+import validate from './validateSong'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import styled from 'styled-components'
 
-const EditSongWrapper = styled.div`
-  padding: 60px 10px 10px;
+const ButtonsWrapper = styled(Grid)`
+  padding: 10px 10px 20px;
 `
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: 0,
-    marginRight: 0,
-    marginBottom: theme.spacing.unit,
-    width: '100%',
-  },
-})
-
 class EditSong extends React.Component {
-  state = {
-    artist: '',
-    title: '',
-    body: '',
-  }
-
   componentWillMount() {
-    const { song } = this.props
-    this.setState({ artist: song.artist, title: song.title, body: song.body })
+    this.props.fetchSong(this.props.match.params.id)
   }
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    })
+  renderFields() {
+    return songFields.map(({ name, label, placeholder, multiline }) => (
+      <Field
+        key={name}
+        type="text"
+        name={name}
+        component={renderTextField}
+        label={label}
+        placeholder={placeholder}
+        multiline={multiline}
+        fullWidth
+        style={{ marginBottom: '20px' }}
+      />
+    ))
   }
 
-  saveSong() {
-    console.log('save song')
+  handleSubmit = () => {
+    console.log('submit', this.props)
+    this.props.editSong(this.props.match.params.id, this.props.editSongValues, this.props.history)
+  }
+
+  handleCancel = () => {
+    this.props.history.push('/songs')
   }
 
   render() {
-    const { classes } = this.props
     return (
-      <EditSongWrapper>
-        <TextField
-          label="Artist"
-          value={this.state.artist}
-          onChange={this.handleChange('artist')}
-          className={classes.textField}
-        />
-        <TextField
-          label="Title"
-          value={this.state.title}
-          onChange={this.handleChange('title')}
-          className={classes.textField}
-        />
-        <TextField
-          label="Body"
-          value={this.state.body}
-          onChange={this.handleChange('body')}
-          className={classes.textField}
-          multiline
-          rowsMax="20"
-        />
-        <Button size="large" color="secondary" onClick={() => this.props.setEditMode(false)}>
-          Cancel
-        </Button>
-        <Button size="large" color="primary" onClick={this.saveSong}>
-          Save
-        </Button>
-      </EditSongWrapper>
+      <div className="container" style={{ padding: '10px 15px' }}>
+        <Typography variant="display3" gutterBottom>
+          Edit song
+        </Typography>
+        <form onSubmit={this.handleSubmit}>
+          {this.renderFields()}
+
+          <ButtonsWrapper container justify="flex-end" spacing={24}>
+            <Button variant="flat" color="secondary" onClick={this.handleCancel}>
+              Cancel
+            </Button>
+            <Button variant="contained" color="primary" onClick={this.handleSubmit}>
+              Save
+            </Button>
+          </ButtonsWrapper>
+        </form>
+      </div>
     )
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setEditMode: value => dispatch(actions.setEditMode(value)),
+const mapStateToProps = ({ form, song }) => ({
+  editSongValues: form.editSong ? form.editSong.values : {},
+  initialValues: {
+    artist: song.currentSong.artist,
+    title: song.currentSong.title,
+    body: song.currentSong.body,
+  },
 })
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(EditSong))
+const mapDispatchToProps = dispatch => ({
+  fetchSong: songId => dispatch(actions.fetchSong(songId)),
+  editSong: (songId, values, history) => dispatch(actions.editSong(songId, values, history)),
+})
+
+const reduxFormConfig = {
+  form: 'editSong',
+  enableReinitialize: true,
+  validate,
+}
+
+EditSong = reduxForm(reduxFormConfig)(EditSong)
+EditSong = connect(mapStateToProps, mapDispatchToProps)(EditSong)
+
+export default EditSong
