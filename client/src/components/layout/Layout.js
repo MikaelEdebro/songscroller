@@ -1,17 +1,13 @@
 import React from 'react'
 import AppBar from './AppBar'
 
-class Layout extends React.Component {
-  state = {}
-
-  render() {
-    return (
-      <div>
-        <AppBar />
-        <div>{this.props.children}</div>
-      </div>
-    )
-  }
+const layout = props => {
+  return (
+    <div>
+      {props.isAuthenticated ? <AppBar /> : null}
+      <div>{props.children}</div>
+    </div>
+  )
 }
 
-export default Layout
+export default layout

@@ -4,15 +4,18 @@ import SongMenu from './SongMenu'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Paper from '@material-ui/core/Paper'
 
-const SongWrapper = styled.div`
+const SongWrapper = styled(Paper)`
   padding: 10px;
-  margin: 0;
   white-space: pre;
-  transition: font-size 0.5s;
+  overflow-x: hidden;
+  margin: 5px auto;
+  max-width: 1200px;
 
   @media (min-width: 600px) {
     padding: 15px 25px;
+    margin: 20px auto;
   }
 
   h3 {
@@ -34,7 +37,7 @@ class Song extends React.Component {
       return <CircularProgress size={50} />
     }
 
-    const { artist, title, body, _id } = this.props.song
+    const { artist, title, body, _id, seconds } = this.props.song
     const formattedSong = body
       .trim()
       .insert(0, '\n')
@@ -48,7 +51,9 @@ class Song extends React.Component {
         <Grid container alignItems="flex-start" justify="space-between">
           <Grid item>
             <Typography variant="caption">{artist}</Typography>
-            <Typography variant="title">{title}</Typography>
+            <Typography variant="title">
+              {title} ({seconds})
+            </Typography>
           </Grid>
           <Grid item>
             <SongMenu songId={_id} />
@@ -57,6 +62,7 @@ class Song extends React.Component {
 
         <div
           className="body"
+          style={{ paddingBottom: '100px', fontSize: this.props.fontSize + 'px' }}
           dangerouslySetInnerHTML={{ __html: formattedSong }}
           onClick={this.props.clicked}
         />

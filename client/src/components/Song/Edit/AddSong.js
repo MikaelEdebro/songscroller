@@ -1,7 +1,7 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
-import { renderTextField } from '../../../core/form-helpers'
+import { renderTextField, renderSlider } from '../../../core/form-helpers'
 import Button from '@material-ui/core/Button'
 import * as actions from '../../../actions'
 import songFields from './songFields'
@@ -49,6 +49,8 @@ class AddSong extends React.Component {
         <form onSubmit={this.handleSubmit}>
           {this.renderFields()}
 
+          <Field component={renderSlider} name="seconds" fullWidth label="Song length" max={400} />
+
           <ButtonsWrapper container justify="flex-end" spacing={24}>
             <Button variant="flat" color="secondary" onClick={this.handleCancel}>
               Cancel
@@ -65,6 +67,12 @@ class AddSong extends React.Component {
 
 const mapStateToProps = ({ form }) => ({
   addSongValues: form.addSong ? form.addSong.values : {},
+  initialValues: {
+    artist: '',
+    title: '',
+    body: '',
+    seconds: 120,
+  },
 })
 
 const mapDispatchToProps = dispatch => ({

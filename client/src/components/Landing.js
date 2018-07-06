@@ -1,29 +1,74 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import googleLogo from '../assets/auth/google-logo.svg'
+import facebookLogo from '../assets/auth/facebook-logo.svg'
+import siteConfig from '../siteConfig'
 
-const LandingWrapper = styled.div`
-  text-align: center;
+const LoginButton = styled(Paper)`
+  margin: 0 auto 10px;
+  max-width: 300px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
 `
+const LoginIcon = styled.div`
+  width: 60px;
+  text-align: left;
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+`
+
+const AUTH_TYPES = [
+  { identifier: 'google', text: 'Login with Google', iconUrl: googleLogo, url: '/api/auth/google' },
+  {
+    identifier: 'facebook',
+    text: 'Login with Facebook',
+    iconUrl: facebookLogo,
+    url: '/api/auth/facebook',
+  },
+]
+
 class Landing extends React.Component {
   componentDidMount() {
+    console.log(googleLogo)
     console.log('Landing')
+  }
+
+  handleLogin = url => {
+    document.location.href = url
+  }
+
+  renderLoginButtons = () => {
+    return AUTH_TYPES.map(({ text, iconUrl, url, identifier }) => (
+      <LoginButton onClick={() => this.handleLogin(url)} key={identifier}>
+        <LoginIcon>
+          <img src={iconUrl} alt={text} />
+        </LoginIcon>
+        {text}
+      </LoginButton>
+    ))
   }
 
   render() {
     return (
-      <LandingWrapper>
-        <h1>Welcome to Troubadour</h1>
-        <p>Your solution for musicians</p>
+      <div>
+        <Typography variant="display4" align="center">
+          {siteConfig.name}
+        </Typography>
+        <Typography variant="paragraph" align="center">
+          {siteConfig.tagline}
+        </Typography>
 
-        <p>
-          {this.props.isAuthenticated ? (
-            <a href="/api/auth/logout">Log out</a>
-          ) : (
-            <a href="/api/auth/google">Login with Google</a>
-          )}
-        </p>
-      </LandingWrapper>
+        {!this.props.isAuthenticated ? this.renderLoginButtons() : null}
+      </div>
     )
   }
 }

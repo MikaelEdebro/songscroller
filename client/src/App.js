@@ -38,7 +38,7 @@ class App extends React.Component {
     }
 
     return (
-      <Layout>
+      <Layout isAuthenticated={this.props.isAuthenticated}>
         <ScrollToTop />
         {routes}
       </Layout>

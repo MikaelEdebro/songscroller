@@ -1,5 +1,4 @@
 import React from 'react'
-import TextField from '@material-ui/core/TextField'
 import { RadioGroup } from '@material-ui/core/RadioGroup'
 import Checkbox from '@material-ui/core/Checkbox'
 import Select from '@material-ui/core/Select'
@@ -7,10 +6,21 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import InputLabel from '@material-ui/core/InputLabel'
+import Typography from '@material-ui/core/Typography'
+import Slider from '@material-ui/lab/Slider'
+import Input from '@material-ui/core/Input'
+import FormHelperText from '@material-ui/core/FormHelperText'
 
-export const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => {
-  console.log({ input, custom })
-  return <TextField label={label} error={touched && error} {...input} {...custom} />
+export const renderTextField = ({ input, label, id, meta, fullWidth, ...custom }) => {
+  return (
+    <FormControl error={!!(meta.touched && meta.error)} fullWidth={fullWidth} {...custom}>
+      <InputLabel htmlFor={id}>{label}</InputLabel>
+      <Input {...input} />
+      {meta.touched && meta.error ? (
+        <FormHelperText id="name-error-text">{meta.error}</FormHelperText>
+      ) : null}
+    </FormControl>
+  )
 }
 
 export const renderCheckbox = ({ input, label, color }) => (
@@ -60,3 +70,17 @@ export const renderSelect = ({
     />
   </FormControl>
 )
+
+export const renderSlider = ({ input, label, max }) => {
+  console.log('slider', { input, max })
+  return (
+    <div style={{ width: '100%' }}>
+      <Typography id="label">{label}</Typography>
+      <Slider
+        value={+input.value}
+        onChange={(event, value) => input.onChange(value)}
+        max={max || 100}
+      />
+    </div>
+  )
+}

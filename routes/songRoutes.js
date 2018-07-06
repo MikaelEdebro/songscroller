@@ -1,4 +1,5 @@
 const requireLogin = require('../middlewares/requireLogin')
+const validateSong = require('../middlewares/validation/validateSong')
 const mongoose = require('mongoose')
 const Song = mongoose.model('song')
 
@@ -24,36 +25,19 @@ module.exports = app => {
     }
   })
 
-  app.post('/api/songs', requireLogin, async (req, res) => {
-    const { artist, title, body, seconds } = req.body
+  app.post('/api/songs', requireLogin, validateSong, async (req, res) => {
+    const { artist, title, body } = req.body
     const newSong = await new Song({
       artist,
       title,
       body,
-      seconds,
       _user: req.user._id,
     }).save()
 
     res.send(newSong)
   })
 
-  app.delete('/api/songs/:id', requireLogin, async (req, res) => {
-    try {
-      const deletedSong = await Song.findOneAndRemove({
-        _id: req.params.id,
-        _user: req.user._id,
-      })
-      if (!deletedSong) {
-        return res.status(404).send({ error: 'Couldnt delete the song' })
-      } else {
-        res.status(204).send('Song successfully deleted')
-      }
-    } catch (error) {
-      res.status(500).send({ error })
-    }
-  })
-
-  app.put('/api/songs/:id', requireLogin, async (req, res) => {
+  app.put('/api/songs/:id', requireLogin, validateSong, async (req, res) => {
     try {
       const { artist, title, body } = req.body
       const editedSong = await Song.findOneAndUpdate(
@@ -68,6 +52,22 @@ module.exports = app => {
         return res.status(404).send({ error: 'Couldnt edit the song' })
       } else {
         res.send(editedSong)
+      }
+    } catch (error) {
+      res.status(500).send({ error })
+    }
+  })
+
+  app.delete('/api/songs/:id', requireLogin, async (req, res) => {
+    try {
+      const deletedSong = await Song.findOneAndRemove({
+        _id: req.params.id,
+        _user: req.user._id,
+      })
+      if (!deletedSong) {
+        return res.status(404).send({ error: 'Couldnt delete the song' })
+      } else {
+        res.status(204).send('Song successfully deleted')
       }
     } catch (error) {
       res.status(500).send({ error })

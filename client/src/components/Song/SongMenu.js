@@ -23,7 +23,6 @@ class SongMenu extends React.Component {
   }
 
   handleDelete = () => {
-    console.log('delete song', this.props.songId)
     this.props.deleteSong(this.props.songId, this.props.history)
   }
 
@@ -65,7 +64,6 @@ class SongMenu extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setEditMode: value => dispatch(actions.setEditMode(value)),
   deleteSong: (songId, history) => dispatch(actions.deleteSong(songId, history)),
 })
 

@@ -6,18 +6,17 @@ import SongListItem from './SongListItem'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
+import Typography from '@material-ui/core/Typography'
+import SearchSongs from './SearchSongs'
+//import debounce from 'lodash/debounce'
 
 const styles = theme => {
-  console.log('theme', theme)
   return {
     button: {
       margin: theme.spacing.unit,
       position: 'fixed',
       bottom: '20px',
       right: '20px',
-    },
-    container: {
-      textAlign: 'center',
     },
     songsWrapper: {
       maxWidth: '500px',
@@ -27,9 +26,12 @@ const styles = theme => {
 }
 
 class SongsContainer extends React.Component {
-  async componentDidMount() {
-    const songs = await this.props.fetchSongs()
-    console.log(songs)
+  state = {
+    query: '',
+  }
+
+  componentDidMount() {
+    this.props.fetchSongs()
   }
 
   goToSong = id => {
@@ -41,11 +43,29 @@ class SongsContainer extends React.Component {
     this.props.history.push('/songs/new')
   }
 
+  getFilteredSongs = () => {
+    if (!this.state.query.length) {
+      return this.props.songs
+    }
+    const query = this.state.query.toLowerCase()
+    return this.props.songs.filter(
+      song =>
+        song.artist.toLowerCase().indexOf(query) !== -1 ||
+        song.title.toLowerCase().indexOf(query) !== -1
+    )
+  }
+
+  handleQueryChange = value => {
+    console.log('handleQuery', value)
+    this.setState({ query: value })
+  }
+
   renderSongs() {
-    if (!this.props.songs.length) {
+    const songs = this.getFilteredSongs()
+    if (!songs.length) {
       return null
     }
-    return this.props.songs.map(song => (
+    return songs.map(song => (
       <SongListItem key={song._id} song={song} clicked={() => this.goToSong(song._id)} />
     ))
   }
@@ -54,7 +74,10 @@ class SongsContainer extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.container}>
-        <h1>Songs</h1>
+        <Typography variant="display2" gutterBottom align="center">
+          Songs
+        </Typography>
+        <SearchSongs query={this.state.query} onChange={this.handleQueryChange} />
         <div className={classes.songsWrapper}>{this.renderSongs()}</div>
         <Button
           variant="fab"

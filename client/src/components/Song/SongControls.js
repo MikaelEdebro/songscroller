@@ -10,7 +10,7 @@ const SongControlsWrapper = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 90px;
   background-color: #fff;
   transition: all 0.5s ease-out;

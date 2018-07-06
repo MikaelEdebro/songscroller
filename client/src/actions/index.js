@@ -10,7 +10,6 @@ export {
   toggleHeader,
   toggleInterval,
   scrollComplete,
-  setEditMode,
   addSong,
   deleteSong,
   editSong,

@@ -1,5 +1,5 @@
 const passport = require('passport')
-const LOGIN_REDIRECT_URL = '/dashboard'
+const LOGIN_REDIRECT_URL = '/songs'
 
 module.exports = app => {
   app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))

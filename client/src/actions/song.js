@@ -38,11 +38,6 @@ export const scrollComplete = () => ({
   type: types.SCROLL_COMPLETE,
 })
 
-export const setEditMode = value => ({
-  type: types.SET_EDIT_MODE,
-  value,
-})
-
 export const fetchSongs = () => async dispatch => {
   const res = await axios.get('/api/songs')
   dispatch({ type: types.FETCH_SONGS, payload: res.data })

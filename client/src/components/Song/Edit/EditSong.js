@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button'
 import * as actions from '../../../actions'
 import songFields from './songFields'
 import validate from './validateSong'
-import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import styled from 'styled-components'
 
@@ -41,15 +40,12 @@ class EditSong extends React.Component {
   }
 
   handleCancel = () => {
-    this.props.history.push('/songs')
+    this.props.history.goBack()
   }
 
   render() {
     return (
       <div className="container" style={{ padding: '10px 15px' }}>
-        <Typography variant="display3" gutterBottom>
-          Edit song
-        </Typography>
         <form onSubmit={this.handleSubmit}>
           {this.renderFields()}
 

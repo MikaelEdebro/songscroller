@@ -1,28 +1,25 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 
 import Song from './Song'
 import SongControls from './SongControls'
 import Wrapper from '../../hoc/Wrapper'
 import * as actions from '../../actions'
 
-const ScrollWrapper = styled.div`
-  position: relative;
-  transition: all 0.5s ease-out;
-  padding-bottom: 100px;
-`
-
 class SongContainer extends React.Component {
   scrollInterval = null
+  startTime = null
+  offset = 0
+  scrollSpeed = null
 
   componentDidMount() {
     this.props.fetchSong(this.props.match.params.id)
+    this.props.toggleControls(true)
   }
 
   play = () => {
-    this.props.toggleHeader(false)
+    console.log('play')
+
     this.props.toggleControls(false)
 
     setTimeout(() => {
@@ -30,91 +27,69 @@ class SongContainer extends React.Component {
     }, 2000)
   }
 
-  startScroll = () => {
-    this.props.play()
+  handleScroll = () => {
+    if (this.props.isPaused) {
+      return
+    }
 
-    const INTERVAL_TIME = 20
-    const { seconds } = this.props.currentSong
-    const songDiv = ReactDOM.findDOMNode(this.songDiv)
-    const songPosition = songDiv.getBoundingClientRect()
-    const wrapperPosition = this.scrollWrapper.getBoundingClientRect()
+    const now = new Date()
+    const msElapsedSinceStart = now.getTime() - this.startTime.getTime()
+    const scrollAmount = msElapsedSinceStart / 1000 * this.scrollSpeed
+    //this.offset = window.scrollY
+    this.offset += scrollAmount
 
-    const totalPixelsToScroll = songPosition.height - wrapperPosition.height
-    const pixelsToScrollPerSecond = totalPixelsToScroll / seconds
-    const pixelsToScrollPerInterval = pixelsToScrollPerSecond / (1000 / INTERVAL_TIME)
+    window.scrollTo(0, this.offset)
+    this.startTime = now
 
-    if (!this.props.intervalRunning) {
-      this.props.toggleInterval(true)
-      let scrollAmount = pixelsToScrollPerInterval
+    const scrollIsAtBottom =
+      window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 1
+    if (scrollIsAtBottom) {
+      console.log('stop scrolling')
+      this.props.toggleInterval(false)
+      this.props.scrollComplete()
 
-      this.scrollInterval = setInterval(() => {
-        if (this.props.isPaused) {
-          return
-        }
-        scrollAmount += pixelsToScrollPerInterval
-        this.scrollWrapper.scrollTop = scrollAmount
-
-        const shouldStopScrolling =
-          parseInt(songDiv.getBoundingClientRect().bottom, 10) <=
-          parseInt(this.scrollWrapper.getBoundingClientRect().bottom, 10)
-        if (shouldStopScrolling) {
-          clearInterval(this.scrollInterval)
-          this.props.toggleInterval(false)
-          this.props.scrollComplete()
-
-          setTimeout(() => {
-            //this.resetScroll()
-            this.props.toggleControls(true)
-            this.props.toggleHeader(true)
-
-            setTimeout(() => {
-              this.scrollToBottom()
-            }, 1000)
-          }, 1000)
-        }
-      }, INTERVAL_TIME)
+      setTimeout(() => {
+        this.props.toggleControls(true)
+      }, 500)
+    } else {
+      requestAnimationFrame(this.handleScroll)
     }
   }
 
+  startScroll = () => {
+    console.log('startScroll')
+    this.props.play()
+
+    this.startTime = new Date()
+    const amountToScroll = document.documentElement.scrollHeight - window.innerHeight
+    this.scrollSpeed = amountToScroll / this.props.currentSong.seconds
+    this.offset = window.scrollY
+
+    requestAnimationFrame(this.handleScroll)
+  }
+
   replay = () => {
-    clearInterval(this.scrollInterval)
+    console.log('replay')
+
     this.resetScroll()
     this.play()
   }
 
   resetScroll = () => {
-    this.scrollWrapper.scroll({
-      top: 0,
-      behavior: 'smooth',
-    })
-  }
-
-  scrollToBottom = () => {
-    this.scrollWrapper.scroll({
-      top: 2000, // todo: replace hard coded value
-      behavior: 'smooth',
-    })
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   render() {
     return (
       <Wrapper>
-        <ScrollWrapper
-          playStarted={this.props.playStarted}
-          paddingTop={this.props.showSongHeader && !this.props.isPaused}
-          showControls={this.props.showControls}
-          style={{ fontSize: this.props.fontSize + 'px' }}
-          innerRef={el => (this.scrollWrapper = el)}
-        >
-          <Song
-            song={this.props.currentSong}
-            ref={el => (this.songDiv = el)}
-            clicked={() => this.props.toggleControls(!this.props.showControls)}
-          />
-        </ScrollWrapper>
+        <Song
+          song={this.props.currentSong}
+          clicked={() => this.props.toggleControls(!this.props.showControls)}
+          fontSize={this.props.currentSong.fontSize}
+        />
 
         <SongControls
-          show={this.props.showControls && !this.props.isEditMode}
+          show={this.props.showControls}
           increaseFont={() => this.props.changeFontSize(1)}
           decreaseFont={() => this.props.changeFontSize(-1)}
           play={this.props.intervalRunning ? this.startScroll : this.play}
@@ -131,15 +106,11 @@ class SongContainer extends React.Component {
 const mapStateToProps = ({ song }) => ({
   songs: song.songs,
   currentSong: song.currentSong,
-  selectedSong: song.selectedSong,
   playStarted: song.playStarted,
-  fontSize: song.fontSize,
-  showSongHeader: song.showSongHeader,
   showControls: song.showControls,
   isPaused: song.isPaused,
   isScrolling: song.isScrolling,
   intervalRunning: song.intervalRunning,
-  isEditMode: song.isEditMode,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -148,7 +119,6 @@ const mapDispatchToProps = dispatch => ({
   pause: () => dispatch(actions.pause()),
   changeFontSize: value => dispatch(actions.changeFontSize(value)),
   toggleControls: value => dispatch(actions.toggleControls(value)),
-  toggleHeader: value => dispatch(actions.toggleHeader(value)),
   toggleInterval: value => dispatch(actions.toggleInterval(value)),
   scrollComplete: () => dispatch(actions.scrollComplete()),
 })
