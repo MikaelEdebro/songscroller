@@ -4,16 +4,20 @@ export default class SongFormatter {
   }
 
   removeWhitespaceOnEndOfRow = () => {
-    this.song.replace(/ {1,}\n/g, '\n')
+    this.song = this.song.replace(/\s{1,}\n/g, '\n')
+    return this
+  }
 
+  replaceTabsForSpaces = () => {
+    this.song = this.song.replace(/\t/g, '    ')
     return this
   }
 
   highlightChordRows = () => {
     const replaceString = '\n<chord-row>$1</chord-row>\n'
     this.song = this.song
-      .replace(/\n(.* {2,}.*)\n/g, replaceString)
-      .replace(/\n(\w{1,3})\n/g, replaceString)
+      .replace(/\n(.*( {2,}).*)\n/g, replaceString) // multiple chords
+      .replace(/\n(\w{1,3})\n/g, replaceString) // one chord that spans entire row
 
     return this
   }
@@ -54,7 +58,5 @@ export default class SongFormatter {
     return this
   }
 
-  getFormattedSong = () => {
-    return this.song
-  }
+  getFormattedSong = () => this.song
 }

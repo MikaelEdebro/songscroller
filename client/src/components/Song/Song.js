@@ -42,6 +42,7 @@ class Song extends React.Component {
     super(props)
     this.formattedSong = new SongFormatter(this.props.song.body)
       .removeWhitespaceOnEndOfRow()
+      .replaceTabsForSpaces()
       .highlightChordRows()
       .highlightChords()
       .replaceRowBreaks()
