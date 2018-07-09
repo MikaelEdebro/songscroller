@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import Layout from './components/layout/Layout'
+import Layout from './components/Layout/Layout'
 import SongsContainer from './components/Song/SongsContainer'
 import SongContainer from './components/Song/SongContainer'
 import AddSong from './components/Song/Edit/AddSong'
