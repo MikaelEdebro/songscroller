@@ -56,7 +56,7 @@ class Song extends React.Component {
 
     const { artist, title, _id, seconds } = this.props.song
     const transposedSong = new SongTransposer(this.formattedSong)
-      .transposeSong(1)
+      .transposeSong(0)
       .getTransposedSong()
 
     return (
