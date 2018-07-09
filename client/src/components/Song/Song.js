@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Paper from '@material-ui/core/Paper'
 import SongFormatter from '../../services/SongFormatter'
+import SongTransposer from '../../services/SongTransposer'
 
 const SongWrapper = styled(Paper)`
   padding: 10px;
@@ -54,6 +55,9 @@ class Song extends React.Component {
     }
 
     const { artist, title, _id, seconds } = this.props.song
+    const transposedSong = new SongTransposer(this.formattedSong)
+      .transposeSong(1)
+      .getTransposedSong()
 
     return (
       <SongWrapper>
@@ -72,7 +76,7 @@ class Song extends React.Component {
         <div
           className="body"
           style={{ paddingBottom: '100px', fontSize: this.props.fontSize + 'px' }}
-          dangerouslySetInnerHTML={{ __html: this.formattedSong }}
+          dangerouslySetInnerHTML={{ __html: transposedSong }}
           onClick={this.props.clicked}
         />
       </SongWrapper>
