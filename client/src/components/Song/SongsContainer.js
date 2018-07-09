@@ -12,6 +12,9 @@ import SearchSongs from './SearchSongs'
 
 const styles = theme => {
   return {
+    container: {
+      padding: '10px',
+    },
     button: {
       margin: theme.spacing.unit,
       position: 'fixed',
@@ -56,7 +59,6 @@ class SongsContainer extends React.Component {
   }
 
   handleQueryChange = value => {
-    console.log('handleQuery', value)
     this.setState({ query: value })
   }
 

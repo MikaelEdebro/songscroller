@@ -1,14 +1,19 @@
-module.exports = (req, res, next) => {
-  const { artist, title, body } = req.body
-  let isValid = true
+const { check } = require('express-validator/check')
 
-  if (!artist || !title || !body) {
-    isValid = false
-  }
-
-  if (!isValid) {
-    res.status(400).send({ error: 'Invalid request' })
-  } else {
-    next()
-  }
-}
+module.exports = [
+  check('artist')
+    .not()
+    .isEmpty()
+    .withMessage('Artist is missing')
+    .trim(),
+  check('title')
+    .not()
+    .isEmpty()
+    .withMessage('Title is missing')
+    .trim(),
+  check('body')
+    .not()
+    .isEmpty()
+    .withMessage('Body is missing')
+    .trim(),
+]

@@ -1,7 +1,6 @@
 import songFields from './songFields'
 
 export default values => {
-  console.log({ values })
   const errors = {}
 
   songFields.forEach(({ name }) => {

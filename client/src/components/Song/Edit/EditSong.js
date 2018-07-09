@@ -68,7 +68,7 @@ const mapStateToProps = ({ form, song }) => ({
   initialValues: {
     artist: song.currentSong.artist,
     title: song.currentSong.title,
-    body: song.currentSong.body,
+    body: decodeURIComponent(song.currentSong.body),
   },
 })
 

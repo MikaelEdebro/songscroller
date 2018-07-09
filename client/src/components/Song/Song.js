@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Paper from '@material-ui/core/Paper'
+import SongFormatter from '../../services/SongFormatter'
 
 const SongWrapper = styled(Paper)`
   padding: 10px;
@@ -12,6 +13,7 @@ const SongWrapper = styled(Paper)`
   overflow-x: hidden;
   margin: 5px auto;
   max-width: 1200px;
+  width: 100%;
 
   @media (min-width: 600px) {
     padding: 15px 25px;
@@ -25,26 +27,32 @@ const SongWrapper = styled(Paper)`
     color: rgba(0, 0, 0, 0.5);
     font-size: 16px;
   }
-  .chord-row {
+  .body {
+    font-family: 'Roboto Mono', monospace;
+    letter-spacing: -1px;
+  }
+  chord {
     color: violet;
     font-weight: bold;
   }
 `
 
 class Song extends React.Component {
+  constructor(props) {
+    super(props)
+    this.formattedSong = new SongFormatter(this.props.song.body)
+      .removeWhitespaceOnEndOfRow()
+      .highlightChordRows()
+      .highlightChords()
+      .replaceRowBreaks()
+      .getFormattedSong()
+  }
   render() {
     if (!this.props.song) {
       return <CircularProgress size={50} />
     }
 
-    const { artist, title, body, _id, seconds } = this.props.song
-    const formattedSong = body
-      .trim()
-      .insert(0, '\n')
-      .removeWhitespaceOnEndOfRow()
-      .highlightChordRows()
-      .highlightChords()
-      .replaceRowBreaks()
+    const { artist, title, _id, seconds } = this.props.song
 
     return (
       <SongWrapper>
@@ -63,7 +71,7 @@ class Song extends React.Component {
         <div
           className="body"
           style={{ paddingBottom: '100px', fontSize: this.props.fontSize + 'px' }}
-          dangerouslySetInnerHTML={{ __html: formattedSong }}
+          dangerouslySetInnerHTML={{ __html: this.formattedSong }}
           onClick={this.props.clicked}
         />
       </SongWrapper>

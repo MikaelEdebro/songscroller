@@ -63,7 +63,7 @@ class Landing extends React.Component {
         <Typography variant="display4" align="center">
           {siteConfig.name}
         </Typography>
-        <Typography variant="paragraph" align="center">
+        <Typography variant="subheading" align="center">
           {siteConfig.tagline}
         </Typography>
 

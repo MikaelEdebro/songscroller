@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import Divider from '@material-ui/core/Divider'
 import * as actions from '../../actions'
 
 const ITEM_HEIGHT = 48
@@ -56,6 +57,8 @@ class SongMenu extends React.Component {
           }}
         >
           <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
+          <MenuItem>Add to Playlist</MenuItem>
+          <Divider />
           <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
         </Menu>
       </div>

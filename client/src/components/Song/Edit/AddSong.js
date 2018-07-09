@@ -14,6 +14,14 @@ const ButtonsWrapper = styled(Grid)`
   padding: 10px 10px 20px;
 `
 
+const FormWrapper = styled.form`
+  textarea {
+    font-family: 'Roboto Mono', monospace;
+    letter-spacing: -1px;
+    white-space: pre;
+  }
+`
+
 class AddSong extends React.Component {
   renderFields() {
     return songFields.map(({ name, label, placeholder, multiline }) => (
@@ -46,7 +54,7 @@ class AddSong extends React.Component {
         <Typography variant="display3" align="center" gutterBottom>
           Add song
         </Typography>
-        <form onSubmit={this.handleSubmit}>
+        <FormWrapper onSubmit={this.handleSubmit}>
           {this.renderFields()}
 
           <Field component={renderSlider} name="seconds" fullWidth label="Song length" max={400} />
@@ -59,7 +67,7 @@ class AddSong extends React.Component {
               Save
             </Button>
           </ButtonsWrapper>
-        </form>
+        </FormWrapper>
       </div>
     )
   }

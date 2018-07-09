@@ -5,21 +5,23 @@ import Song from './Song'
 import SongControls from './SongControls'
 import Wrapper from '../../hoc/Wrapper'
 import * as actions from '../../actions'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 class SongContainer extends React.Component {
-  scrollInterval = null
   startTime = null
   offset = 0
   scrollSpeed = null
 
   componentDidMount() {
+    // const shouldFetchSong =
+    //   !this.props.currentSong || this.props.currentSong._id !== this.props.match.params.id
+    // if (shouldFetchSong) {
+    // }
     this.props.fetchSong(this.props.match.params.id)
     this.props.toggleControls(true)
   }
 
   play = () => {
-    console.log('play')
-
     this.props.toggleControls(false)
 
     setTimeout(() => {
@@ -35,7 +37,6 @@ class SongContainer extends React.Component {
     const now = new Date()
     const msElapsedSinceStart = now.getTime() - this.startTime.getTime()
     const scrollAmount = msElapsedSinceStart / 1000 * this.scrollSpeed
-    //this.offset = window.scrollY
     this.offset += scrollAmount
 
     window.scrollTo(0, this.offset)
@@ -57,7 +58,6 @@ class SongContainer extends React.Component {
   }
 
   startScroll = () => {
-    console.log('startScroll')
     this.props.play()
 
     this.startTime = new Date()
@@ -69,8 +69,6 @@ class SongContainer extends React.Component {
   }
 
   replay = () => {
-    console.log('replay')
-
     this.resetScroll()
     this.play()
   }
@@ -82,11 +80,15 @@ class SongContainer extends React.Component {
   render() {
     return (
       <Wrapper>
-        <Song
-          song={this.props.currentSong}
-          clicked={() => this.props.toggleControls(!this.props.showControls)}
-          fontSize={this.props.currentSong.fontSize}
-        />
+        {this.props.currentSong ? (
+          <Song
+            song={this.props.currentSong}
+            clicked={() => this.props.toggleControls(!this.props.showControls)}
+            fontSize={this.props.currentSong.fontSize}
+          />
+        ) : (
+          <CircularProgress size={50} />
+        )}
 
         <SongControls
           show={this.props.showControls}

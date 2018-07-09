@@ -26,6 +26,7 @@ const songReducer = (state = initialState, action) => {
       return updateObject(state, { playStarted: false, isPaused: true, isScrolling: false })
     case types.SELECT_SONG:
       return updateObject(state, {
+        currentSong: undefined,
         showControls: true,
         playStarted: false,
         isPaused: false,

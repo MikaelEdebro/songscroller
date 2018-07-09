@@ -2,6 +2,7 @@ const requireLogin = require('../middlewares/requireLogin')
 const validateSong = require('../middlewares/validation/validateSong')
 const mongoose = require('mongoose')
 const Song = mongoose.model('song')
+const { check, validationResult } = require('express-validator/check')
 
 module.exports = app => {
   app.get('/api/songs', requireLogin, async (req, res) => {
@@ -26,6 +27,11 @@ module.exports = app => {
   })
 
   app.post('/api/songs', requireLogin, validateSong, async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+
     const { artist, title, body } = req.body
     const newSong = await new Song({
       artist,

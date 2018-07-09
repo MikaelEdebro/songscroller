@@ -10,7 +10,7 @@ const SearchSongsInput = styled.div`
   margin: 0 auto 20px;
 
   input {
-    padding: 20px;
+    padding: 12px 20px;
     border-radius: 24px;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
     border: none;
