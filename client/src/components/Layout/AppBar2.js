@@ -10,7 +10,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 //import Logo from './Logo'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import Drawer from './Drawer'
+import Drawer from './Drawer2'
 
 const styles = {
   root: {
