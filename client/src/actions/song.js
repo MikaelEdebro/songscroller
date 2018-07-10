@@ -38,9 +38,17 @@ export const fetchSongs = () => async dispatch => {
   dispatch({ type: types.FETCH_SONGS, payload: res.data })
 }
 
-export const fetchSong = songId => async dispatch => {
+export const fetchAndSelectSong = songId => async dispatch => {
   const res = await axios.get('/api/songs/' + songId)
-  return res.data
+  dispatch({ type: types.SELECT_SONG, payload: res.data })
+}
+
+export const selectSong = song => dispatch => {
+  dispatch({ type: types.SELECT_SONG, payload: song })
+}
+
+export const clearSelectedSong = () => dispatch => {
+  dispatch({ type: types.CLEAR_SELECTED_SONG })
 }
 
 export const addSong = (song, history) => async () => {

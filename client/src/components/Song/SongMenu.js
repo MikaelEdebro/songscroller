@@ -24,11 +24,12 @@ class SongMenu extends React.Component {
   }
 
   handleDelete = () => {
-    this.props.deleteSong(this.props.songId, this.props.history)
+    this.props.deleteSong(this.props.song._id, this.props.history)
   }
 
   handleEdit = () => {
-    this.props.history.push('/songs/edit/' + this.props.songId)
+    this.props.selectSong(this.props.song)
+    this.props.history.push('/songs/edit/' + this.props.song._id)
   }
 
   render() {
@@ -67,6 +68,7 @@ class SongMenu extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+  selectSong: song => dispatch(actions.selectSong(song)),
   deleteSong: (songId, history) => dispatch(actions.deleteSong(songId, history)),
 })
 

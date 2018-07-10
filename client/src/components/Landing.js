@@ -37,11 +37,6 @@ const AUTH_TYPES = [
 ]
 
 class Landing extends React.Component {
-  componentDidMount() {
-    console.log(googleLogo)
-    console.log('Landing')
-  }
-
   handleLogin = url => {
     document.location.href = url
   }
@@ -73,6 +68,6 @@ class Landing extends React.Component {
   }
 }
 const mapStateToProps = ({ auth }) => ({
-  isAuthenticated: auth,
+  isAuthenticated: auth && auth.user,
 })
 export default connect(mapStateToProps)(Landing)

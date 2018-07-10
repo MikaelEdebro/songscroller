@@ -12,14 +12,8 @@ class SongContainer extends React.Component {
   offset = 0
   scrollSpeed = null
 
-  state = {
-    song: undefined,
-  }
-
-  async componentDidMount() {
-    const song = await this.props.fetchSong(this.props.match.params.id)
-    this.setState({ song })
-    this.props.toggleControls(true)
+  componentDidMount() {
+    this.props.fetchAndSelectSong(this.props.match.params.id)
   }
 
   play = () => {
@@ -63,7 +57,7 @@ class SongContainer extends React.Component {
 
     this.startTime = new Date()
     const amountToScroll = document.documentElement.scrollHeight - window.innerHeight
-    this.scrollSpeed = amountToScroll / this.state.song.seconds
+    this.scrollSpeed = amountToScroll / this.props.selectedSong.seconds
     this.offset = window.scrollY
 
     requestAnimationFrame(this.handleScroll)
@@ -81,11 +75,11 @@ class SongContainer extends React.Component {
   render() {
     return (
       <Wrapper>
-        {this.state.song ? (
+        {this.props.selectedSong ? (
           <Song
-            song={this.state.song}
+            song={this.props.selectedSong}
             clicked={() => this.props.toggleControls(!this.props.showControls)}
-            fontSize={this.state.song.fontSize}
+            fontSize={this.props.selectedSong.fontSize}
           />
         ) : (
           <CircularProgress size={50} />
@@ -107,7 +101,7 @@ class SongContainer extends React.Component {
 }
 
 const mapStateToProps = ({ song }) => ({
-  songs: song.songs,
+  selectedSong: song.selectedSong,
   playStarted: song.playStarted,
   showControls: song.showControls,
   isPaused: song.isPaused,
@@ -116,7 +110,7 @@ const mapStateToProps = ({ song }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchSong: songId => dispatch(actions.fetchSong(songId)),
+  fetchAndSelectSong: songId => dispatch(actions.fetchAndSelectSong(songId)),
   play: () => dispatch(actions.play()),
   pause: () => dispatch(actions.pause()),
   changeFontSize: value => dispatch(actions.changeFontSize(value)),

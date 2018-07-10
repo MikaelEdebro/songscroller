@@ -7,7 +7,7 @@ const songListItem = ({ song, clicked }) => {
   return (
     <Card style={{ marginBottom: '10px' }}>
       <CardHeader
-        action={<SongMenu songId={song._id} />}
+        action={<SongMenu song={song} />}
         title={
           <div onClick={clicked} style={{ cursor: 'pointer' }}>
             {song.artist + ' - ' + song.title}

@@ -1,14 +1,13 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
-import { renderTextField, renderSlider } from '../../../core/form-helpers'
+import { renderTextField } from '../../../core/form-helpers'
 import Button from '@material-ui/core/Button'
 import * as actions from '../../../actions'
 import songFields from './songFields'
 import validate from './validateSong'
 import Grid from '@material-ui/core/Grid'
 import styled from 'styled-components'
-import Typography from '@material-ui/core/Typography'
 
 const ButtonsWrapper = styled(Grid)`
   padding: 10px 10px 20px;
@@ -23,6 +22,10 @@ const FormWrapper = styled.form`
 `
 
 class AddSong extends React.Component {
+  componentWillMount() {
+    this.props.clearSelectedSong()
+  }
+
   renderFields() {
     return songFields.map(({ name, label, placeholder, multiline }) => (
       <Field
@@ -40,7 +43,6 @@ class AddSong extends React.Component {
   }
 
   handleSubmit = () => {
-    console.log('submit', this.props.addSongValues)
     this.props.addSong(this.props.addSongValues, this.props.history)
   }
 
@@ -51,13 +53,8 @@ class AddSong extends React.Component {
   render() {
     return (
       <div className="container" style={{ padding: '10px 15px' }}>
-        <Typography variant="display3" align="center" gutterBottom>
-          Add song
-        </Typography>
         <FormWrapper onSubmit={this.handleSubmit}>
           {this.renderFields()}
-
-          <Field component={renderSlider} name="seconds" fullWidth label="Song length" max={400} />
 
           <ButtonsWrapper container justify="flex-end" spacing={24}>
             <Button variant="flat" color="secondary" onClick={this.handleCancel}>
@@ -84,6 +81,7 @@ const mapStateToProps = ({ form }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  clearSelectedSong: () => dispatch(actions.clearSelectedSong()),
   addSong: (song, history) => dispatch(actions.addSong(song, history)),
 })
 

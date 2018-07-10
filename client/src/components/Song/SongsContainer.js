@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import Typography from '@material-ui/core/Typography'
 import SearchSongs from './SearchSongs'
-//import debounce from 'lodash/debounce'
 
 const styles = theme => {
   return {
@@ -34,6 +33,7 @@ class SongsContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.props.clearSelectedSong()
     this.props.fetchSongs()
   }
 
@@ -94,12 +94,12 @@ class SongsContainer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  songs: state.song.songs,
+const mapStateToProps = ({ song }) => ({
+  songs: song.songs,
 })
 
 const mapDispatchToProps = dispatch => ({
+  clearSelectedSong: () => dispatch(actions.clearSelectedSong()),
   fetchSongs: () => dispatch(actions.fetchSongs()),
 })
 

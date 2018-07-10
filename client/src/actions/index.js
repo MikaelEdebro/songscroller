@@ -1,7 +1,9 @@
 export { fetchUser } from './auth'
 export {
   fetchSongs,
-  fetchSong,
+  fetchAndSelectSong,
+  selectSong,
+  clearSelectedSong,
   play,
   pause,
   changeFontSize,

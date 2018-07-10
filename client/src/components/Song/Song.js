@@ -54,7 +54,7 @@ class Song extends React.Component {
       return <CircularProgress size={50} />
     }
 
-    const { artist, title, _id, seconds } = this.props.song
+    const { artist, title, seconds } = this.props.song
     const transposedSong = new SongTransposer(this.formattedSong)
       .transposeSong(0)
       .getTransposedSong()
@@ -69,7 +69,7 @@ class Song extends React.Component {
             </Typography>
           </Grid>
           <Grid item>
-            <SongMenu songId={_id} />
+            <SongMenu song={this.props.song} />
           </Grid>
         </Grid>
 

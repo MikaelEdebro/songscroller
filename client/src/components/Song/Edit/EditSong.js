@@ -15,7 +15,7 @@ const ButtonsWrapper = styled(Grid)`
 
 class EditSong extends React.Component {
   componentWillMount() {
-    this.props.fetchSong(this.props.match.params.id)
+    this.props.fetchAndSelectSong(this.props.match.params.id)
   }
 
   renderFields() {
@@ -35,7 +35,6 @@ class EditSong extends React.Component {
   }
 
   handleSubmit = () => {
-    console.log('submit', this.props)
     this.props.editSong(this.props.match.params.id, this.props.editSongValues, this.props.history)
   }
 
@@ -64,16 +63,17 @@ class EditSong extends React.Component {
 }
 
 const mapStateToProps = ({ form, song }) => ({
+  selectedSong: song.selectedSong,
   editSongValues: form.editSong ? form.editSong.values : {},
   initialValues: {
-    artist: song.currentSong.artist,
-    title: song.currentSong.title,
-    body: decodeURIComponent(song.currentSong.body),
+    artist: song.selectedSong.artist,
+    title: song.selectedSong.title,
+    body: song.selectedSong.body,
   },
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchSong: songId => dispatch(actions.fetchSong(songId)),
+  fetchAndSelectSong: songId => dispatch(actions.fetchAndSelectSong(songId)),
   editSong: (songId, values, history) => dispatch(actions.editSong(songId, values, history)),
 })
 

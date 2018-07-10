@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, withRouter, Switch } from 'react-router-dom'
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Layout from './components/Layout/Layout'
@@ -13,7 +13,7 @@ import * as actions from './actions'
 import ScrollToTop from './hoc/ScrollToTop'
 
 class App extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchUser()
   }
 
@@ -21,6 +21,7 @@ class App extends React.Component {
     let routes = (
       <Switch>
         <Route exact path="/" component={Landing} />
+        <Route render={() => <Redirect to="/" />} />
       </Switch>
     )
 
@@ -33,6 +34,7 @@ class App extends React.Component {
           <Route exact path="/songs/:id" component={SongContainer} />
           <Route exact path="/songs" component={SongsContainer} key={document.location.href} />
           <Route exact path="/" component={Landing} />
+          <Route render={() => <Redirect to="/dashboard" />} />
         </Switch>
       )
     }
@@ -47,7 +49,8 @@ class App extends React.Component {
 }
 
 const mapStateToProps = ({ auth }) => ({
-  isAuthenticated: auth,
+  isAuthenticated: auth && auth.user,
+  loginCheckCompleted: auth.loginCheckCompleted,
 })
 
 const mapDispatchToProps = dispatch => ({
