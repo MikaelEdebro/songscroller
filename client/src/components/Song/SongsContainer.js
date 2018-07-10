@@ -37,12 +37,8 @@ class SongsContainer extends React.Component {
     this.props.fetchSongs()
   }
 
-  goToSong = id => {
-    this.props.history.push('/songs/' + id)
-  }
-
-  addSong = () => {
-    this.props.history.push('/songs/new')
+  goToRoute = route => {
+    this.props.history.push(route)
   }
 
   getFilteredSongs = () => {
@@ -67,7 +63,11 @@ class SongsContainer extends React.Component {
       return null
     }
     return songs.map(song => (
-      <SongListItem key={song._id} song={song} clicked={() => this.goToSong(song._id)} />
+      <SongListItem
+        key={song._id}
+        song={song}
+        clicked={() => this.goToRoute('/songs/' + song._id)}
+      />
     ))
   }
 
@@ -85,7 +85,7 @@ class SongsContainer extends React.Component {
           color="primary"
           aria-label="add"
           className={classes.button}
-          onClick={this.addSong}
+          onClick={() => this.goToRoute('/songs/add')}
         >
           <AddIcon />
         </Button>

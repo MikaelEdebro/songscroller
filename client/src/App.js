@@ -28,10 +28,10 @@ class App extends React.Component {
       routes = (
         <Switch>
           <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/songs/new" component={AddSong} />
+          <Route exact path="/songs/add" component={AddSong} />
           <Route exact path="/songs/edit/:id" component={EditSong} />
           <Route exact path="/songs/:id" component={SongContainer} />
-          <Route exact path="/songs" component={SongsContainer} />
+          <Route exact path="/songs" component={SongsContainer} key={document.location.href} />
           <Route exact path="/" component={Landing} />
         </Switch>
       )

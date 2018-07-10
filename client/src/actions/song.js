@@ -40,7 +40,6 @@ export const fetchSongs = () => async dispatch => {
 
 export const fetchSong = songId => async dispatch => {
   const res = await axios.get('/api/songs/' + songId)
-  //dispatch({ type: types.SET_CURRENT_SONG, payload: res.data })
   return res.data
 }
 
@@ -56,5 +55,5 @@ export const editSong = (songId, values, history) => async () => {
 
 export const deleteSong = (songId, history) => async () => {
   await axios.delete('/api/songs/' + songId)
-  history.push('/songs')
+  history.push('/songs?refresh=' + songId)
 }

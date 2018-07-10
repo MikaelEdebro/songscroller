@@ -66,6 +66,15 @@ class ButtonAppBar extends React.Component {
               <Logo />
             </Typography>
 
+            <Tooltip id="tooltip-add-song" title="Add Song">
+              <IconButton
+                color="inherit"
+                onClick={() => this.goToRoute('/songs/add')}
+                aria-label="Add Song"
+              >
+                <Icon>add</Icon>
+              </IconButton>
+            </Tooltip>
             <Tooltip id="tooltip-songs" title="Songs">
               <IconButton
                 color="inherit"
