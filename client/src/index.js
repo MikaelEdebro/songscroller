@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './prototypes'
 import './index.css'
 import App from './App'
-import registerServiceWorker from './registerServiceWorker'
+//import registerServiceWorker from './registerServiceWorker'
 import configureStore from './configureStore'
 import axios from './axios-instance'
 
@@ -28,4 +28,4 @@ const app = (
 )
 
 ReactDOM.render(app, document.getElementById('root'))
-registerServiceWorker()
+//registerServiceWorker()
