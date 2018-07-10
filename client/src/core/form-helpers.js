@@ -12,7 +12,6 @@ import Input from '@material-ui/core/Input'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
 export const renderTextField = ({ input, label, id, meta, fullWidth, ...custom }) => {
-  console.log({ input, label, id, meta, fullWidth, custom })
   return (
     <FormControl error={!!(meta.touched && meta.error)} fullWidth={fullWidth}>
       <InputLabel htmlFor={id}>{label}</InputLabel>
@@ -73,7 +72,6 @@ export const renderSelect = ({
 )
 
 export const renderSlider = ({ input, label, max }) => {
-  console.log('slider', { input, max })
   return (
     <div style={{ width: '100%' }}>
       <Typography id="label">{label}</Typography>

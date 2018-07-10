@@ -4,7 +4,7 @@ export default class SongFormatter {
   }
 
   removeWhitespaceOnEndOfRow = () => {
-    this.song = this.song.replace(/\s{1,}\n/g, '\n')
+    this.song = this.song.replace(/[ |\t]{1,}\n/g, '\n')
     return this
   }
 

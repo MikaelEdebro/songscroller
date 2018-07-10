@@ -36,8 +36,10 @@ class AddSong extends React.Component {
         label={label}
         placeholder={placeholder}
         multiline={multiline}
+        style={
+          multiline ? { fontFamily: 'Roboto Mono', marginBottom: '20px' } : { marginBottom: '20px' }
+        }
         fullWidth
-        style={{ marginBottom: '20px' }}
       />
     ))
   }
