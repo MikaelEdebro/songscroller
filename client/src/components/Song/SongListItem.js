@@ -9,7 +9,10 @@ const songListItem = ({ song, clicked }) => {
       <CardHeader
         action={<SongMenu song={song} />}
         title={
-          <div onClick={clicked} style={{ cursor: 'pointer' }}>
+          <div
+            onClick={clicked}
+            style={{ cursor: 'pointer', fontSize: '18px', lineHeight: '22px' }}
+          >
             {song.artist + ' - ' + song.title}
           </div>
         }

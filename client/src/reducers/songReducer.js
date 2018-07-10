@@ -36,7 +36,17 @@ const songReducer = (state = initialState, action) => {
     case types.CLEAR_SELECTED_SONG:
       return updateObject(state, { selectedSong: undefined })
     case types.CHANGE_FONT_SIZE:
-      return updateObject(state, { fontSize: state.fontSize + action.value })
+      return updateObject(state, {
+        selectedSong: updateObject(state.selectedSong, {
+          fontSize: state.selectedSong.fontSize + action.value,
+        }),
+      })
+    case types.CHANGE_SCROLL_SPEED:
+      return updateObject(state, {
+        selectedSong: updateObject(state.selectedSong, {
+          seconds: state.selectedSong.seconds + action.value,
+        }),
+      })
     case types.TOGGLE_CONTROLS:
       return updateObject(state, { showControls: action.value })
     case types.TOGGLE_INTERVAL:

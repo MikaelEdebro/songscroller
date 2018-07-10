@@ -6,14 +6,24 @@ import SongControls from './SongControls'
 import Wrapper from '../../hoc/Wrapper'
 import * as actions from '../../actions'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Grid from '@material-ui/core/Grid'
 
 class SongContainer extends React.Component {
   startTime = null
   offset = 0
   scrollSpeed = null
 
+  state = {
+    showOptions: false,
+  }
+
   componentDidMount() {
+    this.setState({ showSongDialog: false })
     this.props.fetchAndSelectSong(this.props.match.params.id)
+  }
+
+  toggleOptions = value => {
+    this.setState({ showOptions: value })
   }
 
   play = () => {
@@ -21,13 +31,16 @@ class SongContainer extends React.Component {
 
     setTimeout(() => {
       this.startScroll()
-    }, 2000)
+    }, this.props.isPaused ? 0 : 2000)
   }
 
   handleScroll = () => {
     if (this.props.isPaused) {
       return
     }
+
+    const amountToScroll = document.documentElement.scrollHeight - window.innerHeight
+    this.scrollSpeed = amountToScroll / this.props.selectedSong.seconds
 
     const now = new Date()
     const msElapsedSinceStart = now.getTime() - this.startTime.getTime()
@@ -56,8 +69,6 @@ class SongContainer extends React.Component {
     this.props.play()
 
     this.startTime = new Date()
-    const amountToScroll = document.documentElement.scrollHeight - window.innerHeight
-    this.scrollSpeed = amountToScroll / this.props.selectedSong.seconds
     this.offset = window.scrollY
 
     requestAnimationFrame(this.handleScroll)
@@ -72,28 +83,37 @@ class SongContainer extends React.Component {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
+  handleSongClick = () => {
+    this.setState({ showOptions: false })
+    this.props.toggleControls(!this.props.showControls)
+  }
+
   render() {
     return (
       <Wrapper>
         {this.props.selectedSong ? (
           <Song
             song={this.props.selectedSong}
-            clicked={() => this.props.toggleControls(!this.props.showControls)}
+            clicked={this.handleSongClick}
             fontSize={this.props.selectedSong.fontSize}
           />
         ) : (
-          <CircularProgress size={50} />
+          <Grid container justify="center" alignItems="center">
+            <CircularProgress size={50} />
+          </Grid>
         )}
 
         <SongControls
           show={this.props.showControls}
-          increaseFont={() => this.props.changeFontSize(1)}
-          decreaseFont={() => this.props.changeFontSize(-1)}
+          changeFontSize={this.props.changeFontSize}
+          changeScrollSpeed={this.props.changeScrollSpeed}
           play={this.props.intervalRunning ? this.startScroll : this.play}
           pause={this.props.pause}
           replay={this.replay}
           isPaused={this.props.isPaused}
           isScrolling={this.props.isScrolling}
+          showOptions={this.state.showOptions}
+          toggleOptions={this.toggleOptions}
         />
       </Wrapper>
     )
@@ -114,6 +134,7 @@ const mapDispatchToProps = dispatch => ({
   play: () => dispatch(actions.play()),
   pause: () => dispatch(actions.pause()),
   changeFontSize: value => dispatch(actions.changeFontSize(value)),
+  changeScrollSpeed: value => dispatch(actions.changeScrollSpeed(value)),
   toggleControls: value => dispatch(actions.toggleControls(value)),
   toggleInterval: value => dispatch(actions.toggleInterval(value)),
   scrollComplete: () => dispatch(actions.scrollComplete()),

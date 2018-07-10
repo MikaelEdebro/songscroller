@@ -6,7 +6,6 @@ import SongListItem from './SongListItem'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
-import Typography from '@material-ui/core/Typography'
 import SearchSongs from './SearchSongs'
 
 const styles = theme => {
@@ -75,9 +74,6 @@ class SongsContainer extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.container}>
-        <Typography variant="display2" gutterBottom align="center">
-          Songs
-        </Typography>
         <SearchSongs query={this.state.query} onChange={this.handleQueryChange} />
         <div className={classes.songsWrapper}>{this.renderSongs()}</div>
         <Button

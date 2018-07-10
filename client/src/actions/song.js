@@ -14,6 +14,11 @@ export const changeFontSize = value => ({
   value,
 })
 
+export const changeScrollSpeed = value => ({
+  type: types.CHANGE_SCROLL_SPEED,
+  value,
+})
+
 export const toggleControls = value => ({
   type: types.TOGGLE_CONTROLS,
   value,
