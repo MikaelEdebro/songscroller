@@ -28,10 +28,6 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-// routes
-require('./routes/authRoutes')(app)
-require('./routes/songRoutes')(app)
-
 // serve up react app in prod
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
@@ -40,5 +36,9 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
+
+// routes
+require('./routes/authRoutes')(app)
+require('./routes/songRoutes')(app)
 
 app.listen(PORT)
