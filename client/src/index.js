@@ -8,12 +8,15 @@ import './prototypes'
 import './index.css'
 import App from './App'
 //import registerServiceWorker from './registerServiceWorker'
+import { unregister } from './registerServiceWorker'
 import configureStore from './configureStore'
 import axios from './axios-instance'
 
 if (process.env.NODE_ENV === 'development') {
   window.axios = axios
 }
+
+unregister()
 
 const { store, persistor } = configureStore()
 
