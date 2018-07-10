@@ -3,7 +3,6 @@ import { updateObject } from '../core/utility'
 
 const initialState = {
   songs: [],
-  currentSong: undefined,
   showControls: true,
   isScrolling: false,
   isPaused: false,
@@ -26,7 +25,6 @@ const songReducer = (state = initialState, action) => {
       return updateObject(state, { playStarted: false, isPaused: true, isScrolling: false })
     case types.SELECT_SONG:
       return updateObject(state, {
-        currentSong: undefined,
         showControls: true,
         playStarted: false,
         isPaused: false,
@@ -46,8 +44,6 @@ const songReducer = (state = initialState, action) => {
         isScrolling: false,
         intervalRunning: false,
       })
-    case types.SET_CURRENT_SONG:
-      return updateObject(state, { currentSong: action.payload })
     default:
       return state
   }

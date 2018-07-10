@@ -9,11 +9,6 @@ export const pause = () => ({
   type: types.PAUSE,
 })
 
-export const selectSong = id => ({
-  type: types.SELECT_SONG,
-  id,
-})
-
 export const changeFontSize = value => ({
   type: types.CHANGE_FONT_SIZE,
   value,
@@ -45,7 +40,8 @@ export const fetchSongs = () => async dispatch => {
 
 export const fetchSong = songId => async dispatch => {
   const res = await axios.get('/api/songs/' + songId)
-  dispatch({ type: types.SET_CURRENT_SONG, payload: res.data })
+  //dispatch({ type: types.SET_CURRENT_SONG, payload: res.data })
+  return res.data
 }
 
 export const addSong = (song, history) => async () => {

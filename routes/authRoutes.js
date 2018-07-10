@@ -16,4 +16,8 @@ module.exports = app => {
   app.get('/api/auth/current_user', (req, res) => {
     res.send(req.user)
   })
+
+  app.get('/api/auth/test', (req, res) => {
+    res.send('Hello there. Route working!')
+  })
 }

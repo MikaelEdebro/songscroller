@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, withRouter, Switch } from 'react-router-dom'
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Layout from './components/Layout/Layout'
@@ -19,9 +19,10 @@ class App extends React.Component {
 
   render() {
     let routes = (
-      <div>
+      <Switch>
         <Route exact path="/" component={Landing} />
-      </div>
+        <Route render={() => <Redirect to="/" />} />
+      </Switch>
     )
 
     if (this.props.isAuthenticated) {
@@ -33,6 +34,7 @@ class App extends React.Component {
           <Route exact path="/songs/:id" component={SongContainer} />
           <Route exact path="/songs" component={SongsContainer} />
           <Route exact path="/" component={Landing} />
+          <Route render={() => <Redirect to="/dashboard" />} />
         </Switch>
       )
     }

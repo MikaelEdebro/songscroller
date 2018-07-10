@@ -20,8 +20,8 @@ const SearchSongsInput = styled.div`
 `
 const ClearInput = styled.div`
   position: absolute;
-  right: 6px;
-  top: 6px;
+  right: 0;
+  top: 0;
 `
 const searchSongs = ({ query, onChange }) => (
   <SearchSongsInput>

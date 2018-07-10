@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
 import Tooltip from '@material-ui/core/Tooltip'
-//import Logo from './Logo'
+import Logo from './Logo'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Drawer from './Drawer'
@@ -63,7 +63,7 @@ class ButtonAppBar extends React.Component {
               <Icon>menu</Icon>
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              {/* <Logo /> */}
+              <Logo />
             </Typography>
 
             <Tooltip id="tooltip-songs" title="Songs">

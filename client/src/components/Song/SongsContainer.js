@@ -38,7 +38,6 @@ class SongsContainer extends React.Component {
   }
 
   goToSong = id => {
-    this.props.selectSong(id)
     this.props.history.push('/songs/' + id)
   }
 
@@ -102,7 +101,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchSongs: () => dispatch(actions.fetchSongs()),
-  selectSong: id => dispatch(actions.selectSong(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SongsContainer))

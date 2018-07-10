@@ -4,7 +4,6 @@ export {
   fetchSong,
   play,
   pause,
-  selectSong,
   changeFontSize,
   toggleControls,
   toggleHeader,

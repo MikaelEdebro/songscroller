@@ -12,12 +12,13 @@ class SongContainer extends React.Component {
   offset = 0
   scrollSpeed = null
 
-  componentDidMount() {
-    // const shouldFetchSong =
-    //   !this.props.currentSong || this.props.currentSong._id !== this.props.match.params.id
-    // if (shouldFetchSong) {
-    // }
-    this.props.fetchSong(this.props.match.params.id)
+  state = {
+    song: undefined,
+  }
+
+  async componentDidMount() {
+    const song = await this.props.fetchSong(this.props.match.params.id)
+    this.setState({ song })
     this.props.toggleControls(true)
   }
 
@@ -62,7 +63,7 @@ class SongContainer extends React.Component {
 
     this.startTime = new Date()
     const amountToScroll = document.documentElement.scrollHeight - window.innerHeight
-    this.scrollSpeed = amountToScroll / this.props.currentSong.seconds
+    this.scrollSpeed = amountToScroll / this.state.song.seconds
     this.offset = window.scrollY
 
     requestAnimationFrame(this.handleScroll)
@@ -80,11 +81,11 @@ class SongContainer extends React.Component {
   render() {
     return (
       <Wrapper>
-        {this.props.currentSong ? (
+        {this.state.song ? (
           <Song
-            song={this.props.currentSong}
+            song={this.state.song}
             clicked={() => this.props.toggleControls(!this.props.showControls)}
-            fontSize={this.props.currentSong.fontSize}
+            fontSize={this.state.song.fontSize}
           />
         ) : (
           <CircularProgress size={50} />
@@ -107,7 +108,6 @@ class SongContainer extends React.Component {
 
 const mapStateToProps = ({ song }) => ({
   songs: song.songs,
-  currentSong: song.currentSong,
   playStarted: song.playStarted,
   showControls: song.showControls,
   isPaused: song.isPaused,
