@@ -60,4 +60,3 @@ typings/
 # custom files and folders
 nodemon.json
 build
-config/dev.js
