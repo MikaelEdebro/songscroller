@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import styled from 'styled-components'
-import SongOptions from './SongOptions'
+import SongSettings from './SongSettings'
 
 const SongControlsWrapper = styled.div`
   display: flex;
@@ -45,19 +45,19 @@ const songControls = props => {
         </Grid>
         <Grid item xs={4} style={{ textAlign: 'right' }}>
           <IconButton
-            onClick={() => props.toggleOptions(!props.showOptions)}
+            onClick={() => props.toggleSettings(!props.showSettings)}
             color="inherit"
             aria-label="Menu"
-            title={props.showOptions ? 'Close' : 'Settings'}
+            title={props.showSettings ? 'Close' : 'Settings'}
           >
-            <Icon>{props.showOptions ? 'close' : 'settings'}</Icon>
+            <Icon>{props.showSettings ? 'close' : 'settings'}</Icon>
           </IconButton>
         </Grid>
       </Grid>
 
-      <SongOptions
-        showOptions={props.showOptions}
-        onClose={() => props.toggleOptions(false)}
+      <SongSettings
+        show={props.showSettings}
+        onClose={() => props.toggleSettings(false)}
         changeFontSize={props.changeFontSize}
         changeScrollSpeed={props.changeScrollSpeed}
       />

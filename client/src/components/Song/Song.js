@@ -21,21 +21,21 @@ const SongWrapper = styled(Paper)`
     margin: 20px auto;
   }
 
-  h3 {
-    margin: 0;
-  }
   .time {
     color: rgba(0, 0, 0, 0.5);
     font-size: 16px;
-  }
-  .body {
-    font-family: 'Roboto Mono', monospace;
-    letter-spacing: -1px;
   }
   chord {
     color: violet;
     font-weight: bold;
   }
+`
+
+const BodyWrapper = styled.div`
+  font-family: 'Roboto Mono', monospace;
+  letter-spacing: -1px;
+  padding-bottom: 80px;
+  font-size: ${props => props.fontSize}px;
 `
 
 class Song extends React.Component {
@@ -73,9 +73,8 @@ class Song extends React.Component {
           </Grid>
         </Grid>
 
-        <div
-          className="body"
-          style={{ paddingBottom: '100px', fontSize: this.props.fontSize + 'px' }}
+        <BodyWrapper
+          fontSize={this.props.song.fontSize}
           dangerouslySetInnerHTML={{ __html: transposedSong }}
           onClick={this.props.clicked}
         />

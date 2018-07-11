@@ -15,15 +15,15 @@ class SongContainer extends React.Component {
   scrollReqPointer = null
 
   state = {
-    showOptions: false,
+    showSettings: false,
   }
 
   componentDidMount() {
     this.props.fetchAndSelectSong(this.props.match.params.id)
   }
 
-  toggleOptions = value => {
-    this.setState({ showOptions: value })
+  toggleSettings = value => {
+    this.setState({ showSettings: value })
   }
 
   play = () => {
@@ -90,7 +90,7 @@ class SongContainer extends React.Component {
   }
 
   handleSongClick = () => {
-    this.setState({ showOptions: false })
+    this.setState({ showSettings: false })
     this.props.toggleControls(!this.props.showControls)
   }
 
@@ -118,8 +118,8 @@ class SongContainer extends React.Component {
           replay={this.replay}
           isPaused={this.props.isPaused}
           isScrolling={this.props.isScrolling}
-          showOptions={this.state.showOptions}
-          toggleOptions={this.toggleOptions}
+          showSettings={this.state.showSettings}
+          toggleSettings={this.toggleSettings}
         />
       </Wrapper>
     )

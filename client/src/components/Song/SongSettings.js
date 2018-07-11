@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
 
-const SongOptionsWrapper = styled.div`
+const SongSettingsWrapper = styled.div`
   position: absolute;
   background: white;
   right: 10px;
@@ -23,9 +23,9 @@ const GridWrapper = styled(Grid)`
   padding: 6px 10px;
 `
 
-const songOptions = props => {
+const songSettings = props => {
   return (
-    <SongOptionsWrapper show={props.showOptions}>
+    <SongSettingsWrapper show={props.show}>
       <GridWrapper container direction="column">
         <Typography variant="caption">Font Size</Typography>
         <Grid container alignItems="center">
@@ -80,8 +80,8 @@ const songOptions = props => {
           </IconButton>
         </Grid>
       </GridWrapper>
-    </SongOptionsWrapper>
+    </SongSettingsWrapper>
   )
 }
 
-export default songOptions
+export default songSettings
