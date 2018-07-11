@@ -33,4 +33,4 @@ const app = (
 ReactDOM.render(app, document.getElementById('root'))
 //registerServiceWorker()
 
-console.log('process.env.API_BASE_URL', process.env.API_BASE_URL)
+console.log('process.env.REACT_APP_API_BASE_URL', process.env.REACT_APP_API_BASE_URL)
