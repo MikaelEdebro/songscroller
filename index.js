@@ -5,6 +5,7 @@ const keys = require('./config/keys')
 const passport = require('passport')
 const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')
+const helmet = require('helmet')
 
 // mongoose config
 const mongoose = require('mongoose')
@@ -18,6 +19,7 @@ require('./models/Song')
 require('./services/passport')
 
 const app = express()
+app.use(helmet())
 app.use(bodyParser.json())
 app.use(
   cookieSession({
