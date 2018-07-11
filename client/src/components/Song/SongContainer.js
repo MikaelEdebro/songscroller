@@ -19,7 +19,6 @@ class SongContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({ showSongDialog: false })
     this.props.fetchAndSelectSong(this.props.match.params.id)
   }
 
