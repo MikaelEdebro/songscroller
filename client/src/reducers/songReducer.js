@@ -8,8 +8,6 @@ const initialState = {
   isScrolling: false,
   isPaused: false,
   intervalRunning: false,
-  playStarted: false,
-  fontSize: 15,
 }
 
 const songReducer = (state = initialState, action) => {
@@ -18,17 +16,15 @@ const songReducer = (state = initialState, action) => {
       return updateObject(state, { songs: action.payload })
     case types.PLAY:
       return updateObject(state, {
-        playStarted: true,
         isPaused: false,
         isScrolling: true,
       })
     case types.PAUSE:
-      return updateObject(state, { playStarted: false, isPaused: true, isScrolling: false })
+      return updateObject(state, { isPaused: true, isScrolling: false })
     case types.SELECT_SONG:
       return updateObject(state, {
         selectedSong: action.payload,
         showControls: true,
-        playStarted: false,
         isPaused: false,
         isScrolling: false,
         intervalRunning: false,
@@ -53,7 +49,6 @@ const songReducer = (state = initialState, action) => {
       return updateObject(state, { intervalRunning: action.value })
     case types.SCROLL_COMPLETE:
       return updateObject(state, {
-        playStarted: false,
         isPaused: false,
         isScrolling: false,
         intervalRunning: false,

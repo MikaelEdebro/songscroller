@@ -122,7 +122,6 @@ class SongContainer extends React.Component {
 
 const mapStateToProps = ({ song }) => ({
   selectedSong: song.selectedSong,
-  playStarted: song.playStarted,
   showControls: song.showControls,
   isPaused: song.isPaused,
   isScrolling: song.isScrolling,
