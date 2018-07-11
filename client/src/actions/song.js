@@ -9,6 +9,10 @@ export const pause = () => ({
   type: types.PAUSE,
 })
 
+export const replay = () => ({
+  type: types.REPLAY,
+})
+
 export const changeFontSize = value => ({
   type: types.CHANGE_FONT_SIZE,
   value,
@@ -21,16 +25,6 @@ export const changeScrollSpeed = value => ({
 
 export const toggleControls = value => ({
   type: types.TOGGLE_CONTROLS,
-  value,
-})
-
-export const toggleHeader = value => ({
-  type: types.TOGGLE_HEADER,
-  value,
-})
-
-export const toggleInterval = value => ({
-  type: types.TOGGLE_INTERVAL,
   value,
 })
 

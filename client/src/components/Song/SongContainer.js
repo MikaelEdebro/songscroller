@@ -12,6 +12,7 @@ class SongContainer extends React.Component {
   startTime = null
   offset = 0
   scrollSpeed = null
+  scrollReqPointer = null
 
   state = {
     showOptions: false,
@@ -31,7 +32,7 @@ class SongContainer extends React.Component {
 
     setTimeout(() => {
       this.startScroll()
-    }, this.props.isPaused ? 0 : 2000)
+    }, this.props.isPaused && !this.props.isInReplayTransition ? 0 : 2000)
   }
 
   handleScroll = () => {
@@ -54,14 +55,13 @@ class SongContainer extends React.Component {
       window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 1
     if (scrollIsAtBottom) {
       console.log('stop scrolling')
-      this.props.toggleInterval(false)
       this.props.scrollComplete()
 
       setTimeout(() => {
         this.props.toggleControls(true)
       }, 500)
     } else {
-      requestAnimationFrame(this.handleScroll)
+      this.scrollReqPointer = requestAnimationFrame(this.handleScroll)
     }
   }
 
@@ -71,12 +71,19 @@ class SongContainer extends React.Component {
     this.startTime = new Date()
     this.offset = window.scrollY
 
-    requestAnimationFrame(this.handleScroll)
+    this.scrollReqPointer = requestAnimationFrame(this.handleScroll)
   }
 
   replay = () => {
+    cancelAnimationFrame(this.scrollReqPointer)
+
+    this.props.replay()
     this.resetScroll()
-    this.play()
+
+    // need setTimeout to let values update correctly, to prevent scroll starting directly
+    setTimeout(() => {
+      this.play()
+    }, 0)
   }
 
   resetScroll = () => {
@@ -107,7 +114,7 @@ class SongContainer extends React.Component {
           show={this.props.showControls}
           changeFontSize={this.props.changeFontSize}
           changeScrollSpeed={this.props.changeScrollSpeed}
-          play={this.props.intervalRunning ? this.startScroll : this.play}
+          play={this.props.isPaused ? this.startScroll : this.play}
           pause={this.props.pause}
           replay={this.replay}
           isPaused={this.props.isPaused}
@@ -125,17 +132,17 @@ const mapStateToProps = ({ song }) => ({
   showControls: song.showControls,
   isPaused: song.isPaused,
   isScrolling: song.isScrolling,
-  intervalRunning: song.intervalRunning,
+  isInReplayTransition: song.isInReplayTransition,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchAndSelectSong: songId => dispatch(actions.fetchAndSelectSong(songId)),
   play: () => dispatch(actions.play()),
   pause: () => dispatch(actions.pause()),
+  replay: () => dispatch(actions.replay()),
   changeFontSize: value => dispatch(actions.changeFontSize(value)),
   changeScrollSpeed: value => dispatch(actions.changeScrollSpeed(value)),
   toggleControls: value => dispatch(actions.toggleControls(value)),
-  toggleInterval: value => dispatch(actions.toggleInterval(value)),
   scrollComplete: () => dispatch(actions.scrollComplete()),
 })
 

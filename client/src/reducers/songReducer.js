@@ -7,7 +7,7 @@ const initialState = {
   showControls: true,
   isScrolling: false,
   isPaused: false,
-  intervalRunning: false,
+  isInReplayTransition: false,
 }
 
 const songReducer = (state = initialState, action) => {
@@ -18,16 +18,23 @@ const songReducer = (state = initialState, action) => {
       return updateObject(state, {
         isPaused: false,
         isScrolling: true,
+        isInReplayTransition: false,
       })
     case types.PAUSE:
       return updateObject(state, { isPaused: true, isScrolling: false })
+    case types.REPLAY:
+      return updateObject(state, {
+        isInReplayTransition: true,
+        isPaused: false,
+        isScrolling: false,
+      })
     case types.SELECT_SONG:
       return updateObject(state, {
         selectedSong: action.payload,
         showControls: true,
         isPaused: false,
         isScrolling: false,
-        intervalRunning: false,
+        isInReplayTransition: false,
       })
     case types.CLEAR_SELECTED_SONG:
       return updateObject(state, { selectedSong: undefined })
@@ -45,13 +52,10 @@ const songReducer = (state = initialState, action) => {
       })
     case types.TOGGLE_CONTROLS:
       return updateObject(state, { showControls: action.value })
-    case types.TOGGLE_INTERVAL:
-      return updateObject(state, { intervalRunning: action.value })
     case types.SCROLL_COMPLETE:
       return updateObject(state, {
         isPaused: false,
         isScrolling: false,
-        intervalRunning: false,
       })
     default:
       return state
