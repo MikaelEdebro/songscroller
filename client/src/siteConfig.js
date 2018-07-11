@@ -1,5 +1,5 @@
 export default {
-  name: 'Troubadour',
-  title: 'Troubadour - Something',
+  name: 'SongScroller',
+  title: 'SongScroller - Something',
   tagline: 'The Musicians Friend',
 }

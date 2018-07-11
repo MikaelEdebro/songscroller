@@ -23,13 +23,13 @@ const Logo = props => (
         alt=""
         width="180"
       /> */}
-      Logo
+      SongScroller
     </Link>
   </LogoWrapper>
 )
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth,
+const mapStateToProps = ({ auth }) => ({
+  isAuthenticated: auth && auth.user,
 })
 
 export default connect(mapStateToProps)(Logo)
