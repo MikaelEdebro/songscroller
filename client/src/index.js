@@ -32,3 +32,5 @@ const app = (
 
 ReactDOM.render(app, document.getElementById('root'))
 //registerServiceWorker()
+
+console.log('process.env', process.env)
