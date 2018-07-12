@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import siteConfig from '../../siteConfig'
 
 const LogoWrapper = styled.div`
   height: 100%;
@@ -23,7 +24,7 @@ const Logo = props => (
         alt=""
         width="180"
       /> */}
-      SongScroller
+      {siteConfig.name}
     </Link>
   </LogoWrapper>
 )

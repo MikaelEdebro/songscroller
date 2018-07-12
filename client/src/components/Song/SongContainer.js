@@ -114,7 +114,7 @@ class SongContainer extends React.Component {
 
         <SongControls
           show={this.props.showControls}
-          song={this.props.selectedSong}
+          song={this.props.selectedSong || {}}
           changeFontSize={this.props.changeFontSize}
           changeScrollSpeed={this.props.changeScrollSpeed}
           transposeSong={this.props.transposeSong}

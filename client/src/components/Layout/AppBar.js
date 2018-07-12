@@ -6,7 +6,6 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
-import Tooltip from '@material-ui/core/Tooltip'
 import Logo from './Logo'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -66,33 +65,23 @@ class ButtonAppBar extends React.Component {
               <Logo />
             </Typography>
 
-            <Tooltip id="tooltip-add-song" title="Add Song">
-              <IconButton
-                color="inherit"
-                onClick={() => this.goToRoute('/songs/add')}
-                aria-label="Add Song"
-              >
-                <Icon>add</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip id="tooltip-songs" title="Songs">
-              <IconButton
-                color="inherit"
-                onClick={() => this.goToRoute('/songs')}
-                aria-label="Songs"
-              >
-                <Icon>music_note</Icon>
-              </IconButton>
-            </Tooltip>
-            <Tooltip id="tooltip-playlists" title="Playlists">
-              <IconButton
-                color="inherit"
-                onClick={() => this.goToRoute('/playlists')}
-                aria-label="Playlists"
-              >
-                <Icon>playlist_play</Icon>
-              </IconButton>
-            </Tooltip>
+            <IconButton
+              color="inherit"
+              onClick={() => this.goToRoute('/songs/add')}
+              aria-label="Add Song"
+            >
+              <Icon>add</Icon>
+            </IconButton>
+            <IconButton color="inherit" onClick={() => this.goToRoute('/songs')} aria-label="Songs">
+              <Icon>music_note</Icon>
+            </IconButton>
+            <IconButton
+              color="inherit"
+              onClick={() => this.goToRoute('/playlists')}
+              aria-label="Playlists"
+            >
+              <Icon>playlist_play</Icon>
+            </IconButton>
           </Toolbar>
         </AppBar>
 
