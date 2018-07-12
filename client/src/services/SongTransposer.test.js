@@ -13,7 +13,7 @@ describe('SongTransposer', () => {
     expect(transposedSong).toEqual(transposedExpectedResult)
   })
 
-  test.only('transposes normal minor chords correctly', () => {
+  test('transposes normal minor chords correctly', () => {
     const semitones = 3
     const song = getOriginalChords(true)
     const transposedExpectedResult = getTransposedChords(true, semitones)

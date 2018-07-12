@@ -50,6 +50,19 @@ const songReducer = (state = initialState, action) => {
           seconds: state.selectedSong.seconds + action.value,
         }),
       })
+    case types.TRANSPOSE_SONG:
+      return updateObject(state, {
+        selectedSong: updateObject(state.selectedSong, {
+          transpose: action.value,
+          transposeTotal: (state.selectedSong.transposeTotal || 0) + action.value,
+        }),
+      })
+    case types.RESET_TRANSPOSE:
+      return updateObject(state, {
+        selectedSong: updateObject(state.selectedSong, {
+          transpose: 0,
+        }),
+      })
     case types.TOGGLE_CONTROLS:
       return updateObject(state, { showControls: action.value })
     case types.SCROLL_COMPLETE:

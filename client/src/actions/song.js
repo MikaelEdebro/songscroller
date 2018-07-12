@@ -18,6 +18,19 @@ export const changeFontSize = value => ({
   value,
 })
 
+export const transposeSong = value => dispatch => {
+  dispatch({
+    type: types.TRANSPOSE_SONG,
+    value,
+  })
+
+  setTimeout(() => {
+    dispatch({
+      type: types.RESET_TRANSPOSE,
+    })
+  }, 200)
+}
+
 export const changeScrollSpeed = value => ({
   type: types.CHANGE_SCROLL_SPEED,
   value,

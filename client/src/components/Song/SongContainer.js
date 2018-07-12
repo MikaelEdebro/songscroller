@@ -16,6 +16,7 @@ class SongContainer extends React.Component {
 
   state = {
     showSettings: false,
+    scrollSpeed: 0,
   }
 
   componentDidMount() {
@@ -41,11 +42,13 @@ class SongContainer extends React.Component {
 
     const amountToScroll = document.documentElement.scrollHeight - window.innerHeight
     this.scrollSpeed = amountToScroll / this.props.selectedSong.seconds
+    this.setState({ scrollSpeed: this.scrollSpeed })
+    console.log(this.state.scrollSpeed)
 
     const now = new Date()
     const msElapsedSinceStart = now.getTime() - this.startTime.getTime()
-    const scrollAmount = msElapsedSinceStart / 1000 * this.scrollSpeed
-    this.offset += scrollAmount
+    const scrollAmountPerSecond = msElapsedSinceStart / 1000 * this.scrollSpeed
+    this.offset += scrollAmountPerSecond
 
     window.scrollTo(0, this.offset)
     this.startTime = now
@@ -111,8 +114,10 @@ class SongContainer extends React.Component {
 
         <SongControls
           show={this.props.showControls}
+          song={this.props.selectedSong}
           changeFontSize={this.props.changeFontSize}
           changeScrollSpeed={this.props.changeScrollSpeed}
+          transposeSong={this.props.transposeSong}
           play={this.props.isPaused ? this.startScroll : this.play}
           pause={this.props.pause}
           replay={this.replay}
@@ -120,6 +125,7 @@ class SongContainer extends React.Component {
           isScrolling={this.props.isScrolling}
           showSettings={this.state.showSettings}
           toggleSettings={this.toggleSettings}
+          scrollSpeed={this.state.scrollSpeed}
         />
       </Wrapper>
     )
@@ -141,6 +147,7 @@ const mapDispatchToProps = dispatch => ({
   replay: () => dispatch(actions.replay()),
   changeFontSize: value => dispatch(actions.changeFontSize(value)),
   changeScrollSpeed: value => dispatch(actions.changeScrollSpeed(value)),
+  transposeSong: value => dispatch(actions.transposeSong(value)),
   toggleControls: value => dispatch(actions.toggleControls(value)),
   scrollComplete: () => dispatch(actions.scrollComplete()),
 })

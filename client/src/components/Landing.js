@@ -61,6 +61,9 @@ class Landing extends React.Component {
         <Typography variant="subheading" align="center">
           {siteConfig.tagline}
         </Typography>
+        <Typography variant="subheading" align="center">
+          Work in progress
+        </Typography>
 
         {!this.props.isAuthenticated ? this.renderLoginButtons() : null}
       </div>

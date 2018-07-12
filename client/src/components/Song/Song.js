@@ -41,32 +41,42 @@ const BodyWrapper = styled.div`
 class Song extends React.Component {
   constructor(props) {
     super(props)
-    this.formattedSong = new SongFormatter(this.props.song.body)
-      .removeWhitespaceOnEndOfRow()
-      .replaceTabsForSpaces()
-      .highlightChordRows()
-      .highlightChords()
-      .replaceRowBreaks()
-      .getFormattedSong()
+
+    this.state = {
+      formattedBody: new SongFormatter(this.props.song.body)
+        .removeWhitespaceOnEndOfRow()
+        .replaceTabsForSpaces()
+        .highlightChordRows()
+        .highlightChords()
+        .replaceRowBreaks()
+        .getFormattedSong(),
+    }
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.song && prevProps.song.transpose !== this.props.song.transpose) {
+      console.log('transpose song')
+      this.setState(prevState => ({
+        formattedBody: new SongTransposer(prevState.formattedBody)
+          .transposeSong(this.props.song.transpose || 0)
+          .getTransposedSong(),
+      }))
+    }
+  }
+
   render() {
     if (!this.props.song) {
       return <CircularProgress size={50} />
     }
 
-    const { artist, title, seconds } = this.props.song
-    const transposedSong = new SongTransposer(this.formattedSong)
-      .transposeSong(0)
-      .getTransposedSong()
+    const { artist, title } = this.props.song
 
     return (
       <SongWrapper>
         <Grid container alignItems="flex-start" justify="space-between">
           <Grid item>
             <Typography variant="caption">{artist}</Typography>
-            <Typography variant="title">
-              {title} ({seconds})
-            </Typography>
+            <Typography variant="title">{title}</Typography>
           </Grid>
           <Grid item>
             <SongMenu song={this.props.song} />
@@ -75,7 +85,7 @@ class Song extends React.Component {
 
         <BodyWrapper
           fontSize={this.props.song.fontSize}
-          dangerouslySetInnerHTML={{ __html: transposedSong }}
+          dangerouslySetInnerHTML={{ __html: this.state.formattedBody }}
           onClick={this.props.clicked}
         />
       </SongWrapper>

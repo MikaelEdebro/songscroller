@@ -60,6 +60,8 @@ const songControls = props => {
         onClose={() => props.toggleSettings(false)}
         changeFontSize={props.changeFontSize}
         changeScrollSpeed={props.changeScrollSpeed}
+        transposeSong={props.transposeSong}
+        song={props.song}
       />
     </SongControlsWrapper>
   )

@@ -1,61 +1,46 @@
-/* eslint-disable */
-String.prototype.insert = function(index, string) {
-  if (index > 0) return this.substring(0, index) + string + this.substring(index, this.length)
-  else return string + this
-}
-String.prototype.removeWhitespaceOnEndOfRow = function() {
-  return this.toString().replace(/ {1,}\n/g, '\n')
-}
-String.prototype.highlightChordRows = function() {
-  const replaceString = '\n<chord-row>$1</chord-row>\n'
-  let self = this.toString().replace(/\n(.* {2,}.*)\n/g, replaceString)
-  self = self.replace(/\n(\w{1,3})\n/g, replaceString)
-  return self
-}
-String.prototype.highlightChords = function() {
-  const song = this.toString()
-  const chordRowPattern = /<chord-row>(.*)<\/chord-row>/g
-  const chordPattern = /\S{1,}/g
-  let formattedSong = song
+const SCALE = [
+  { baseNote: 'Cb', scale: ['Cb', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#'] },
+  { baseNote: 'C', scale: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'] },
+  { baseNote: 'C#', scale: ['C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C'] },
+  { baseNote: 'Db', scale: ['Db', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C'] },
+  { baseNote: 'D', scale: ['D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#'] },
+  { baseNote: 'D#', scale: ['D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D'] },
+  { baseNote: 'Eb', scale: ['Eb', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D'] },
+  { baseNote: 'E', scale: ['E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#'] },
+  { baseNote: 'Fb', scale: ['Fb', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#'] },
+  { baseNote: 'F', scale: ['F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E'] },
+  { baseNote: 'F#', scale: ['F#', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F'] },
+  { baseNote: 'Gb', scale: ['Gb', 'G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F'] },
+  { baseNote: 'G', scale: ['G', 'G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#'] },
+  { baseNote: 'G#', scale: ['G#', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G'] },
+  { baseNote: 'Ab', scale: ['Ab', 'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G'] },
+  { baseNote: 'A', scale: ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'] },
+  { baseNote: 'A#', scale: ['A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A'] },
+  { baseNote: 'Bb', scale: ['Bb', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A'] },
+  { baseNote: 'B', scale: ['B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#'] },
+]
 
-  while ((match = chordRowPattern.exec(song))) {
-    const chordRow = match[0].replace('<chord-row>', '').replace('</chord-row>', '')
-    let chordRowWithAddedChords = chordRow
-    //console.log(chordRow)
-    while ((chord = chordPattern.exec(chordRow))) {
-      chordRowWithAddedChords = chordRowWithAddedChords.replace(
-        chord[0],
-        `<chord type="${chord[0]}">${chord[0]}</chord>`
-      )
-      //console.log(chord)
-      //console.log(chordRowWithAddedChords)
-    }
+const transposeChord = (chord, semitones, scale) => {
+  const strippedChord = chord.value.replace(/<\/?chord>/g, '')
+  const chordMatch = strippedChord.match(/^(Cb|C#|C|Db|D#|D|Eb|E|Fb|F#|F|Gb|G#|G|Ab|A#|A|Bb|B)/gi)
 
-    formattedSong = formattedSong.replace(
-      match[0],
-      `<chord-row>${chordRowWithAddedChords}</chord-row>`
-    )
+  if (!chordMatch) {
+    // TODO: Log this so I know the chords not being catched by the algorithm
+    console.log('chord not found')
+    return chord
   }
+  const baseNote = chordMatch[0]
+  const note = scale.find(s => s.baseNote.toLowerCase() === baseNote.toLowerCase())
+  console.log(strippedChord)
+  console.log(chordMatch)
 
-  console.log(formattedSong)
+  // make sure it doesn't break if semitones is negative value
+  const scaleIndex = semitones < 0 ? semitones + 12 : semitones
+  const newChord = note.scale[scaleIndex] + strippedChord.substring(baseNote.length)
 
-  return formattedSong
+  // TODO: also transpose alternate root note, ex: G/B
+  return { ...chord, value: `<chord>${newChord}</chord>` }
 }
-String.prototype.replaceWhiteSpace = function() {
-  return this.toString().replace(/ /g, '&nbsp;')
-}
-String.prototype.replaceRowBreaks = function() {
-  return this.toString().replace(/\n/g, '<br>')
-}
 
-let song = `Csus4                                                Am\nI am just a poor boy, though my story's seldom told\n            G\nI have squandered my resistance\n      G7           G6               C\n`
-
-const formattedSong = song
-  .trim()
-  .insert(0, '\n')
-  .removeWhitespaceOnEndOfRow()
-  .highlightChordRows()
-  .highlightChords()
-  .replaceRowBreaks()
-
-//console.log(formattedSong)
+const chord = { value: 'Am' }
+console.log(transposeChord(chord, 1, SCALE))

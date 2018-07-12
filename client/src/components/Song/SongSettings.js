@@ -27,7 +27,7 @@ const songSettings = props => {
   return (
     <SongSettingsWrapper show={props.show}>
       <GridWrapper container direction="column">
-        <Typography variant="caption">Font Size</Typography>
+        <Typography variant="caption">Font Size ({props.song.fontSize})</Typography>
         <Grid container alignItems="center">
           <IconButton
             color="inherit"
@@ -46,7 +46,7 @@ const songSettings = props => {
       <Divider />
 
       <GridWrapper container direction="column">
-        <Typography variant="caption">Scroll Speed</Typography>
+        <Typography variant="caption">Scroll Speed ({props.scrollSpeed})</Typography>
         <Grid container alignItems="center">
           <IconButton
             color="inherit"
@@ -69,7 +69,9 @@ const songSettings = props => {
       <Divider />
 
       <GridWrapper container direction="column">
-        <Typography variant="caption">Transpose</Typography>
+        <Typography variant="caption">
+          Transpose ({formatTranspose(props.song.transposeTotal)})
+        </Typography>
         <Grid container alignItems="center">
           <IconButton color="inherit" onClick={() => props.transposeSong(-1)} title="Semitone Down">
             <Icon>remove_circle_outline</Icon>
@@ -85,3 +87,11 @@ const songSettings = props => {
 }
 
 export default songSettings
+
+function formatTranspose(semitones = 0) {
+  if (!semitones) {
+    return semitones
+  }
+
+  return (semitones > 0 ? '+' : null) + semitones
+}

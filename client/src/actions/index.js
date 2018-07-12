@@ -10,6 +10,7 @@ export {
   replay,
   changeFontSize,
   changeScrollSpeed,
+  transposeSong,
   toggleControls,
   scrollComplete,
   addSong,
