@@ -31,16 +31,38 @@ const transposeChord = (chord, semitones, scale) => {
   }
   const baseNote = chordMatch[0]
   const note = scale.find(s => s.baseNote.toLowerCase() === baseNote.toLowerCase())
-  console.log(strippedChord)
-  console.log(chordMatch)
 
   // make sure it doesn't break if semitones is negative value
   const scaleIndex = semitones < 0 ? semitones + 12 : semitones
-  const newChord = note.scale[scaleIndex] + strippedChord.substring(baseNote.length)
+  let newChord = note.scale[scaleIndex] + strippedChord.substring(baseNote.length)
 
+  newChord = transposeAlternateBaseNote(newChord, semitones, scale)
   // TODO: also transpose alternate root note, ex: G/B
   return { ...chord, value: `<chord>${newChord}</chord>` }
 }
 
-const chord = { value: 'Am' }
-console.log(transposeChord(chord, 1, SCALE))
+const transposeAlternateBaseNote = (chord, semitones, scale) => {
+  const alternateBaseNoteIndex = chord.indexOf('/')
+  if (alternateBaseNoteIndex < 0) {
+    return chord
+  }
+  const alternateBaseNote = chord.substring(alternateBaseNoteIndex + 1)
+  const alternateBaseNoteScale = scale.find(
+    s => s.baseNote.toLowerCase() === alternateBaseNote.toLowerCase()
+  )
+  if (!alternateBaseNoteScale) {
+    return chord
+  }
+
+  const newChord =
+    chord.substring(0, alternateBaseNoteIndex + 1) + alternateBaseNoteScale.scale[semitones]
+
+  console.log(alternateBaseNoteIndex)
+  console.log(alternateBaseNote)
+  console.log(alternateBaseNoteScale)
+  console.log(newChord)
+  return newChord
+}
+
+const chord = { value: 'A/C#' }
+console.log(transposeChord(chord, 4, SCALE))
