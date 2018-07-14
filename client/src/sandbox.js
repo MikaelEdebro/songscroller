@@ -42,6 +42,8 @@ const transposeChord = (chord, semitones, scale) => {
 }
 
 const transposeAlternateBaseNote = (chord, semitones, scale) => {
+  chord = chord.replace('\\', '/')
+  console.log(chord)
   const alternateBaseNoteIndex = chord.indexOf('/')
   if (alternateBaseNoteIndex < 0) {
     return chord
@@ -64,5 +66,5 @@ const transposeAlternateBaseNote = (chord, semitones, scale) => {
   return newChord
 }
 
-const chord = { value: 'A/C#' }
+const chord = { value: `A\\C#` }
 console.log(transposeChord(chord, 4, SCALE))

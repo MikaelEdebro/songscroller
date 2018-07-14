@@ -36,6 +36,13 @@ describe('SongTransposer', () => {
     expect(transposedSong).toEqual('<chord>G#/C</chord>')
   })
 
+  test('it also handles root notes with backslash (eg G\\B)', () => {
+    const semitones = 1
+    const song = `<chord>G\\B</chord>`
+    const transposedSong = new SongTransposer(song).transposeSong(semitones).getTransposedSong()
+    expect(transposedSong).toEqual('<chord>G#/C</chord>')
+  })
+
   test('test different chord variants (just random chords)', () => {
     const chords = [
       { initial: 'G/B', semitones: 1, expected: 'G#/C' },

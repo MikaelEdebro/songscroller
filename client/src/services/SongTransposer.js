@@ -74,6 +74,9 @@ export default class SongTransposer {
   }
 
   transposeAlternateBaseNote = (chord, semitones, scale) => {
+    // support for alternate base chord with backslash (G\B)
+    chord = chord.replace('\\', '/')
+
     const alternateBaseNoteIndex = chord.indexOf('/')
     if (alternateBaseNoteIndex < 0) {
       return chord
