@@ -9,6 +9,7 @@ const songSchema = new Schema({
   fontSizes: Array,
   useMonospaceFont: { type: Boolean, default: true },
   _user: { type: Schema.Types.ObjectId, ref: 'User' },
+  createdDate: { type: Date, default: new Date() },
 })
 
 mongoose.model('song', songSchema)
