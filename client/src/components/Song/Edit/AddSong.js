@@ -13,14 +13,6 @@ const ButtonsWrapper = styled(Grid)`
   padding: 10px 10px 20px;
 `
 
-const FormWrapper = styled.form`
-  textarea {
-    font-family: 'Roboto Mono', monospace;
-    letter-spacing: -1px;
-    white-space: pre;
-  }
-`
-
 class AddSong extends React.Component {
   componentWillMount() {
     this.props.clearSelectedSong()
@@ -67,7 +59,7 @@ class AddSong extends React.Component {
   render() {
     return (
       <div className="container" style={{ padding: '10px 15px' }}>
-        <FormWrapper onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           {this.renderFields()}
 
           <ButtonsWrapper container justify="flex-end" spacing={24}>
@@ -78,7 +70,7 @@ class AddSong extends React.Component {
               Save
             </Button>
           </ButtonsWrapper>
-        </FormWrapper>
+        </form>
       </div>
     )
   }
