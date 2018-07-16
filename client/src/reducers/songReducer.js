@@ -91,6 +91,7 @@ const songReducer = (state = initialState, action) => {
     case types.EDIT_COMPLETE:
       return updateObject(state, {
         shouldSaveUpdatedSong: false,
+        selectedSong: undefined,
       })
     default:
       return state

@@ -14,7 +14,7 @@ const ButtonsWrapper = styled(Grid)`
 `
 
 class EditSong extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchAndSelectSong(this.props.match.params.id)
   }
 
@@ -80,10 +80,10 @@ const mapStateToProps = ({ form, song }) => ({
   selectedSong: song.selectedSong,
   editSongValues: form.editSong ? form.editSong.values : {},
   initialValues: {
-    artist: song.selectedSong.artist,
-    title: song.selectedSong.title,
-    body: song.selectedSong.body,
-    useMonospaceFont: song.selectedSong.useMonospaceFont,
+    artist: song.selectedSong ? song.selectedSong.artist : '',
+    title: song.selectedSong ? song.selectedSong.title : '',
+    body: song.selectedSong ? song.selectedSong.body : '',
+    useMonospaceFont: song.selectedSong ? song.selectedSong.useMonospaceFont : false,
   },
 })
 
