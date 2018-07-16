@@ -32,12 +32,13 @@ module.exports = app => {
       return res.status(422).json({ errors: errors.array() })
     }
 
-    const { artist, title, body, fontSizes } = req.body
+    const { artist, title, body, fontSizes, useMonospaceFont } = req.body
     const newSong = await new Song({
       artist,
       title,
       body,
       fontSizes,
+      useMonospaceFont,
       _user: req.user._id,
     }).save()
 
@@ -46,7 +47,7 @@ module.exports = app => {
 
   app.put('/api/songs/:id', requireLogin, validateSong, async (req, res) => {
     try {
-      const { artist, title, body, fontSizes } = req.body
+      const { artist, title, body, fontSizes, useMonospaceFont } = req.body
       const editedSong = await Song.findOneAndUpdate(
         { _id: req.params.id, _user: req.user._id },
         {
@@ -54,6 +55,7 @@ module.exports = app => {
           title,
           body,
           fontSizes,
+          useMonospaceFont,
         }
       ).exec()
       if (!editedSong) {

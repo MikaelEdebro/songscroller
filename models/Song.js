@@ -7,6 +7,7 @@ const songSchema = new Schema({
   body: String,
   seconds: { type: Number, default: 160 },
   fontSizes: Array,
+  useMonospaceFont: { type: Boolean, default: true },
   _user: { type: Schema.Types.ObjectId, ref: 'User' },
 })
 

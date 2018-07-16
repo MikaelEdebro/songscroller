@@ -32,9 +32,8 @@ const SongWrapper = styled(Paper)`
 `
 
 const BodyWrapper = styled.div`
-  font-family: 'Roboto Mono', monospace;
-  letter-spacing: -1px;
-  padding-bottom: 85px;
+  font-family: ${props => (props.useMonospaceFont ? 'Roboto Mono' : 'Roboto')};
+  padding-bottom: 90px;
   font-size: ${props => props.fontSize}px;
 `
 
@@ -85,6 +84,7 @@ class Song extends React.Component {
 
         <BodyWrapper
           fontSize={this.props.fontSize}
+          useMonospaceFont={this.props.song.useMonospaceFont}
           dangerouslySetInnerHTML={{ __html: this.state.formattedBody }}
           onClick={this.props.clicked}
         />

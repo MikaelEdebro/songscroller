@@ -1,7 +1,7 @@
 import React from 'react'
 import { reduxForm, Field } from 'redux-form'
 import { connect } from 'react-redux'
-import { renderTextField } from '../../../core/form-helpers'
+import { renderTextField, renderCheckbox } from '../../../core/form-helpers'
 import Button from '@material-ui/core/Button'
 import * as actions from '../../../actions'
 import songFields from './songFields'
@@ -19,19 +19,29 @@ class EditSong extends React.Component {
   }
 
   renderFields() {
-    return songFields.map(({ name, label, placeholder, multiline }) => (
-      <Field
-        key={name}
-        type="text"
-        name={name}
-        component={renderTextField}
-        label={label}
-        placeholder={placeholder}
-        multiline={multiline}
-        fullWidth
-        style={{ marginBottom: '20px' }}
-      />
-    ))
+    return songFields.map(({ type, name, label, placeholder, multiline }) => {
+      const renderMethod = type === 'checkbox' ? renderCheckbox : renderTextField
+      return (
+        <Field
+          key={name}
+          type="text"
+          name={name}
+          component={renderMethod}
+          label={label}
+          placeholder={placeholder}
+          multiline={multiline}
+          fullWidth
+          style={
+            multiline
+              ? {
+                  fontFamily: this.props.editSongValues.useMonospaceFont ? 'Roboto Mono' : 'Roboto',
+                  marginBottom: '20px',
+                }
+              : { marginBottom: '20px' }
+          }
+        />
+      )
+    })
   }
 
   handleSubmit = () => {
@@ -73,6 +83,7 @@ const mapStateToProps = ({ form, song }) => ({
     artist: song.selectedSong.artist,
     title: song.selectedSong.title,
     body: song.selectedSong.body,
+    useMonospaceFont: song.selectedSong.useMonospaceFont,
   },
 })
 
