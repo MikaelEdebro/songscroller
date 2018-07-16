@@ -45,28 +45,6 @@ const songSettings = props => {
 
       <Divider />
 
-      {/* <GridWrapper container direction="column">
-        <Typography variant="caption">Scroll Speed ({props.scrollSpeed})</Typography>
-        <Grid container alignItems="center">
-          <IconButton
-            color="inherit"
-            onClick={() => props.changeScrollSpeed(5)}
-            title="Scroll slower"
-          >
-            <Icon>remove_circle_outline</Icon>
-          </IconButton>
-          <Icon style={{ fontSize: 36, margin: '0 2px' }}>access_time</Icon>
-          <IconButton
-            color="inherit"
-            onClick={() => props.changeScrollSpeed(-5)}
-            title="Scroll faster"
-          >
-            <Icon>add_circle_outline</Icon>
-          </IconButton>
-        </Grid>
-      </GridWrapper>
-      <Divider /> */}
-
       <GridWrapper container direction="column">
         <Typography variant="caption">
           Transpose ({formatTranspose(props.song.transposeTotal)})

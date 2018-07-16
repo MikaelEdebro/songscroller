@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
 import SongSettings from './SongSettings'
+import debounce from 'lodash/debounce'
 
 const SongControlsWrapper = styled.div`
   display: flex;
@@ -84,7 +85,7 @@ const songControls = props => {
         onClose={() => props.toggleSettings(false)}
         changeFontSize={props.changeFontSize}
         changeScrollSpeed={props.changeScrollSpeed}
-        transposeSong={props.transposeSong}
+        transposeSong={debounce(props.transposeSong, 400)}
         song={props.song}
         fontSize={props.fontSize}
       />
