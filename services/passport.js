@@ -9,8 +9,10 @@ let callbackBaseUrl
 switch (keys.environment) {
   case 'staging':
     callbackBaseUrl = 'https://songscroller-staging.herokuapp.com'
+    break
   case 'prod':
     callbackBaseUrl = 'http://beta.songscroller.io'
+    break
   default:
     callbackBaseUrl = 'http://localhost:3000'
 }
