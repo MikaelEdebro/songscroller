@@ -34,7 +34,7 @@ const SongWrapper = styled(Paper)`
 const BodyWrapper = styled.div`
   font-family: 'Roboto Mono', monospace;
   letter-spacing: -1px;
-  padding-bottom: 80px;
+  padding-bottom: 85px;
   font-size: ${props => props.fontSize}px;
 `
 

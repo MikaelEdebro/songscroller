@@ -45,7 +45,7 @@ const songSettings = props => {
 
       <Divider />
 
-      <GridWrapper container direction="column">
+      {/* <GridWrapper container direction="column">
         <Typography variant="caption">Scroll Speed ({props.scrollSpeed})</Typography>
         <Grid container alignItems="center">
           <IconButton
@@ -65,8 +65,7 @@ const songSettings = props => {
           </IconButton>
         </Grid>
       </GridWrapper>
-
-      <Divider />
+      <Divider /> */}
 
       <GridWrapper container direction="column">
         <Typography variant="caption">

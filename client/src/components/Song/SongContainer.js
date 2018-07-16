@@ -74,8 +74,9 @@ class SongContainer extends React.Component {
 
     const amountToScroll = document.documentElement.scrollHeight - window.innerHeight
     this.scrollSpeed = amountToScroll / this.props.selectedSong.seconds
-    this.setState({ scrollSpeed: this.scrollSpeed })
-    console.log(this.state.scrollSpeed)
+    if (this.scrollSpeed !== this.state.scrollSpeed) {
+      this.setState({ scrollSpeed: this.scrollSpeed })
+    }
 
     const now = new Date()
     const msElapsedSinceStart = now.getTime() - this.startTime.getTime()
