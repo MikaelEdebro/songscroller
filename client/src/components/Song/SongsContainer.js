@@ -78,7 +78,7 @@ class SongsContainer extends React.Component {
         <div className={classes.songsWrapper}>{this.renderSongs()}</div>
         <Button
           variant="fab"
-          color="primary"
+          color="secondary"
           aria-label="add"
           className={classes.button}
           onClick={() => this.goToRoute('/songs/add')}

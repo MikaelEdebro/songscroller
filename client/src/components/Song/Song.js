@@ -12,13 +12,13 @@ const SongWrapper = styled(Paper)`
   padding: 10px;
   white-space: pre;
   overflow-x: hidden;
-  margin: 5px auto;
-  max-width: 1200px;
+  margin: 5px auto 100px;
+  max-width: 1024px;
   width: 100%;
 
   @media (min-width: 600px) {
     padding: 15px 25px;
-    margin: 20px auto;
+    margin: 20px auto 100px;
   }
 
   .time {
@@ -33,7 +33,6 @@ const SongWrapper = styled(Paper)`
 
 const BodyWrapper = styled.div`
   font-family: ${props => (props.useMonospaceFont ? 'Roboto Mono' : 'Roboto')};
-  padding-bottom: 90px;
   font-size: ${props => props.fontSize}px;
 `
 
@@ -54,7 +53,6 @@ class Song extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.song && prevProps.song.transpose !== this.props.song.transpose) {
-      console.log('transpose song')
       this.setState(prevState => ({
         formattedBody: new SongTransposer(prevState.formattedBody)
           .transposeSong(this.props.song.transpose || 0)
@@ -72,12 +70,12 @@ class Song extends React.Component {
 
     return (
       <SongWrapper>
-        <Grid container alignItems="flex-start" justify="space-between">
-          <Grid item>
+        <Grid container alignItems="flex-start">
+          <Grid item xs={10} onClick={this.props.clicked}>
             <Typography variant="caption">{artist}</Typography>
             <Typography variant="title">{title}</Typography>
           </Grid>
-          <Grid item>
+          <Grid item xs={2} align="right">
             <SongMenu song={this.props.song} />
           </Grid>
         </Grid>

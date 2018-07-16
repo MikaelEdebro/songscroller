@@ -75,6 +75,7 @@ export const editSong = (songId, values, history) => async dispatch => {
 
   // allow to not pass history and prevent redirect, like when changing fontSize etc
   if (history) {
+    dispatch({ type: types.CLEAR_SELECTED_SONG })
     history.push('/songs/' + res.data._id)
   }
 }

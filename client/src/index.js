@@ -11,6 +11,9 @@ import App from './App'
 import { unregister } from './registerServiceWorker'
 import configureStore from './configureStore'
 import axios from './axios-instance'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import deepPurple from '@material-ui/core/colors/deepPurple'
+import pink from '@material-ui/core/colors/pink'
 
 if (process.env.NODE_ENV === 'development') {
   window.axios = axios
@@ -20,11 +23,20 @@ unregister()
 
 const { store, persistor } = configureStore()
 
+const theme = createMuiTheme({
+  palette: {
+    primary: deepPurple,
+    secondary: pink,
+  },
+})
+
 const app = (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
-        <App />
+        <MuiThemeProvider theme={theme}>
+          <App />
+        </MuiThemeProvider>
       </BrowserRouter>
     </PersistGate>
   </Provider>

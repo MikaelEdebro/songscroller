@@ -1,15 +1,9 @@
-*,
-*::after,
-*::before {
-  box-sizing: border-box;
-}
 body {
   font-family: Roboto, sans-serif;
   font-size: 16px;
   word-wrap: break-word;
   padding: 0;
   margin: 0;
-  background-color: #f5f5f5;
   overflow-x: hidden;
 }
 
