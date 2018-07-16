@@ -45,7 +45,11 @@ class AddSong extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.addSong(this.props.addSongValues, this.props.history)
+    const newSong = {
+      ...this.props.addSongValues,
+      fontSizes: [{ fontSize: 15, viewportWidth: window.innerWidth }],
+    }
+    this.props.addSong(newSong, this.props.history)
   }
 
   handleCancel = () => {

@@ -17,10 +17,42 @@ class SongContainer extends React.Component {
   state = {
     showSettings: false,
     scrollSpeed: 0,
+    viewportWidth: window.innerWidth,
   }
 
   componentDidMount() {
     this.props.fetchAndSelectSong(this.props.match.params.id)
+
+    // todo: add debounce/throtlle
+    window.addEventListener('resize', this.updateViewportWidth)
+
+    setTimeout(() => {
+      if (this.props.shouldSaveUpdatedSong) {
+        this.saveEditedSong(this.props.selectedSong)
+      }
+    }, 30000)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateViewportWidth)
+
+    if (this.props.shouldSaveUpdatedSong) {
+      this.saveEditedSong(this.props.selectedSong)
+    }
+  }
+
+  saveEditedSong = song => {
+    const { artist, title, body, fontSizes } = song
+    this.props.editSong(song._id, {
+      artist,
+      title,
+      body,
+      fontSizes,
+    })
+  }
+
+  updateViewportWidth = () => {
+    this.setState({ viewportWidth: window.innerWidth })
   }
 
   toggleSettings = value => {
@@ -97,15 +129,22 @@ class SongContainer extends React.Component {
     this.props.toggleControls(!this.props.showControls)
   }
 
+  getFontSize = song => {
+    const defaultFontSize = 15
+    if (!song) {
+      return defaultFontSize
+    }
+
+    const fontSizeMatchingViewport = song.fontSizes.find(f => f.viewportWidth === window.innerWidth)
+    return fontSizeMatchingViewport ? fontSizeMatchingViewport.fontSize : defaultFontSize
+  }
+
   render() {
+    const fontSize = this.getFontSize(this.props.selectedSong)
     return (
       <Wrapper>
         {this.props.selectedSong ? (
-          <Song
-            song={this.props.selectedSong}
-            clicked={this.handleSongClick}
-            fontSize={this.props.selectedSong.fontSize}
-          />
+          <Song song={this.props.selectedSong} clicked={this.handleSongClick} fontSize={fontSize} />
         ) : (
           <Grid container justify="center" alignItems="center">
             <CircularProgress size={50} />
@@ -115,6 +154,7 @@ class SongContainer extends React.Component {
         <SongControls
           show={this.props.showControls}
           song={this.props.selectedSong || {}}
+          fontSize={fontSize}
           changeFontSize={this.props.changeFontSize}
           changeScrollSpeed={this.props.changeScrollSpeed}
           transposeSong={this.props.transposeSong}
@@ -138,6 +178,7 @@ const mapStateToProps = ({ song }) => ({
   isPaused: song.isPaused,
   isScrolling: song.isScrolling,
   isInReplayTransition: song.isInReplayTransition,
+  shouldSaveUpdatedSong: song.shouldSaveUpdatedSong,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -150,6 +191,7 @@ const mapDispatchToProps = dispatch => ({
   transposeSong: value => dispatch(actions.transposeSong(value)),
   toggleControls: value => dispatch(actions.toggleControls(value)),
   scrollComplete: () => dispatch(actions.scrollComplete()),
+  editSong: (songId, values) => dispatch(actions.editSong(songId, values)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongContainer)

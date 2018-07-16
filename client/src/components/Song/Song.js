@@ -84,7 +84,7 @@ class Song extends React.Component {
         </Grid>
 
         <BodyWrapper
-          fontSize={this.props.song.fontSize}
+          fontSize={this.props.fontSize}
           dangerouslySetInnerHTML={{ __html: this.state.formattedBody }}
           onClick={this.props.clicked}
         />

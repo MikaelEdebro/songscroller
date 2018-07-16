@@ -68,9 +68,15 @@ export const addSong = (song, history) => async () => {
   history.push('/songs/' + res.data._id)
 }
 
-export const editSong = (songId, values, history) => async () => {
+export const editSong = (songId, values, history) => async dispatch => {
   const res = await axios.put('/api/songs/' + songId, values)
-  history.push('/songs/' + res.data._id)
+
+  dispatch({ type: types.EDIT_COMPLETE })
+
+  // allow to not pass history and prevent redirect, like when changing fontSize etc
+  if (history) {
+    history.push('/songs/' + res.data._id)
+  }
 }
 
 export const deleteSong = (songId, history) => async () => {

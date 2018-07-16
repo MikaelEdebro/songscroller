@@ -62,6 +62,7 @@ const songControls = props => {
         changeScrollSpeed={props.changeScrollSpeed}
         transposeSong={props.transposeSong}
         song={props.song}
+        fontSize={props.fontSize}
       />
     </SongControlsWrapper>
   )

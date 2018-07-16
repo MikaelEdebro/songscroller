@@ -27,7 +27,7 @@ const songSettings = props => {
   return (
     <SongSettingsWrapper show={props.show}>
       <GridWrapper container direction="column">
-        <Typography variant="caption">Font Size ({props.song.fontSize})</Typography>
+        <Typography variant="caption">Font Size ({props.fontSize})</Typography>
         <Grid container alignItems="center">
           <IconButton
             color="inherit"

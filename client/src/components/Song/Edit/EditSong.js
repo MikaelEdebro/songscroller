@@ -35,7 +35,11 @@ class EditSong extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.editSong(this.props.match.params.id, this.props.editSongValues, this.props.history)
+    const editedSong = {
+      ...this.props.editSongValues,
+      fontSizes: this.props.selectedSong.fontSizes,
+    }
+    this.props.editSong(this.props.match.params.id, editedSong, this.props.history)
   }
 
   handleCancel = () => {

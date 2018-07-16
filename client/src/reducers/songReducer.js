@@ -8,6 +8,27 @@ const initialState = {
   isScrolling: false,
   isPaused: false,
   isInReplayTransition: false,
+  shouldSaveUpdatedSong: false,
+}
+
+const changeFontSize = (state, action) => {
+  const defaultFontSize = 15
+  const fontSizes = [...state.selectedSong.fontSizes]
+  const existingFontSizeForViewport = fontSizes.findIndex(
+    f => f.viewportWidth === window.innerWidth
+  )
+  if (existingFontSizeForViewport < 0) {
+    fontSizes.push({ fontSize: defaultFontSize + action.value, viewportWidth: window.innerWidth })
+  } else {
+    fontSizes[existingFontSizeForViewport].fontSize += action.value
+  }
+
+  return updateObject(state, {
+    selectedSong: updateObject(state.selectedSong, {
+      fontSizes,
+    }),
+    shouldSaveUpdatedSong: true,
+  })
 }
 
 const songReducer = (state = initialState, action) => {
@@ -39,16 +60,13 @@ const songReducer = (state = initialState, action) => {
     case types.CLEAR_SELECTED_SONG:
       return updateObject(state, { selectedSong: undefined })
     case types.CHANGE_FONT_SIZE:
-      return updateObject(state, {
-        selectedSong: updateObject(state.selectedSong, {
-          fontSize: state.selectedSong.fontSize + action.value,
-        }),
-      })
+      return changeFontSize(state, action)
     case types.CHANGE_SCROLL_SPEED:
       return updateObject(state, {
         selectedSong: updateObject(state.selectedSong, {
           seconds: state.selectedSong.seconds + action.value,
         }),
+        shouldSaveUpdatedSong: true,
       })
     case types.TRANSPOSE_SONG:
       return updateObject(state, {
@@ -69,6 +87,10 @@ const songReducer = (state = initialState, action) => {
       return updateObject(state, {
         isPaused: false,
         isScrolling: false,
+      })
+    case types.EDIT_COMPLETE:
+      return updateObject(state, {
+        shouldSaveUpdatedSong: false,
       })
     default:
       return state
