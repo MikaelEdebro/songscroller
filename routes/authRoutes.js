@@ -8,6 +8,16 @@ module.exports = app => {
     res.redirect(LOGIN_REDIRECT_URL)
   })
 
+  app.get('/api/auth/facebook', passport.authenticate('facebook'))
+
+  app.get(
+    '/api/auth/facebook/callback',
+    passport.authenticate('facebook', {
+      successRedirect: LOGIN_REDIRECT_URL,
+      failureRedirect: '/',
+    })
+  )
+
   app.get('/api/auth/logout', (req, res) => {
     req.logout()
     res.redirect('/')
@@ -15,9 +25,5 @@ module.exports = app => {
 
   app.get('/api/auth/current_user', (req, res) => {
     res.send(req.user)
-  })
-
-  app.get('/api/auth/test', (req, res) => {
-    res.send('Hello there. Route working!')
   })
 }
