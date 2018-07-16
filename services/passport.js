@@ -5,6 +5,16 @@ const keys = require('../config/keys')
 const mongoose = require('mongoose')
 const User = mongoose.model('user')
 
+let callbackBaseUrl
+switch (keys.environment) {
+  case 'staging':
+    callbackBaseUrl = 'https://songscroller-staging.herokuapp.com'
+  case 'prod':
+    callbackBaseUrl = 'http://beta.songscroller.io'
+  default:
+    callbackBaseUrl = 'http://localhost:3000'
+}
+
 passport.serializeUser((user, done) => done(null, user.id))
 passport.deserializeUser(async (id, done) => {
   const user = await User.findById(id)
@@ -17,7 +27,7 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: '/api/auth/google/callback',
+      callbackURL: callbackBaseUrl + '/api/auth/google/callback',
       proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
@@ -46,7 +56,7 @@ passport.use(
     {
       clientID: keys.facebookClientID,
       clientSecret: keys.facebookClientSecret,
-      callbackURL: '/api/auth/facebook/callback',
+      callbackURL: callbackBaseUrl + '/api/auth/facebook/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await User.findOne({
