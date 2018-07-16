@@ -1,5 +1,5 @@
 module.exports = {
-  environment: process.env.ENVIRONMENT,
+  baseUrl: process.env.BASE_URL,
   cookieKey: process.env.COOKIE_KEY,
   mongoURI: process.env.MONGO_URI,
   googleClientID: process.env.GOOGLE_CLIENT_ID,
