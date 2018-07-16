@@ -31,7 +31,7 @@ const GridWrapper = styled(Grid)`
   margin: 0 auto;
 `
 
-const styles = {
+const styles = theme => ({
   playButtonWrapper: {
     position: 'relative',
     display: 'inline-block',
@@ -42,7 +42,7 @@ const styles = {
     right: '-30px',
     cursor: 'pointer',
   },
-}
+})
 
 const songControls = props => {
   const { classes } = props

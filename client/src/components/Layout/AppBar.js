@@ -11,10 +11,15 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Drawer from './Drawer'
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1,
     marginBottom: '20px',
+  },
+  toolbar: {
+    width: '100%',
+    maxWidth: '1000px',
+    margin: '0 auto',
   },
   flex: {
     flex: 1,
@@ -23,7 +28,7 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-}
+})
 
 class ButtonAppBar extends React.Component {
   state = {
@@ -52,7 +57,7 @@ class ButtonAppBar extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar className={classes.toolbar}>
             <IconButton
               onClick={() => this.toggleDrawer(true)}
               className={classes.menuButton}
