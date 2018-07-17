@@ -27,7 +27,7 @@ const SongControlsWrapper = styled.div`
 `
 
 const GridWrapper = styled(Grid)`
-  max-width: 1000px;
+  max-width: 1024px;
   margin: 0 auto;
 `
 

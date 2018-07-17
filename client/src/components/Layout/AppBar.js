@@ -18,7 +18,7 @@ const styles = theme => ({
   },
   toolbar: {
     width: '100%',
-    maxWidth: '1000px',
+    maxWidth: '1024px',
     margin: '0 auto',
   },
   flex: {
