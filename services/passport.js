@@ -20,23 +20,7 @@ passport.use(
       callbackURL: keys.baseUrl + '/api/auth/google/callback',
       proxy: true,
     },
-    async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({
-        userId: profile.id,
-        authType: 'google',
-      })
-
-      if (existingUser) {
-        return done(null, existingUser)
-      }
-
-      const newUser = await new User({
-        userId: profile.id,
-        authType: 'google',
-      }).save()
-
-      done(null, newUser)
-    }
+    callbackMethod
   )
 )
 
@@ -48,22 +32,29 @@ passport.use(
       clientSecret: keys.facebookClientSecret,
       callbackURL: keys.baseUrl + '/api/auth/facebook/callback',
     },
-    async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await User.findOne({
-        userId: profile.id,
-        authType: 'facebook',
-      })
-
-      if (existingUser) {
-        return done(null, existingUser)
-      }
-
-      const newUser = await new User({
-        userId: profile.id,
-        authType: 'facebook',
-      }).save()
-
-      done(null, newUser)
-    }
+    callbackMethod
   )
 )
+
+async function callbackMethod(accessToken, refreshToken, profile, done) {
+  const existingUser = await User.findOneAndUpdate(
+    {
+      userId: profile.id,
+      authType: profile.provider,
+    },
+    {
+      lastLoggedInDate: new Date(),
+    }
+  ).exec()
+
+  if (existingUser) {
+    return done(null, existingUser)
+  }
+
+  const newUser = await new User({
+    userId: profile.id,
+    authType: profile.provider,
+  }).save()
+
+  done(null, newUser)
+}
