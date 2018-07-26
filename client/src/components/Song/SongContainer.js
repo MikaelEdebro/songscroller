@@ -89,7 +89,6 @@ class SongContainer extends React.Component {
     const scrollIsAtBottom =
       window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 1
     if (scrollIsAtBottom) {
-      console.log('stop scrolling')
       this.props.scrollComplete()
 
       setTimeout(() => {

@@ -14,7 +14,7 @@ module.exports = app => {
 
   app.get('/api/songs/:id', requireLogin, async (req, res) => {
     try {
-      const song = await Song.findById(req.params.id)
+      const song = await Song.findOne({ _id: req.params.id, _user: req.user._id })
 
       if (!song) {
         res.status(404).send('Song not found')

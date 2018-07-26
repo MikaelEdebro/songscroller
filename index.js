@@ -14,6 +14,7 @@ mongoose.connect(keys.mongoURI)
 // mongoose models
 require('./models/User')
 require('./models/Song')
+require('./models/Playlist')
 
 // passport config
 require('./services/passport')
@@ -33,6 +34,7 @@ app.use(passport.session())
 // routes
 require('./routes/authRoutes')(app)
 require('./routes/songRoutes')(app)
+require('./routes/playlistRoutes')(app)
 
 // serve up react app in prod
 if (process.env.NODE_ENV === 'production') {

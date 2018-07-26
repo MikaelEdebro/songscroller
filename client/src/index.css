@@ -11,3 +11,19 @@ body {
   max-width: 1024px;
   margin: 0 auto;
 }
+
+.align-center {
+  text-align: center;
+}
+
+.padding-12 {
+  padding: 12px;
+}
+.padding-24 {
+  padding: 24px;
+}
+
+.container-narrow {
+  max-width: 500px;
+  margin: 0 auto;
+}

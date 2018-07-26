@@ -1,3 +1,7 @@
+// auth
+export const FETCH_USER = 'FETCH_USER'
+
+// song
 export const FETCH_SONGS = 'FETCH_SONGS'
 export const PLAY = 'PLAY'
 export const PAUSE = 'PAUSE'
@@ -12,4 +16,8 @@ export const TOGGLE_CONTROLS = 'TOGGLE_CONTROLS'
 export const SCROLL_COMPLETE = 'SCROLL_COMPLETE'
 export const EDIT_COMPLETE = 'EDIT_COMPLETE'
 
-export const FETCH_USER = 'FETCH_USER'
+// playlist
+export const FETCH_PLAYLISTS = 'FETCH_PLAYLISTS'
+export const SELECT_PLAYLIST = 'SELECT_PLAYLIST'
+export const SET_PLAYLIST_SONGS = 'SET_PLAYLIST_SONGS'
+export const CLEAR_SELECTED_PLAYLIST = 'CLEAR_SELECTED_PLAYLIST'

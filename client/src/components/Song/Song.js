@@ -7,18 +7,19 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Paper from '@material-ui/core/Paper'
 import SongFormatter from '../../services/SongFormatter'
 import SongTransposer from '../../services/SongTransposer'
+import siteConfig from '../../siteConfig'
 
 const SongWrapper = styled(Paper)`
   padding: 10px;
   white-space: pre;
   overflow-x: hidden;
-  margin: 5px auto 100px;
+  margin: 5px auto;
   max-width: 1024px;
   width: 100%;
 
   @media (min-width: 600px) {
     padding: 15px 25px;
-    margin: 20px auto 100px;
+    margin: 20px auto;
   }
 
   .time {
@@ -34,6 +35,7 @@ const SongWrapper = styled(Paper)`
 const BodyWrapper = styled.div`
   font-family: ${props => (props.useMonospaceFont ? 'Roboto Mono' : 'Roboto')};
   font-size: ${props => props.fontSize}px;
+  padding-bottom: ${siteConfig.songControlsHeight + 10}px;
 `
 
 class Song extends React.Component {

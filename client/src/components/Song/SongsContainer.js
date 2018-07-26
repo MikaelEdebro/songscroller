@@ -7,12 +7,10 @@ import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import SearchSongs from './SearchSongs'
+import SongMenu from './SongMenu'
 
 const styles = theme => {
   return {
-    container: {
-      padding: '10px',
-    },
     button: {
       margin: theme.spacing.unit,
       position: 'fixed',
@@ -66,6 +64,7 @@ class SongsContainer extends React.Component {
         key={song._id}
         song={song}
         clicked={() => this.goToRoute('/songs/' + song._id)}
+        actionComponent={<SongMenu song={song} />}
       />
     ))
   }
@@ -73,13 +72,14 @@ class SongsContainer extends React.Component {
   render() {
     const { classes } = this.props
     return (
-      <div className={classes.container}>
+      <div className="container padding-12">
         <SearchSongs query={this.state.query} onChange={this.handleQueryChange} />
         <div className={classes.songsWrapper}>{this.renderSongs()}</div>
         <Button
           variant="fab"
           color="secondary"
-          aria-label="add"
+          aria-label="Add Song"
+          title="Add Song"
           className={classes.button}
           onClick={() => this.goToRoute('/songs/add')}
         >

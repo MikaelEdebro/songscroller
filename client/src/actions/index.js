@@ -17,3 +17,10 @@ export {
   deleteSong,
   editSong,
 } from './song'
+
+export {
+  fetchPlaylists,
+  fetchAndSelectPlaylist,
+  addPlaylist,
+  clearSelectedPlaylist,
+} from './playlist'
