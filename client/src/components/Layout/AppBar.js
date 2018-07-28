@@ -10,6 +10,7 @@ import Logo from './Logo'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import Drawer from './Drawer'
+import * as actions from '../../actions'
 
 const styles = theme => ({
   root: {
@@ -31,8 +32,17 @@ const styles = theme => ({
 })
 
 class ButtonAppBar extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+  }
+
   state = {
     showDrawer: false,
+    isDarkMode: false,
+  }
+
+  componentDidMount() {
+    this.setState({ isDarkMode: this.props.user.settings.darkMode })
   }
 
   toggleDrawer = value => {
@@ -45,6 +55,12 @@ class ButtonAppBar extends React.Component {
 
   handleLogout = () => {
     document.location.href = '/api/auth/logout'
+  }
+
+  toggleDarkMode = () => {
+    const user = { ...this.props.user, settings: { darkMode: !this.props.user.settings.darkMode } }
+    this.setState({ isDarkMode: !this.props.user.settings.darkMode })
+    this.props.editUser(user)
   }
 
   goToRoute = route => {
@@ -95,18 +111,25 @@ class ButtonAppBar extends React.Component {
           toggleDrawer={this.toggleDrawer}
           goToRoute={this.goToRoute}
           logout={this.handleLogout}
+          toggleDarkMode={this.toggleDarkMode}
+          isDarkMode={this.state.isDarkMode}
         />
       </div>
     )
   }
 }
 
-ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
 const mapStateToProps = ({ auth }) => ({
   isAuthenticated: auth || false,
+  user: auth.user,
 })
 
-export default withRouter(connect(mapStateToProps)(withStyles(styles)(ButtonAppBar)))
+const mapDispatchToProps = dispatch => ({
+  editUser: user => dispatch(actions.editUser(user)),
+})
+
+ButtonAppBar = withStyles(styles)(ButtonAppBar)
+ButtonAppBar = connect(mapStateToProps, mapDispatchToProps)(ButtonAppBar)
+ButtonAppBar = withRouter(ButtonAppBar)
+
+export default ButtonAppBar

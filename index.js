@@ -33,6 +33,7 @@ app.use(passport.session())
 
 // routes
 require('./routes/authRoutes')(app)
+require('./routes/userRoutes')(app)
 require('./routes/songRoutes')(app)
 require('./routes/playlistRoutes')(app)
 

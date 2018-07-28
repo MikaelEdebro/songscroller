@@ -1,4 +1,4 @@
-export { fetchUser } from './auth'
+export { fetchUser, editUser } from './user'
 
 export {
   fetchSongs,

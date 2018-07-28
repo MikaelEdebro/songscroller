@@ -18,20 +18,30 @@ import Playlist from './components/Playlist/Playlist'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import deepPurple from '@material-ui/core/colors/deepPurple'
 import pink from '@material-ui/core/colors/pink'
+import { defaultUserSettings } from './core/constants'
 
 class App extends React.Component {
-  state = {
-    theme: createMuiTheme({
+  componentWillMount() {
+    this.props.fetchUser()
+  }
+
+  getUserSettings = () => {
+    if (!this.props.user || !this.props.user.settings) {
+      return defaultUserSettings
+    }
+
+    return this.props.user.settings
+  }
+
+  getTheme = () => {
+    const userSettings = this.getUserSettings()
+    return createMuiTheme({
       palette: {
-        type: 'light',
+        type: userSettings.darkMode ? 'dark' : 'light',
         primary: deepPurple,
         secondary: pink,
       },
-    }),
-  }
-
-  componentWillMount() {
-    this.props.fetchUser()
+    })
   }
 
   render() {
@@ -61,7 +71,7 @@ class App extends React.Component {
     }
 
     return (
-      <MuiThemeProvider theme={this.state.theme}>
+      <MuiThemeProvider theme={this.getTheme()}>
         <Layout isAuthenticated={this.props.isAuthenticated}>
           <ScrollToTop />
           {routes}
@@ -72,6 +82,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = ({ auth }) => ({
+  user: auth.user,
   isAuthenticated: auth && auth.user,
   loginCheckCompleted: auth.loginCheckCompleted,
 })

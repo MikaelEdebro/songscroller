@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -11,7 +13,7 @@ import Icon from '@material-ui/core/Icon'
 import Divider from '@material-ui/core/Divider'
 import { toggleFullscreen } from '../../core/ui-helpers'
 
-const drawer = props => (
+const Drawer = props => (
   <SwipeableDrawer
     open={props.show}
     onClose={() => props.toggleDrawer(false)}
@@ -54,11 +56,20 @@ const drawer = props => (
         </ListItemIcon>
         <ListItemText primary="Dark Mode" />
         <ListItemSecondaryAction>
-          <Switch onChange={() => {}} checked={false} />
+          <Switch onChange={props.toggleDarkMode} checked={props.isDarkMode} />
         </ListItemSecondaryAction>
       </ListItem>
     </List>
   </SwipeableDrawer>
 )
 
-export default drawer
+Drawer.propTypes = {
+  show: PropTypes.bool.isRequired,
+  toggleDrawer: PropTypes.func.isRequired,
+  goToRoute: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  toggleDarkMode: PropTypes.func.isRequired,
+  isDarkMode: PropTypes.bool.isRequired,
+}
+
+export default Drawer
