@@ -81,13 +81,14 @@ class Song extends React.Component {
             <SongMenu song={this.props.song} />
           </Grid>
         </Grid>
-
-        <BodyWrapper
-          fontSize={this.props.fontSize}
-          useMonospaceFont={this.props.song.useMonospaceFont}
-          dangerouslySetInnerHTML={{ __html: this.state.formattedBody }}
-          onClick={this.props.clicked}
-        />
+        <Typography component="div">
+          <BodyWrapper
+            fontSize={this.props.fontSize}
+            useMonospaceFont={this.props.song.useMonospaceFont}
+            dangerouslySetInnerHTML={{ __html: this.state.formattedBody }}
+            onClick={this.props.clicked}
+          />
+        </Typography>
       </SongWrapper>
     )
   }

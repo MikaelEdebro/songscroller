@@ -15,8 +15,21 @@ import EditPlaylist from './components/Playlist/Edit/EditPlaylist'
 import * as actions from './actions'
 import ScrollToTop from './hoc/ScrollToTop'
 import Playlist from './components/Playlist/Playlist'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import deepPurple from '@material-ui/core/colors/deepPurple'
+import pink from '@material-ui/core/colors/pink'
 
 class App extends React.Component {
+  state = {
+    theme: createMuiTheme({
+      palette: {
+        type: 'light',
+        primary: deepPurple,
+        secondary: pink,
+      },
+    }),
+  }
+
   componentWillMount() {
     this.props.fetchUser()
   }
@@ -48,10 +61,12 @@ class App extends React.Component {
     }
 
     return (
-      <Layout isAuthenticated={this.props.isAuthenticated}>
-        <ScrollToTop />
-        {routes}
-      </Layout>
+      <MuiThemeProvider theme={this.state.theme}>
+        <Layout isAuthenticated={this.props.isAuthenticated}>
+          <ScrollToTop />
+          {routes}
+        </Layout>
+      </MuiThemeProvider>
     )
   }
 }
@@ -65,4 +80,7 @@ const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(actions.fetchUser()),
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
+App = connect(mapStateToProps, mapDispatchToProps)(App)
+App = withRouter(App)
+
+export default App
