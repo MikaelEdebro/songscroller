@@ -46,7 +46,7 @@ class ButtonAppBar extends React.Component {
   }
 
   toggleDrawer = value => {
-    this.setState({ showDrawer: value })
+    this.setState({ showDrawer: value, isDarkMode: this.props.user.settings.darkMode })
   }
 
   handleLogin = () => {
