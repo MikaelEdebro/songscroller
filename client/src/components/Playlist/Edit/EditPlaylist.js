@@ -13,14 +13,14 @@ class AddPlaylist extends React.Component {
   render() {
     return (
       <div className="container padding-24">
-        <h1 className="align-center">Add Playlist</h1>
-        <PlaylistForm />
+        <h1 className="align-center">Edit Playlist</h1>
+        <PlaylistForm edit />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ song }) => ({
+const mapStateToProps = ({ form, song }) => ({
   songs: song.songs,
 })
 

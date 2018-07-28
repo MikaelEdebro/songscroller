@@ -11,6 +11,7 @@ import Landing from './components/Landing'
 import Dashboard from './components/Dashboard'
 import Playlists from './components/Playlist/Playlists'
 import AddPlaylist from './components/Playlist/Edit/AddPlaylist'
+import EditPlaylist from './components/Playlist/Edit/EditPlaylist'
 import * as actions from './actions'
 import ScrollToTop from './hoc/ScrollToTop'
 import Playlist from './components/Playlist/Playlist'
@@ -37,6 +38,7 @@ class App extends React.Component {
           <Route exact path="/songs/:id" component={SongContainer} />
           <Route exact path="/songs" component={SongsContainer} key={document.location.href} />
           <Route exact path="/playlists/add" component={AddPlaylist} />
+          <Route exact path="/playlists/edit/:id" component={EditPlaylist} />
           <Route exact path="/playlists/:id" component={Playlist} />
           <Route exact path="/playlists" component={Playlists} />
           <Route exact path="/" component={Landing} />

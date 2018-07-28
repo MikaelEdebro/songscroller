@@ -37,4 +37,30 @@ module.exports = app => {
 
     res.send(newPlaylist)
   })
+
+  app.put('/api/playlists/:id', requireLogin, validatePlaylist, async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      res.status(422).send({ errors: errors.array() })
+    }
+
+    try {
+      const { title, songIds } = req.body
+      const editedPlaylist = await Playlist.findOneAndUpdate(
+        { _id: req.params.id, _user: req.user._id },
+        {
+          title,
+          songIds,
+        }
+      ).exec()
+
+      if (!editedPlaylist) {
+        return res.status(404).send({ error: 'Couldnt edit the playlist' })
+      } else {
+        res.send(editedPlaylist)
+      }
+    } catch (error) {
+      res.status(500).send({ error })
+    }
+  })
 }

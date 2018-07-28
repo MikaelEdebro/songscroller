@@ -4,8 +4,8 @@ import * as actions from '../../actions'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import SongListItem from '../Song/SongListItem'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import SongListItem from '../Song/SongListItem'
 
 class Playlist extends React.Component {
   componentDidMount() {
@@ -13,16 +13,13 @@ class Playlist extends React.Component {
   }
 
   renderPlaylistSongs = () => {
-    if (!this.props.selectedPlaylist.songs.length) {
-      return (
-        <Button variant="flat" color="primary">
-          Add songs to playlist
-        </Button>
-      )
-    }
     return this.props.selectedPlaylist.songs.map(song => (
       <SongListItem key={song._id} song={song} clicked={() => {}} />
     ))
+  }
+
+  editPlaylist = () => {
+    this.props.history.push('/playlists/edit/' + this.props.match.params.id)
   }
 
   render() {
@@ -41,16 +38,22 @@ class Playlist extends React.Component {
           {title}
         </Typography>
         <div className="container-narrow">{this.renderPlaylistSongs()}</div>
+
+        <Button variant="flat" color="primary" onClick={this.editPlaylist}>
+          Edit playlist
+        </Button>
       </div>
     )
   }
 }
 
 const mapStateToProps = ({ song, playlist }) => ({
+  songs: song.songs,
   selectedPlaylist: playlist.selectedPlaylist,
 })
 
 const mapDispatchToProps = dispatch => ({
+  fetchSongs: () => dispatch(actions.fetchSongs()),
   fetchAndSelectPlaylist: id => dispatch(actions.fetchAndSelectPlaylist(id)),
 })
 

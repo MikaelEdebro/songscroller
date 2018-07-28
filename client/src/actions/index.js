@@ -22,5 +22,6 @@ export {
   fetchPlaylists,
   fetchAndSelectPlaylist,
   addPlaylist,
+  editPlaylist,
   clearSelectedPlaylist,
 } from './playlist'

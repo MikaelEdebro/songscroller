@@ -16,6 +16,12 @@ export const addPlaylist = (values, history) => async dispatch => {
   history.push('/playlists/' + res.data._id)
 }
 
+export const editPlaylist = (playlistId, values, history) => async dispatch => {
+  console.log({ playlistId, values })
+  const res = await axios.put('/api/playlists/' + playlistId, values)
+  history.push('/playlists/' + res.data._id)
+}
+
 export const clearSelectedPlaylist = () => ({
   type: types.CLEAR_SELECTED_PLAYLIST,
 })
