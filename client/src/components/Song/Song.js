@@ -16,8 +16,9 @@ const SongWrapper = styled(Paper)`
   margin: 5px auto;
   max-width: 1024px;
   width: 100%;
+  user-select: none;
 
-  @media (min-width: 600px) {
+  @media (min-width: 960px) {
     padding: 15px 25px;
     margin: 20px auto;
   }

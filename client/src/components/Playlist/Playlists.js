@@ -12,8 +12,8 @@ const styles = theme => {
     button: {
       margin: theme.spacing.unit,
       position: 'fixed',
-      bottom: '20px',
-      right: '20px',
+      bottom: '10px',
+      right: '10px',
     },
     playlistsWrapper: {
       maxWidth: '500px',

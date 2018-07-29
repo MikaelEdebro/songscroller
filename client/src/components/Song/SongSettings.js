@@ -5,10 +5,10 @@ import IconButton from '@material-ui/core/IconButton'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import styled from 'styled-components'
+import { withStyles } from '@material-ui/core/styles'
 
 const SongSettingsWrapper = styled.div`
   position: absolute;
-  background: white;
   right: 10px;
   bottom: 90px;
   width: 160px;
@@ -19,14 +19,24 @@ const SongSettingsWrapper = styled.div`
   transform: ${props => (!props.show ? 'translateX(176px)' : 'initial')};
 `
 
-const GridWrapper = styled(Grid)`
-  padding: 6px 10px;
-`
+const styles = theme => ({
+  wrapper: {
+    backgroundColor: theme.palette.background.default,
+    userSelect: 'none',
+  },
+  grid: {
+    padding: '6px 10px',
+  },
+  icon: {
+    color: theme.palette.text.primary,
+  },
+})
 
-const songSettings = props => {
+const SongSettings = props => {
+  const { classes } = props
   return (
-    <SongSettingsWrapper show={props.show}>
-      <GridWrapper container direction="column">
+    <SongSettingsWrapper show={props.show} className={classes.wrapper}>
+      <Grid container direction="column" className={classes.grid}>
         <Typography variant="caption">Font Size ({props.fontSize})</Typography>
         <Grid container alignItems="center">
           <IconButton
@@ -34,36 +44,40 @@ const songSettings = props => {
             onClick={() => props.changeFontSize(-1)}
             title="Decrease font"
           >
-            <Icon>remove_circle_outline</Icon>
+            <Icon className={classes.icon}>remove_circle_outline</Icon>
           </IconButton>
-          <Icon style={{ fontSize: 36, margin: '0 2px' }}>format_size</Icon>
+          <Icon style={{ fontSize: 36, margin: '0 2px' }} className={classes.icon}>
+            format_size
+          </Icon>
           <IconButton color="inherit" onClick={() => props.changeFontSize(1)} title="Increase font">
-            <Icon>add_circle_outline</Icon>
+            <Icon className={classes.icon}>add_circle_outline</Icon>
           </IconButton>
         </Grid>
-      </GridWrapper>
+      </Grid>
 
       <Divider />
 
-      <GridWrapper container direction="column">
+      <Grid container direction="column">
         <Typography variant="caption">
           Transpose ({formatTranspose(props.song.transposeTotal)})
         </Typography>
         <Grid container alignItems="center">
           <IconButton color="inherit" onClick={() => props.transposeSong(-1)} title="Semitone Down">
-            <Icon>remove_circle_outline</Icon>
+            <Icon className={classes.icon}>remove_circle_outline</Icon>
           </IconButton>
-          <Icon style={{ fontSize: 36, margin: '0 2px' }}>translate</Icon>
+          <Icon style={{ fontSize: 36, margin: '0 2px' }} className={classes.icon}>
+            translate
+          </Icon>
           <IconButton color="inherit" onClick={() => props.transposeSong(1)} title="Semitone Up">
-            <Icon>add_circle_outline</Icon>
+            <Icon className={classes.icon}>add_circle_outline</Icon>
           </IconButton>
         </Grid>
-      </GridWrapper>
+      </Grid>
     </SongSettingsWrapper>
   )
 }
 
-export default songSettings
+export default withStyles(styles)(SongSettings)
 
 function formatTranspose(semitones = 0) {
   if (!semitones) {

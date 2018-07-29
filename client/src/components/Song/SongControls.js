@@ -18,20 +18,18 @@ const SongControlsWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 80px;
-  background-color: #fff;
   transition: all 0.5s ease-out;
   padding: 6px 5px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
   transform: ${props => (!props.show ? 'translateY(87px)' : 'initial')};
   z-index: 1200;
-`
-
-const GridWrapper = styled(Grid)`
-  max-width: 1024px;
-  margin: 0 auto;
+  user-select: none;
 `
 
 const styles = theme => ({
+  wrapper: {
+    backgroundColor: theme.palette.background.default,
+  },
   playButtonWrapper: {
     position: 'relative',
     display: 'inline-block',
@@ -41,6 +39,14 @@ const styles = theme => ({
     top: '14px',
     right: '-30px',
     cursor: 'pointer',
+    color: theme.palette.text.primary,
+  },
+  grid: {
+    maxWidth: '1024px',
+    margin: '0 auto',
+  },
+  icon: {
+    color: theme.palette.text.primary,
   },
 })
 
@@ -48,8 +54,8 @@ const songControls = props => {
   const { classes } = props
 
   return (
-    <SongControlsWrapper show={props.show}>
-      <GridWrapper container justify="space-between" alignItems="center">
+    <SongControlsWrapper show={props.show} className={classes.wrapper}>
+      <Grid container justify="space-between" alignItems="center" className={classes.grid}>
         <Grid item xs={4} align="left">
           <div style={{ display: 'inline-block', textAlign: 'center' }}>
             <Typography variant="caption">
@@ -61,7 +67,7 @@ const songControls = props => {
                 onClick={() => props.changeScrollSpeed(10)}
                 title="Scroll slower"
               >
-                <Icon>remove_circle_outline</Icon>
+                <Icon className={classes.icon}>remove_circle_outline</Icon>
               </IconButton>
               {/* <Icon style={{ fontSize: 36, margin: '0 2px' }}>access_time</Icon> */}
               <IconButton
@@ -69,7 +75,7 @@ const songControls = props => {
                 onClick={() => props.changeScrollSpeed(-10)}
                 title="Scroll faster"
               >
-                <Icon>add_circle_outline</Icon>
+                <Icon className={classes.icon}>add_circle_outline</Icon>
               </IconButton>
             </Grid>
           </div>
@@ -83,7 +89,9 @@ const songControls = props => {
               onClick={props.isScrolling ? props.pause : props.play}
               title={props.isScrolling ? 'Pause' : 'Play'}
             >
-              <Icon style={{ fontSize: 36 }}>{props.isScrolling ? 'pause' : 'play_arrow'}</Icon>
+              <Icon style={{ fontSize: 36 }} className={classes.icon}>
+                {props.isScrolling ? 'pause' : 'play_arrow'}
+              </Icon>
             </Button>
 
             <Icon
@@ -103,10 +111,10 @@ const songControls = props => {
             aria-label="Menu"
             title={props.showSettings ? 'Close' : 'Settings'}
           >
-            <Icon>{props.showSettings ? 'close' : 'settings'}</Icon>
+            <Icon className={classes.icon}>{props.showSettings ? 'close' : 'settings'}</Icon>
           </IconButton>
         </Grid>
-      </GridWrapper>
+      </Grid>
 
       <SongSettings
         show={props.showSettings}

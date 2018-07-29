@@ -14,12 +14,13 @@ const styles = theme => {
     button: {
       margin: theme.spacing.unit,
       position: 'fixed',
-      bottom: '20px',
-      right: '20px',
+      bottom: '10px',
+      right: '10px',
     },
     songsWrapper: {
       maxWidth: '500px',
       margin: '0 auto',
+      paddingBottom: '70px',
     },
   }
 }
