@@ -17,7 +17,7 @@ export default class SongFormatter {
     const replaceString = '\n<chord-row>$1</chord-row>\n'
     this.song = this.song
       .replace(/\n(.*( {2,}).*)\n/g, replaceString) // multiple chords
-      .replace(/\n(\w{1,3})\n/g, replaceString) // one chord that spans entire row
+      .replace(/\n(\S{1,3})\n/g, replaceString) // one chord that spans entire row
 
     return this
   }
