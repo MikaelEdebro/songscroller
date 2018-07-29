@@ -29,6 +29,7 @@ const styles = theme => ({
   },
   icon: {
     color: theme.palette.text.primary,
+    fontSize: '32px',
   },
 })
 
@@ -57,7 +58,7 @@ const SongSettings = props => {
 
       <Divider />
 
-      <Grid container direction="column">
+      <Grid container direction="column" className={classes.grid}>
         <Typography variant="caption">
           Transpose ({formatTranspose(props.song.transposeTotal)})
         </Typography>

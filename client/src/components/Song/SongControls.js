@@ -47,6 +47,7 @@ const styles = theme => ({
   },
   icon: {
     color: theme.palette.text.primary,
+    fontSize: '32px',
   },
 })
 
