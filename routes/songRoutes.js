@@ -2,19 +2,23 @@ const requireLogin = require('../middlewares/requireLogin')
 const validateSong = require('../middlewares/validation/validateSong')
 const mongoose = require('mongoose')
 const Song = mongoose.model('song')
-const { check, validationResult } = require('express-validator/check')
+const { validationResult } = require('express-validator/check')
+const sanitize = require('mongo-sanitize')
 
 module.exports = app => {
   app.get('/api/songs', requireLogin, async (req, res) => {
     const songs = await Song.find({
-      _user: req.user._id,
+      _user: sanitize(req.user._id),
     })
     res.send(songs)
   })
 
   app.get('/api/songs/:id', requireLogin, async (req, res) => {
     try {
-      const song = await Song.findOne({ _id: req.params.id, _user: req.user._id })
+      const song = await Song.findOne({
+        _id: sanitize(req.params.id),
+        _user: sanitize(req.user._id),
+      })
 
       if (!song) {
         res.status(404).send('Song not found')
@@ -31,8 +35,12 @@ module.exports = app => {
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
     }
+    const artist = sanitize(req.body.artist)
+    const title = sanitize(req.body.title)
+    const body = sanitize(req.body.body)
+    const fontSizes = sanitize(req.body.fontSizes)
+    const useMonospaceFont = sanitize(req.body.useMonospaceFont)
 
-    const { artist, title, body, fontSizes, useMonospaceFont } = req.body
     const newSong = await new Song({
       artist,
       title,
@@ -47,9 +55,14 @@ module.exports = app => {
 
   app.put('/api/songs/:id', requireLogin, validateSong, async (req, res) => {
     try {
-      const { artist, title, body, fontSizes, useMonospaceFont } = req.body
+      const artist = sanitize(req.body.artist)
+      const title = sanitize(req.body.title)
+      const body = sanitize(req.body.body)
+      const fontSizes = sanitize(req.body.fontSizes)
+      const useMonospaceFont = sanitize(req.body.useMonospaceFont)
+
       const editedSong = await Song.findOneAndUpdate(
-        { _id: req.params.id, _user: req.user._id },
+        { _id: sanitize(req.params.id), _user: sanitize(req.user._id) },
         {
           artist,
           title,
@@ -71,8 +84,8 @@ module.exports = app => {
   app.delete('/api/songs/:id', requireLogin, async (req, res) => {
     try {
       const deletedSong = await Song.findOneAndRemove({
-        _id: req.params.id,
-        _user: req.user._id,
+        _id: sanitize(req.params.id),
+        _user: sanitize(req.user._id),
       })
       if (!deletedSong) {
         return res.status(404).send({ error: 'Couldnt delete the song' })
