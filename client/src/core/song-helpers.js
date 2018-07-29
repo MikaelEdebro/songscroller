@@ -12,6 +12,11 @@ export const getFontSize = song => {
     return defaultFontSize
   }
 
-  const fontSizeMatchingViewport = song.fontSizes.find(f => f.viewportWidth === window.innerWidth)
+  const widthOffset = 5
+  const fontSizeMatchingViewport = song.fontSizes.find(
+    f =>
+      f.viewportWidth >= window.innerWidth - widthOffset &&
+      f.viewportWidth <= window.innerWidth + widthOffset
+  )
   return fontSizeMatchingViewport ? fontSizeMatchingViewport.fontSize : defaultFontSize
 }

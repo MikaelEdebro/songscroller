@@ -6,7 +6,11 @@ import siteConfig from '../../siteConfig'
 
 const LogoWrapper = styled.div`
   height: 100%;
-  font-size: 30px;
+  font-size: 18px;
+
+  @media (min-width: 660px) {
+    font-size: 25px;
+  }
 
   a {
     color: black;

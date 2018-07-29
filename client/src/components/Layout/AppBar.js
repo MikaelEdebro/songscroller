@@ -15,7 +15,6 @@ import * as actions from '../../actions'
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    marginBottom: '20px',
   },
   toolbar: {
     width: '100%',

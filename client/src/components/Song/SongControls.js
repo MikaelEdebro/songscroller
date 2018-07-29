@@ -36,8 +36,8 @@ const styles = theme => ({
   },
   replayButton: {
     position: 'absolute',
-    top: '14px',
-    right: '-30px',
+    top: '13px',
+    right: '-38px',
     cursor: 'pointer',
     color: theme.palette.text.primary,
   },
@@ -50,7 +50,7 @@ const styles = theme => ({
   },
 })
 
-const songControls = props => {
+const SongControls = props => {
   const { classes } = props
 
   return (
@@ -95,7 +95,7 @@ const songControls = props => {
             </Button>
 
             <Icon
-              style={{ fontSize: 30 }}
+              style={{ fontSize: 34 }}
               onClick={props.replay}
               title="Replay"
               className={classes.replayButton}
@@ -129,4 +129,4 @@ const songControls = props => {
   )
 }
 
-export default withStyles(styles)(songControls)
+export default withStyles(styles)(SongControls)
