@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import SearchSongs from './SearchSongs'
 import SongMenu from './SongMenu'
+import sortBy from 'lodash/sortBy'
 
 const styles = theme => {
   return {
@@ -41,13 +42,16 @@ class SongsContainer extends React.Component {
 
   getFilteredSongs = () => {
     if (!this.state.query.length) {
-      return this.props.songs
+      return sortBy(this.props.songs, ['artist', 'title'])
     }
     const query = this.state.query.toLowerCase()
-    return this.props.songs.filter(
-      song =>
-        song.artist.toLowerCase().indexOf(query) !== -1 ||
-        song.title.toLowerCase().indexOf(query) !== -1
+    return sortBy(
+      this.props.songs.filter(
+        song =>
+          song.artist.toLowerCase().indexOf(query) !== -1 ||
+          song.title.toLowerCase().indexOf(query) !== -1
+      ),
+      ['artist', 'title']
     )
   }
 
