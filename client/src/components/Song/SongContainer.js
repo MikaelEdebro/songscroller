@@ -7,6 +7,7 @@ import Wrapper from '../../hoc/Wrapper'
 import * as actions from '../../actions'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
+import { getFontSize } from '../../core/song-helpers'
 
 class SongContainer extends React.Component {
   startTime = null
@@ -37,6 +38,7 @@ class SongContainer extends React.Component {
     window.removeEventListener('resize', this.updateViewportWidth)
 
     if (this.props.shouldSaveUpdatedSong) {
+      console.log('save song')
       this.saveEditedSong(this.props.selectedSong)
     }
   }
@@ -129,18 +131,8 @@ class SongContainer extends React.Component {
     this.props.toggleControls(!this.props.showControls)
   }
 
-  getFontSize = song => {
-    const defaultFontSize = 15
-    if (!song) {
-      return defaultFontSize
-    }
-
-    const fontSizeMatchingViewport = song.fontSizes.find(f => f.viewportWidth === window.innerWidth)
-    return fontSizeMatchingViewport ? fontSizeMatchingViewport.fontSize : defaultFontSize
-  }
-
   render() {
-    const fontSize = this.getFontSize(this.props.selectedSong)
+    const fontSize = getFontSize(this.props.selectedSong)
     return (
       <Wrapper>
         {this.props.selectedSong ? (

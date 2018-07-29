@@ -27,3 +27,8 @@ body {
   max-width: 500px;
   margin: 0 auto;
 }
+
+textarea {
+  white-space: inherit;
+  font-size: inherit;
+}

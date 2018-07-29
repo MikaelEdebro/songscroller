@@ -6,6 +6,7 @@ import validate from './validateSong'
 import { renderTextField, renderCheckbox } from '../../../core/form-helpers'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
+import { getFontSize } from '../../../core/song-helpers'
 
 class SongForm extends React.Component {
   getRenderMethod = type => {
@@ -34,6 +35,8 @@ class SongForm extends React.Component {
                     fontFamily: this.props.songFormValues.useMonospaceFont
                       ? 'Roboto Mono'
                       : 'Roboto',
+                    whiteSpace: 'nowrap',
+                    fontSize: getFontSize(this.props.selectedSong) + 'px',
                   }
                 : null
             }
@@ -66,6 +69,7 @@ class SongForm extends React.Component {
 }
 
 const mapStateToProps = ({ form, song }) => ({
+  selectedSong: song.selectedSong,
   songFormValues: form.songForm ? form.songForm.values : {},
   initialValues: {
     artist: song.selectedSong ? song.selectedSong.artist : '',

@@ -57,7 +57,6 @@ class SongMenu extends React.Component {
           }}
         >
           <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
-          <MenuItem>Add to Playlist</MenuItem>
           <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
         </Menu>
       </div>

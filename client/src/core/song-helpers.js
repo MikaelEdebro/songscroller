@@ -5,3 +5,13 @@ export const getMinutesFromSeconds = seconds => {
     remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds
   }`
 }
+
+export const getFontSize = song => {
+  const defaultFontSize = 15
+  if (!song) {
+    return defaultFontSize
+  }
+
+  const fontSizeMatchingViewport = song.fontSizes.find(f => f.viewportWidth === window.innerWidth)
+  return fontSizeMatchingViewport ? fontSizeMatchingViewport.fontSize : defaultFontSize
+}
