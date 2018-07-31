@@ -16,7 +16,6 @@ const SongWrapper = styled(Paper)`
   margin: 5px auto;
   max-width: 1024px;
   width: 100%;
-  user-select: none;
 
   @media (min-width: 960px) {
     padding: 15px 25px;
@@ -73,7 +72,7 @@ class Song extends React.Component {
 
     return (
       <SongWrapper>
-        <Grid container alignItems="flex-start">
+        <Grid container alignItems="flex-start" style={{ userSelect: 'none' }}>
           <Grid item xs={10} onClick={this.props.clicked}>
             <Typography variant="caption">{artist}</Typography>
             <Typography variant="title">{title}</Typography>

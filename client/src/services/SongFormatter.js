@@ -25,7 +25,7 @@ export default class SongFormatter {
   highlightChords = () => {
     let song = this.song
     const chordRowPattern = /<chord-row>(.*)<\/chord-row>/g
-    const chordPattern = /[\S\d?/?]{1,}/g
+    const chordPattern = /[A-Za-z#?\d?/?\\?]{1,}/gi
 
     let rowMatch
     while ((rowMatch = chordRowPattern.exec(song))) {
