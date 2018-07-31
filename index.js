@@ -9,7 +9,10 @@ const helmet = require('helmet')
 
 // mongoose config
 const mongoose = require('mongoose')
-mongoose.connect(keys.mongoURI)
+mongoose.connect(keys.mongoURI, {
+  reconnectTries: Number.MAX_VALUE,
+  reconnectInterval: 1000,
+})
 
 // mongoose models
 require('./models/User')
