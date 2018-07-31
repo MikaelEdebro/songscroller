@@ -14,6 +14,7 @@ class SongForm extends React.Component {
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
   }
+
   state = {
     formSubmitted: false,
   }
