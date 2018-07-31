@@ -11,12 +11,23 @@ import Slider from '@material-ui/lab/Slider'
 import Input from '@material-ui/core/Input'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
-export const renderTextField = ({ input, label, id, meta, fullWidth, ...custom }) => {
+export const renderTextField = ({
+  input,
+  label,
+  id,
+  meta,
+  fullWidth,
+  formSubmitted,
+  ...custom
+}) => {
   return (
-    <FormControl error={!!(meta.touched && meta.error)} fullWidth={fullWidth}>
+    <FormControl
+      error={!!((meta.touched && meta.error) || (formSubmitted && meta.error))}
+      fullWidth={fullWidth}
+    >
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <Input {...input} {...custom} />
-      {meta.touched && meta.error ? (
+      {(meta.touched && meta.error) || (formSubmitted && meta.error) ? (
         <FormHelperText id="name-error-text">{meta.error}</FormHelperText>
       ) : null}
     </FormControl>

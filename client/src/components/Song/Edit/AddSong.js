@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../../../actions'
 import SongForm from './SongForm'
+import validateSong from './validateSong'
 
 class AddSong extends React.Component {
   componentWillMount() {
@@ -9,6 +10,11 @@ class AddSong extends React.Component {
   }
 
   handleSubmit = () => {
+    const errors = validateSong(this.props.songFormValues)
+    if (Object.keys(errors).length) {
+      return
+    }
+
     const newSong = {
       ...this.props.songFormValues,
       fontSizes: [{ fontSize: 15, viewportWidth: window.innerWidth }],

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
+import PropTypes from 'prop-types'
 import songFields from './songFields'
 import validate from './validateSong'
 import { renderTextField, renderCheckbox } from '../../../core/form-helpers'
@@ -9,6 +10,14 @@ import Button from '@material-ui/core/Button'
 import { getFontSize } from '../../../core/song-helpers'
 
 class SongForm extends React.Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
+  }
+  state = {
+    formSubmitted: false,
+  }
+
   getRenderMethod = type => {
     switch (type) {
       case 'checkbox':
@@ -16,6 +25,11 @@ class SongForm extends React.Component {
       default:
         return renderTextField
     }
+  }
+
+  handleSubmit = () => {
+    this.setState({ formSubmitted: true })
+    this.props.onSubmit()
   }
 
   renderFields() {
@@ -29,6 +43,7 @@ class SongForm extends React.Component {
             label={label}
             placeholder={placeholder}
             multiline={multiline}
+            formSubmitted={this.state.formSubmitted}
             style={
               multiline
                 ? {
@@ -50,7 +65,7 @@ class SongForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit} className="container" style={{ padding: '10px' }}>
+      <form onSubmit={this.handleSubmit} className="container" style={{ padding: '10px' }}>
         <Grid container justify="space-between" alignItems="center" spacing={24}>
           {this.renderFields()}
 
@@ -58,7 +73,7 @@ class SongForm extends React.Component {
             <Button variant="flat" color="secondary" onClick={this.props.onCancel}>
               Cancel
             </Button>
-            <Button variant="contained" color="primary" onClick={this.props.onSubmit}>
+            <Button variant="contained" color="primary" onClick={this.handleSubmit}>
               Save
             </Button>
           </Grid>
