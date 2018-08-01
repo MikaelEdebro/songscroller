@@ -44,7 +44,8 @@ async function callbackMethod(accessToken, refreshToken, profile, done) {
     },
     {
       lastLoggedInDate: new Date(),
-    }
+    },
+    { new: true }
   ).exec()
 
   if (existingUser) {

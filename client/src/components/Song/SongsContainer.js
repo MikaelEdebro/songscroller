@@ -70,7 +70,11 @@ class SongsContainer extends React.Component {
         song={song}
         clicked={() => this.goToRoute('/songs/' + song._id)}
         actionComponent={<SongMenu song={song} />}
-      />
+        align="left"
+        style={{ marginBottom: '10px' }}
+      >
+        {song.artist} - {song.title}
+      </SongListItem>
     ))
   }
 

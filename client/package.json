@@ -19,6 +19,7 @@
     "prettier": "^1.12.1",
     "pretty-quick": "^1.6.0",
     "react": "^16.4.0",
+    "react-beautiful-dnd": "^8.0.7",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

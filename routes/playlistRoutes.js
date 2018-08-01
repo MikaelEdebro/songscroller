@@ -13,20 +13,17 @@ module.exports = app => {
   })
 
   app.get('/api/playlists/:id', requireLogin, async (req, res) => {
-    const playlist = await Playlist.findOne({
-      _id: sanitize(req.params.id),
-      _user: sanitize(req.user._id),
-    })
-    const songIdsToFetch = []
-    playlist.songIds.forEach(songId => {
-      songIdsToFetch.push(mongoose.Types.ObjectId(sanitize(songId)))
-    })
-    const songsInPlaylist = await Song.find({
-      _id: { $in: songIdsToFetch },
-      _user: sanitize(req.user._id),
-    })
+    try {
+      const playlist = await Playlist.findOne({
+        _id: sanitize(req.params.id),
+        _user: sanitize(req.user._id),
+      })
 
-    res.send({ ...playlist._doc, songs: songsInPlaylist })
+      const songs = await getSongs(playlist.songIds)
+      res.send({ ...playlist._doc, songs })
+    } catch (error) {
+      res.status(500).send({ error })
+    }
   })
 
   app.post('/api/playlists', requireLogin, validatePlaylist, async (req, res) => {
@@ -34,16 +31,17 @@ module.exports = app => {
     if (!errors.isEmpty()) {
       res.status(422).send({ errors: errors.array() })
     }
+    try {
+      const newPlaylist = await new Playlist({
+        title: sanitize(req.body.title),
+        songIds: sanitize(req.body.songIds),
+        _user: sanitize(req.user._id),
+      }).save()
 
-    const title = sanitize(req.body.title)
-    const songIds = sanitize(req.body.songIds)
-    const newPlaylist = await new Playlist({
-      title,
-      songIds,
-      _user: sanitize(req.user._id),
-    }).save()
-
-    res.send(newPlaylist)
+      res.send(newPlaylist)
+    } catch (error) {
+      res.status(500).send({ error })
+    }
   })
 
   app.put('/api/playlists/:id', requireLogin, validatePlaylist, async (req, res) => {
@@ -53,23 +51,33 @@ module.exports = app => {
     }
 
     try {
-      const title = sanitize(req.body.title)
-      const songIds = sanitize(req.body.songIds)
       const editedPlaylist = await Playlist.findOneAndUpdate(
         { _id: sanitize(req.params.id), _user: sanitize(req.user._id) },
         {
-          title,
-          songIds,
-        }
+          title: sanitize(req.body.title),
+          songIds: sanitize(req.body.songIds),
+        },
+        { new: true }
       ).exec()
 
-      if (!editedPlaylist) {
-        return res.status(404).send({ error: 'Couldnt edit the playlist' })
-      } else {
-        res.send(editedPlaylist)
-      }
+      const songs = await getSongs(editedPlaylist.songIds)
+      res.send({ ...editedPlaylist._doc, songs })
     } catch (error) {
       res.status(500).send({ error })
     }
   })
+}
+
+async function getSongs(ids) {
+  if (!ids.length) {
+    return []
+  }
+  const songIdsToFetch = ids.map(songId => mongoose.Types.ObjectId(sanitize(songId)))
+  const songs = await Song.find({
+    _id: { $in: songIdsToFetch },
+  }).exec()
+  songs.sort((a, b) => {
+    return ids.indexOf(a._id) - ids.indexOf(b._id)
+  })
+  return songs
 }

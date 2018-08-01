@@ -69,7 +69,8 @@ module.exports = app => {
           body,
           fontSizes,
           useMonospaceFont,
-        }
+        },
+        { new: true }
       ).exec()
       if (!editedSong) {
         return res.status(404).send({ error: 'Couldnt edit the song' })

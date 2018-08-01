@@ -13,13 +13,18 @@ export const fetchAndSelectPlaylist = id => async dispatch => {
 
 export const addPlaylist = (values, history) => async dispatch => {
   const res = await axios.post('/api/playlists', values)
-  history.push('/playlists/' + res.data._id)
+  if (history) {
+    history.push('/playlists/' + res.data._id)
+  }
 }
 
 export const editPlaylist = (playlistId, values, history) => async dispatch => {
-  console.log({ playlistId, values })
   const res = await axios.put('/api/playlists/' + playlistId, values)
-  history.push('/playlists/' + res.data._id)
+  dispatch({ type: types.SELECT_PLAYLIST, payload: res.data })
+
+  if (history) {
+    history.push('/playlists/' + res.data._id)
+  }
 }
 
 export const clearSelectedPlaylist = () => ({

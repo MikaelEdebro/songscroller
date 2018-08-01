@@ -1,18 +1,19 @@
 import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
+import PropTypes from 'prop-types'
 
-const songListItem = ({ song, clicked, actionComponent }) => {
+const SongListItem = ({ children, song, clicked, actionComponent, align, style }) => {
   return (
-    <Card style={{ marginBottom: '10px' }}>
+    <Card style={style}>
       <CardHeader
         action={actionComponent}
         title={
           <div
             onClick={clicked}
-            style={{ cursor: 'pointer', fontSize: '18px', lineHeight: '22px' }}
+            style={{ cursor: 'pointer', fontSize: '18px', lineHeight: '22px', textAlign: align }}
           >
-            {song.artist + ' - ' + song.title}
+            {children}
           </div>
         }
         style={{ padding: '12px 22px' }}
@@ -21,4 +22,13 @@ const songListItem = ({ song, clicked, actionComponent }) => {
   )
 }
 
-export default songListItem
+SongListItem.propTypes = {
+  song: PropTypes.object.isRequired,
+  clicked: PropTypes.func,
+  actionComponent: PropTypes.object,
+  align: PropTypes.string,
+}
+SongListItem.defaultProps = {
+  align: 'left',
+}
+export default SongListItem

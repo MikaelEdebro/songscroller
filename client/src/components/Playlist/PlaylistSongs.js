@@ -1,0 +1,144 @@
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { reorder } from '../../core/utility'
+import * as actions from '../../actions'
+import SongListItem from '../Song/SongListItem'
+import Icon from '@material-ui/core/Icon'
+import IconButton from '@material-ui/core/IconButton'
+import { withStyles } from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  // some basic styles to make the items look a bit nicer
+  userSelect: 'none',
+  margin: `0 0 12px 0`,
+
+  // styles we need to apply on draggables
+  ...draggableStyle,
+})
+
+const getListStyle = isDraggingOver => ({
+  width: '100%',
+})
+
+const styles = theme => ({
+  icon: {
+    color:
+      theme.palette.type === 'light' ? theme.palette.text.secondary : theme.palette.text.primary,
+  },
+})
+
+class PlaylistSongs extends Component {
+  static propTypes = {
+    playlist: PropTypes.object.isRequired,
+    isEditMode: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    isEditMode: false,
+  }
+
+  state = {
+    items: this.props.playlist.songs,
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.playlist.songs.length !== this.props.playlist.songs.length) {
+      this.setState({ items: this.props.playlist.songs })
+    }
+  }
+
+  onDragEnd = result => {
+    // dropped outside the list
+    if (!result.destination) {
+      return
+    }
+
+    const items = reorder(this.state.items, result.source.index, result.destination.index)
+
+    this.setState({
+      items,
+    })
+
+    const { title, _id } = this.props.playlist
+    const songIds = items.map(item => item._id)
+    const playlist = {
+      title,
+      songIds,
+    }
+    this.props.editPlaylist(_id, playlist)
+  }
+
+  handleSongClick = () => {
+    console.log('song click')
+  }
+
+  deleteSongFromPlaylist = songIndex => {
+    const items = [...this.state.items]
+    items.splice(songIndex, 1)
+    const songIds = items.map(item => item._id)
+    this.setState({ items })
+
+    const newPlaylist = { title: this.props.playlist.title, songIds }
+    this.props.editPlaylist(this.props.playlist._id, newPlaylist)
+  }
+
+  render() {
+    if (!this.state.items || !this.state.items.length) {
+      // show loader
+      return null
+    }
+
+    const { classes } = this.props
+    const DeleteIcon = props => (
+      <IconButton
+        color="inherit"
+        onClick={() => this.deleteSongFromPlaylist(props.songIndex)}
+        title="Remove song from playlist"
+      >
+        <Icon className={classes.icon}>delete</Icon>
+      </IconButton>
+    )
+    return (
+      <DragDropContext onDragEnd={this.onDragEnd}>
+        <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+              {this.state.items.map((item, index) => (
+                <Draggable key={item._id} draggableId={item._id} index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                    >
+                      <SongListItem
+                        song={item}
+                        clicked={this.handleSongClick}
+                        actionComponent={<DeleteIcon songIndex={index} />}
+                      >
+                        {index + 1}. {item.artist} - {item.title}
+                      </SongListItem>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    )
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  editPlaylist: (playlistId, values) => dispatch(actions.editPlaylist(playlistId, values)),
+})
+
+PlaylistSongs = connect(null, mapDispatchToProps)(PlaylistSongs)
+PlaylistSongs = withStyles(styles)(PlaylistSongs)
+
+export default PlaylistSongs
