@@ -5,9 +5,8 @@ import Song from './Song'
 import SongControls from './SongControls'
 import Wrapper from '../../hoc/Wrapper'
 import * as actions from '../../actions'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Grid from '@material-ui/core/Grid'
 import { getFontSize } from '../../core/song-helpers'
+import Loader from '../Layout/Loader'
 
 class SongContainer extends React.Component {
   startTime = null
@@ -27,18 +26,17 @@ class SongContainer extends React.Component {
     // todo: add debounce/throtlle
     window.addEventListener('resize', this.updateViewportWidth)
 
-    setTimeout(() => {
+    setInterval(() => {
       if (this.props.shouldSaveUpdatedSong) {
         this.saveEditedSong(this.props.selectedSong)
       }
-    }, 30000)
+    }, 10000)
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateViewportWidth)
 
     if (this.props.shouldSaveUpdatedSong) {
-      console.log('save song')
       this.saveEditedSong(this.props.selectedSong)
     }
   }
@@ -138,9 +136,7 @@ class SongContainer extends React.Component {
         {this.props.selectedSong ? (
           <Song song={this.props.selectedSong} clicked={this.handleSongClick} fontSize={fontSize} />
         ) : (
-          <Grid container justify="center" alignItems="center">
-            <CircularProgress size={50} />
-          </Grid>
+          <Loader text="Loading Song" />
         )}
 
         <SongControls

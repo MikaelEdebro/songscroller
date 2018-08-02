@@ -28,14 +28,11 @@ class Playlists extends React.Component {
   }
 
   renderPlaylists = () => {
-    return this.props.playlists.map(p => (
+    return this.props.playlists.map(playlist => (
       <PlaylistListItem
-        key={p._id}
-        playlist={p}
-        clicked={() => {
-          this.props.clearSelectedPlaylist()
-          this.props.history.push('/playlists/' + p._id)
-        }}
+        key={playlist._id}
+        playlist={playlist}
+        clicked={() => this.props.history.push('/playlists/' + playlist._id)}
       />
     ))
   }

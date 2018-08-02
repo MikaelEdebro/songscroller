@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import SongMenu from './SongMenu'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Paper from '@material-ui/core/Paper'
 import SongFormatter from '../../services/SongFormatter'
 import SongTransposer from '../../services/SongTransposer'
@@ -64,10 +63,6 @@ class Song extends React.Component {
   }
 
   render() {
-    if (!this.props.song) {
-      return <CircularProgress size={50} />
-    }
-
     const { artist, title } = this.props.song
 
     return (

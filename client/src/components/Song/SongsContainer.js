@@ -9,6 +9,7 @@ import AddIcon from '@material-ui/icons/Add'
 import SearchSongs from './SearchSongs'
 import SongMenu from './SongMenu'
 import sortBy from 'lodash/sortBy'
+import Loader from '../Layout/Loader'
 
 const styles = theme => {
   return {
@@ -79,6 +80,10 @@ class SongsContainer extends React.Component {
   }
 
   render() {
+    if (!this.props.songs.length) {
+      return <Loader text="Loading Songs" />
+    }
+
     const { classes } = this.props
     return (
       <div className="container padding-12">

@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import { withStyles } from '@material-ui/core/styles'
 import PlaylistSongs from './PlaylistSongs'
 import SongListItem from '../Song/SongListItem'
@@ -12,6 +10,7 @@ import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import { randomString } from '../../core/utility'
 import PlaylistAddSongsDialog from './PlaylistAddSongsDialog'
+import Loader from '../Layout/Loader'
 
 const styles = theme => ({
   icon: {
@@ -101,7 +100,7 @@ class Playlist extends React.Component {
       <SongListItem
         key={song._id}
         song={song}
-        clicked={() => {}}
+        clicked={() => this.addSongToPlaylist(song._id)}
         actionComponent={<AddIcon songId={song._id} />}
         style={{ marginBottom: 12 }}
       >
@@ -112,11 +111,7 @@ class Playlist extends React.Component {
 
   render() {
     if (!this.props.selectedPlaylist) {
-      return (
-        <Grid container justify="center">
-          <CircularProgress />
-        </Grid>
-      )
+      return <Loader text="Loading playlist" />
     }
 
     const { title } = this.props.selectedPlaylist
