@@ -24,7 +24,6 @@ const styles = theme => {
 
 class Playlists extends React.Component {
   componentDidMount() {
-    this.props.clearSelectedPlaylist()
     this.props.fetchPlaylists()
   }
 
@@ -33,7 +32,10 @@ class Playlists extends React.Component {
       <PlaylistListItem
         key={p._id}
         playlist={p}
-        clicked={() => this.props.history.push('/playlists/' + p._id)}
+        clicked={() => {
+          this.props.clearSelectedPlaylist()
+          this.props.history.push('/playlists/' + p._id)
+        }}
       />
     ))
   }

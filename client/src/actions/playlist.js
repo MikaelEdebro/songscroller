@@ -18,9 +18,15 @@ export const addPlaylist = (values, history) => async dispatch => {
   }
 }
 
-export const editPlaylist = (playlistId, values, history) => async dispatch => {
-  const res = await axios.put('/api/playlists/' + playlistId, values)
-  dispatch({ type: types.SELECT_PLAYLIST, payload: res.data })
+export const savePlaylistLocal = playlist => dispatch => {
+  dispatch({ type: types.SAVE_PLAYLIST_LOCAL, payload: playlist })
+}
+
+export const savePlaylistDb = (playlist, history) => async dispatch => {
+  const { title, songIds } = playlist
+  const values = { title, songIds }
+  dispatch({ type: types.SAVE_PLAYLIST_DB, payload: values })
+  const res = await axios.put('/api/playlists/' + playlist._id, values)
 
   if (history) {
     history.push('/playlists/' + res.data._id)

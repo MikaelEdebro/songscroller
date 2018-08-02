@@ -11,6 +11,7 @@ import SongListItem from '../Song/SongListItem'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import { randomString } from '../../core/utility'
+import PlaylistAddSongsDialog from './PlaylistAddSongsDialog'
 
 const styles = theme => ({
   icon: {
@@ -19,10 +20,15 @@ const styles = theme => ({
   },
 })
 
+const removeAlreadyAddedSongs = (song, alreadyAddedSongs) => {
+  return !alreadyAddedSongs.includes(song._id)
+}
+
 class Playlist extends React.Component {
   state = {
-    isEditMode: false,
+    showAddSongsDialog: false,
     renderKey: randomString(5),
+    songsToAdd: [],
   }
 
   componentWillMount() {
@@ -30,17 +36,54 @@ class Playlist extends React.Component {
     this.props.fetchAndSelectPlaylist(this.props.match.params.id)
   }
 
-  toggleIsEditMode = () => {
-    this.setState(prevState => ({ isEditMode: !prevState.isEditMode }))
+  componentDidMount() {
+    setInterval(this.checkForPendingChanges, 10000)
+  }
+
+  componentWillUnmount() {
+    if (this.props.pendingChanges) {
+      this.props.savePlaylistDb(this.props.selectedPlaylist)
+    }
+    clearInterval(this.checkForPendingChanges)
+  }
+
+  checkForPendingChanges = () => {
+    if (this.props.pendingChanges) {
+      this.props.savePlaylistDb(this.props.selectedPlaylist)
+    }
+  }
+
+  showAddSongDialog = () => {
+    this.setState({
+      showAddSongsDialog: true,
+      songsToAdd: this.props.songs.filter(song =>
+        removeAlreadyAddedSongs(song, this.props.selectedPlaylist.songIds)
+      ),
+    })
+  }
+
+  hideAddSongsDialog = () => {
+    this.setState({ showAddSongsDialog: false })
   }
 
   addSongToPlaylist = songId => {
     const playlist = this.props.selectedPlaylist
     const songIds = [...playlist.songIds]
     songIds.push(songId)
-    const newPlaylistValues = { title: playlist.title, songIds }
-    this.props.editPlaylist(playlist._id, newPlaylistValues)
-    this.setState({ renderKey: randomString(5) })
+
+    // the list of songs to add
+    const songsToAdd = [...this.state.songsToAdd]
+    const songIndex = songsToAdd.findIndex(s => s._id === songId)
+    songsToAdd.splice(songIndex, 1)
+
+    // add new song to playlist
+    const songs = [...playlist.songs]
+    const songToAdd = this.props.songs.find(s => s._id === songId)
+    songs.push(songToAdd)
+    const newPlaylist = { ...playlist, songIds, songs }
+    this.props.savePlaylistLocal(newPlaylist)
+
+    this.setState({ renderKey: randomString(5), songsToAdd })
   }
 
   renderSongsToAdd = () => {
@@ -54,24 +97,17 @@ class Playlist extends React.Component {
       </IconButton>
     )
 
-    const removeAlreadyAddedSongs = (song, alreadyAddedSongs) => {
-      return !alreadyAddedSongs.includes(song._id)
-    }
-
-    const alreadyAddedSongs = this.props.selectedPlaylist.songIds
-    return this.props.songs
-      .filter(song => removeAlreadyAddedSongs(song, alreadyAddedSongs))
-      .map(song => (
-        <SongListItem
-          key={song._id}
-          song={song}
-          clicked={() => {}}
-          actionComponent={<AddIcon songId={song._id} />}
-          style={{ marginBottom: 12 }}
-        >
-          {song.artist} - {song.title}
-        </SongListItem>
-      ))
+    return this.state.songsToAdd.map(song => (
+      <SongListItem
+        key={song._id}
+        song={song}
+        clicked={() => {}}
+        actionComponent={<AddIcon songId={song._id} />}
+        style={{ marginBottom: 12 }}
+      >
+        {song.artist} - {song.title}
+      </SongListItem>
+    ))
   }
 
   render() {
@@ -91,22 +127,23 @@ class Playlist extends React.Component {
         </Typography>
         <div className="container-narrow">
           {this.props.selectedPlaylist.songIds.length > 8 && (
-            <Button variant="flat" color="primary" onClick={this.toggleIsEditMode}>
+            <Button variant="flat" color="primary" onClick={this.showAddSongDialog}>
               Add songs
             </Button>
           )}
           {this.props.selectedPlaylist && (
-            <PlaylistSongs
-              key={this.state.renderKey}
-              playlist={this.props.selectedPlaylist}
-              isEditMode={this.state.isEditMode}
-            />
+            <PlaylistSongs key={this.state.renderKey} playlist={this.props.selectedPlaylist} />
           )}
-          <Button variant="flat" color="primary" onClick={this.toggleIsEditMode}>
-            {this.state.isEditMode ? 'Hide songs' : 'Add songs'}
+          <Button variant="flat" color="primary" onClick={this.showAddSongDialog}>
+            Add songs
           </Button>
 
-          {this.state.isEditMode ? this.renderSongsToAdd() : null}
+          <PlaylistAddSongsDialog
+            onClose={this.hideAddSongsDialog}
+            open={this.state.showAddSongsDialog}
+          >
+            {this.renderSongsToAdd()}
+          </PlaylistAddSongsDialog>
         </div>
       </div>
     )
@@ -116,15 +153,18 @@ class Playlist extends React.Component {
 const mapStateToProps = ({ song, playlist }) => ({
   songs: song.songs,
   selectedPlaylist: playlist.selectedPlaylist,
+  pendingChanges: playlist.pendingChanges,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchSongs: () => dispatch(actions.fetchSongs()),
   fetchAndSelectPlaylist: id => dispatch(actions.fetchAndSelectPlaylist(id)),
   clearSelectedPlaylist: () => dispatch(actions.clearSelectedPlaylist()),
-  editPlaylist: (playlistId, values) => dispatch(actions.editPlaylist(playlistId, values)),
+  savePlaylistDb: playlist => dispatch(actions.savePlaylistDb(playlist)),
+  savePlaylistLocal: playlist => dispatch(actions.savePlaylistLocal(playlist)),
 })
 
 Playlist = connect(mapStateToProps, mapDispatchToProps)(Playlist)
 Playlist = withStyles(styles)(Playlist)
+
 export default Playlist

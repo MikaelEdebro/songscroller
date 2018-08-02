@@ -61,13 +61,13 @@ class PlaylistSongs extends Component {
       items,
     })
 
-    const { title, _id } = this.props.playlist
     const songIds = items.map(item => item._id)
     const playlist = {
-      title,
+      ...this.props.playlist,
       songIds,
+      songs: items,
     }
-    this.props.editPlaylist(_id, playlist)
+    this.props.savePlaylistLocal(playlist)
   }
 
   handleSongClick = () => {
@@ -80,8 +80,8 @@ class PlaylistSongs extends Component {
     const songIds = items.map(item => item._id)
     this.setState({ items })
 
-    const newPlaylist = { title: this.props.playlist.title, songIds }
-    this.props.editPlaylist(this.props.playlist._id, newPlaylist)
+    const newPlaylist = { ...this.props.playlist, songIds, songs: items }
+    this.props.savePlaylistLocal(newPlaylist)
   }
 
   render() {
@@ -135,7 +135,8 @@ class PlaylistSongs extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  editPlaylist: (playlistId, values) => dispatch(actions.editPlaylist(playlistId, values)),
+  savePlaylistLocal: values => dispatch(actions.savePlaylistLocal(values)),
+  savePlaylistDb: playlist => dispatch(actions.savePlaylistDb(playlist)),
 })
 
 PlaylistSongs = connect(null, mapDispatchToProps)(PlaylistSongs)
