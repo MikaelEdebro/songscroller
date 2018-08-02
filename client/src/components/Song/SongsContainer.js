@@ -5,24 +5,24 @@ import * as actions from '../../actions'
 import ListItem from '../core/ListItem'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
 import SearchSongs from './SearchSongs'
 import SongMenu from './SongMenu'
 import sortBy from 'lodash/sortBy'
 import Loader from '../Layout/Loader'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => {
   return {
     button: {
       margin: theme.spacing.unit,
       position: 'fixed',
-      bottom: '10px',
-      right: '10px',
+      bottom: 10,
+      right: 10,
     },
     songsWrapper: {
-      maxWidth: '500px',
-      margin: '0 auto',
-      paddingBottom: '70px',
+      paddingBottom: 70,
     },
   }
 }
@@ -85,7 +85,14 @@ class SongsContainer extends React.Component {
     const { classes } = this.props
     return (
       <div className="container padding-12">
-        <SearchSongs query={this.state.query} onChange={this.handleQueryChange} />
+        <Grid container justify="space-between">
+          <Grid item xs={12} sm={6}>
+            <Typography variant="display2">Songs</Typography>
+          </Grid>
+          <Grid item align="right" xs={12} sm={6}>
+            <SearchSongs query={this.state.query} onChange={this.handleQueryChange} />
+          </Grid>
+        </Grid>
         <div className={classes.songsWrapper}>{this.renderSongs()}</div>
         <Button
           variant="fab"

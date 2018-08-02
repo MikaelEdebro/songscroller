@@ -95,6 +95,8 @@ const songReducer = (state = initialState, action) => {
       })
     case types.ADD_SONG:
       return updateObject(state, { shouldReFetchSongs: true })
+    case types.DELETE_SONG:
+      return updateObject(state, { shouldReFetchSongs: true })
     default:
       return state
   }

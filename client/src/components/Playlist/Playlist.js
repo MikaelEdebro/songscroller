@@ -120,31 +120,27 @@ class Playlist extends React.Component {
 
     const { title } = this.props.selectedPlaylist
     return (
-      <div className="container padding-12 align-center">
-        <Typography variant="display3" align="center">
-          {title}
-        </Typography>
-        <div className="container-narrow">
-          {this.props.selectedPlaylist.songIds.length > 8 && (
-            <Button variant="flat" color="primary" onClick={this.showAddSongDialog}>
-              Add songs
-            </Button>
-          )}
-          {this.props.selectedPlaylist && (
-            <PlaylistSongs key={this.state.renderKey} playlist={this.props.selectedPlaylist} />
-          )}
+      <div className="container padding-12">
+        <Typography variant="display2">{title}</Typography>
+        {this.props.selectedPlaylist.songIds.length > 8 && (
           <Button variant="flat" color="primary" onClick={this.showAddSongDialog}>
             Add songs
           </Button>
+        )}
+        {this.props.selectedPlaylist && (
+          <PlaylistSongs key={this.state.renderKey} playlist={this.props.selectedPlaylist} />
+        )}
+        <Button variant="flat" color="primary" onClick={this.showAddSongDialog}>
+          Add songs
+        </Button>
 
-          <PlaylistAddSongsDialog
-            onClose={this.hideAddSongsDialog}
-            open={this.state.showAddSongsDialog}
-            showLoader={!this.props.songs.length || this.props.shouldReFetchSongs}
-          >
-            {this.renderSongsToAdd()}
-          </PlaylistAddSongsDialog>
-        </div>
+        <PlaylistAddSongsDialog
+          onClose={this.hideAddSongsDialog}
+          open={this.state.showAddSongsDialog}
+          showLoader={!this.props.songs.length || this.props.shouldReFetchSongs}
+        >
+          {this.renderSongsToAdd()}
+        </PlaylistAddSongsDialog>
       </div>
     )
   }

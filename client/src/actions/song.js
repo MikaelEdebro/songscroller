@@ -81,7 +81,8 @@ export const editSong = (songId, values, history) => async dispatch => {
   }
 }
 
-export const deleteSong = (songId, history) => async () => {
+export const deleteSong = (songId, history) => async dispatch => {
   await axios.delete('/api/songs/' + songId)
+  dispatch({ type: types.DELETE_SONG })
   history.push('/songs?refresh=' + songId)
 }

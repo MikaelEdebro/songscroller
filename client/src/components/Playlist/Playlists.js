@@ -16,8 +16,7 @@ const styles = theme => {
       right: '10px',
     },
     playlistsWrapper: {
-      maxWidth: '500px',
-      margin: '0 auto',
+      paddingBottom: 70,
     },
   }
 }
@@ -43,7 +42,7 @@ class Playlists extends React.Component {
     const { classes } = this.props
     return (
       <div className="container padding-12">
-        <Typography variant="display3" gutterBottom align="center">
+        <Typography variant="display3" gutterBottom>
           Playlists
         </Typography>
         <div className={classes.playlistsWrapper}>{this.renderPlaylists()}</div>

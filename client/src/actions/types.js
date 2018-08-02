@@ -16,6 +16,7 @@ export const TOGGLE_CONTROLS = 'TOGGLE_CONTROLS'
 export const SCROLL_COMPLETE = 'SCROLL_COMPLETE'
 export const EDIT_COMPLETE = 'EDIT_COMPLETE'
 export const ADD_SONG = 'ADD_SONG'
+export const DELETE_SONG = 'DELETE_SONG'
 
 // playlist
 export const FETCH_PLAYLISTS = 'FETCH_PLAYLISTS'
