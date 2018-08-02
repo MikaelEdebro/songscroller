@@ -6,8 +6,9 @@ import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
 import withMobileDialog from '@material-ui/core/withMobileDialog'
+import Loader from '../Layout/Loader'
 
-const PlaylistAddSongsDialog = ({ open, onClose, children, fullScreen }) => {
+const PlaylistAddSongsDialog = ({ open, onClose, children, fullScreen, showLoader }) => {
   return (
     <Dialog
       onClose={onClose}
@@ -24,7 +25,7 @@ const PlaylistAddSongsDialog = ({ open, onClose, children, fullScreen }) => {
           </IconButton>
         </Grid>
       </DialogTitle>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent>{showLoader ? <Loader text="Loading Songs" /> : children}</DialogContent>
     </Dialog>
   )
 }

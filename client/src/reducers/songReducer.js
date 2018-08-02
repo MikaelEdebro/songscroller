@@ -9,6 +9,7 @@ const initialState = {
   isPaused: false,
   isInReplayTransition: false,
   shouldSaveUpdatedSong: false,
+  shouldReFetchSongs: false,
 }
 
 const changeFontSize = (state, action) => {
@@ -34,7 +35,7 @@ const changeFontSize = (state, action) => {
 const songReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.FETCH_SONGS:
-      return updateObject(state, { songs: action.payload })
+      return updateObject(state, { songs: action.payload, shouldReFetchSongs: false })
     case types.PLAY:
       return updateObject(state, {
         isPaused: false,
@@ -92,6 +93,8 @@ const songReducer = (state = initialState, action) => {
       return updateObject(state, {
         shouldSaveUpdatedSong: false,
       })
+    case types.ADD_SONG:
+      return updateObject(state, { shouldReFetchSongs: true })
     default:
       return state
   }

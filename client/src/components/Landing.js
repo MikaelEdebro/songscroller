@@ -55,7 +55,7 @@ class Landing extends React.Component {
   render() {
     return (
       <div>
-        <Typography variant="display4" align="center">
+        <Typography variant="display3" align="center" gutterBottom>
           {siteConfig.name}
         </Typography>
         <Typography variant="subheading" align="center">

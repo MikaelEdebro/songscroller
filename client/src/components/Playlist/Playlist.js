@@ -52,9 +52,14 @@ class Playlist extends React.Component {
     }
   }
 
-  showAddSongDialog = () => {
+  showAddSongDialog = async () => {
     this.setState({
       showAddSongsDialog: true,
+    })
+    if (!this.props.songs.length || this.props.shouldReFetchSongs) {
+      await this.props.fetchSongs()
+    }
+    this.setState({
       songsToAdd: this.props.songs.filter(song =>
         removeAlreadyAddedSongs(song, this.props.selectedPlaylist.songIds)
       ),
@@ -135,6 +140,7 @@ class Playlist extends React.Component {
           <PlaylistAddSongsDialog
             onClose={this.hideAddSongsDialog}
             open={this.state.showAddSongsDialog}
+            showLoader={!this.props.songs.length || this.props.shouldReFetchSongs}
           >
             {this.renderSongsToAdd()}
           </PlaylistAddSongsDialog>
@@ -146,6 +152,7 @@ class Playlist extends React.Component {
 
 const mapStateToProps = ({ song, playlist }) => ({
   songs: song.songs,
+  shouldReFetchSongs: song.shouldReFetchSongs,
   selectedPlaylist: playlist.selectedPlaylist,
   pendingChanges: playlist.pendingChanges,
 })

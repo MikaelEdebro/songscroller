@@ -63,9 +63,10 @@ export const clearSelectedSong = () => dispatch => {
   dispatch({ type: types.CLEAR_SELECTED_SONG })
 }
 
-export const addSong = (song, history) => async () => {
+export const addSong = (song, history) => async dispatch => {
   const res = await axios.post('/api/songs', song)
   history.push('/songs/' + res.data._id)
+  dispatch({ type: types.ADD_SONG })
 }
 
 export const editSong = (songId, values, history) => async dispatch => {
