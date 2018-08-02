@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import PlaylistSongs from './PlaylistSongs'
-import SongListItem from '../Song/SongListItem'
+import ListItem from '../core/ListItem'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import { randomString } from '../../core/utility'
@@ -97,15 +97,14 @@ class Playlist extends React.Component {
     )
 
     return this.state.songsToAdd.map(song => (
-      <SongListItem
+      <ListItem
         key={song._id}
-        song={song}
         clicked={() => this.addSongToPlaylist(song._id)}
         actionComponent={<AddIcon songId={song._id} />}
-        style={{ marginBottom: 12 }}
+        marginBottom
       >
         {song.artist} - {song.title}
-      </SongListItem>
+      </ListItem>
     ))
   }
 

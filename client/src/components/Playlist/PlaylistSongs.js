@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { reorder } from '../../core/utility'
 import * as actions from '../../actions'
-import SongListItem from '../Song/SongListItem'
+import ListItem from '../core/ListItem'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import { withStyles } from '@material-ui/core/styles'
@@ -114,13 +114,12 @@ class PlaylistSongs extends Component {
                       {...provided.dragHandleProps}
                       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                     >
-                      <SongListItem
-                        song={item}
+                      <ListItem
                         clicked={this.handleSongClick}
                         actionComponent={<DeleteIcon songIndex={index} />}
                       >
                         {index + 1}. {item.artist} - {item.title}
-                      </SongListItem>
+                      </ListItem>
                     </div>
                   )}
                 </Draggable>

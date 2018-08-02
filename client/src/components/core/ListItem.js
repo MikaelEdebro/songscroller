@@ -3,9 +3,9 @@ import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import PropTypes from 'prop-types'
 
-const SongListItem = ({ children, song, clicked, actionComponent, align, style }) => {
+const ListItem = ({ children, clicked, actionComponent, align, style, marginBottom }) => {
   return (
-    <Card style={style}>
+    <Card style={{ marginBottom: marginBottom ? 12 : 0, ...style }}>
       <CardHeader
         action={actionComponent}
         title={
@@ -22,13 +22,12 @@ const SongListItem = ({ children, song, clicked, actionComponent, align, style }
   )
 }
 
-SongListItem.propTypes = {
-  song: PropTypes.object.isRequired,
+ListItem.propTypes = {
   clicked: PropTypes.func,
   actionComponent: PropTypes.object,
   align: PropTypes.string,
 }
-SongListItem.defaultProps = {
+ListItem.defaultProps = {
   align: 'left',
 }
-export default SongListItem
+export default ListItem

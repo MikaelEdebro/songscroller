@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import Typography from '@material-ui/core/Typography'
-import PlaylistListItem from './PlaylistListItem'
+import ListItem from '../core/ListItem'
 
 const styles = theme => {
   return {
@@ -29,11 +29,13 @@ class Playlists extends React.Component {
 
   renderPlaylists = () => {
     return this.props.playlists.map(playlist => (
-      <PlaylistListItem
+      <ListItem
         key={playlist._id}
-        playlist={playlist}
         clicked={() => this.props.history.push('/playlists/' + playlist._id)}
-      />
+        marginBottom
+      >
+        {playlist.title}
+      </ListItem>
     ))
   }
 

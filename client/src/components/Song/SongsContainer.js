@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import * as actions from '../../actions'
-import SongListItem from './SongListItem'
+import ListItem from '../core/ListItem'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
@@ -66,16 +66,14 @@ class SongsContainer extends React.Component {
       return null
     }
     return songs.map(song => (
-      <SongListItem
+      <ListItem
         key={song._id}
-        song={song}
         clicked={() => this.goToRoute('/songs/' + song._id)}
         actionComponent={<SongMenu song={song} />}
-        align="left"
-        style={{ marginBottom: '10px' }}
+        marginBottom
       >
         {song.artist} - {song.title}
-      </SongListItem>
+      </ListItem>
     ))
   }
 
