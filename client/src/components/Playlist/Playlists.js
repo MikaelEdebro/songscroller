@@ -32,7 +32,7 @@ class Playlists extends React.Component {
       <ListItem
         key={playlist._id}
         clicked={() => this.props.history.push('/playlists/' + playlist._id)}
-        actionComponent={<PlaylistMenu playlistId={playlist._id} />}
+        actionComponent={<PlaylistMenu playlist={playlist} />}
         marginBottom
       >
         {playlist.title}

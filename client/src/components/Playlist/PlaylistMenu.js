@@ -30,13 +30,13 @@ class PlaylistMenu extends React.Component {
   }
 
   handleDelete = () => {
-    this.props.deletePlaylist(this.props.playlistId, this.props.history)
+    this.props.deletePlaylist(this.props.playlist._id, this.props.history)
     this.setState({ deleteConfirmed: false })
   }
 
   handleEdit = () => {
-    this.props.selectSong(this.props.song)
-    this.props.history.push('/songs/edit/' + this.props.song._id)
+    this.props.selectPlaylist(this.props.playlist)
+    this.props.history.push('/playlists/edit/' + this.props.playlist._id)
   }
 
   render() {
@@ -87,6 +87,7 @@ class PlaylistMenu extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+  selectPlaylist: playlist => dispatch(actions.selectPlaylist(playlist)),
   deletePlaylist: (playlistId, history) => dispatch(actions.deletePlaylist(playlistId, history)),
 })
 

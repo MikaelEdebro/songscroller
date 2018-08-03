@@ -21,6 +21,7 @@ export {
 export {
   fetchPlaylists,
   fetchAndSelectPlaylist,
+  selectPlaylist,
   addPlaylist,
   savePlaylistLocal,
   savePlaylistDb,

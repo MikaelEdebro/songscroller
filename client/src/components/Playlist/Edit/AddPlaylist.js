@@ -4,6 +4,10 @@ import * as actions from '../../../actions'
 import PlaylistForm from './PlaylistForm'
 
 class AddPlaylist extends React.Component {
+  componentWillMount() {
+    this.props.clearSelectedPlaylist()
+  }
+
   componentDidMount() {
     if (!this.props.songs.length) {
       this.props.fetchSongs()
@@ -25,6 +29,7 @@ const mapStateToProps = ({ song }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  clearSelectedPlaylist: () => dispatch(actions.clearSelectedPlaylist()),
   fetchSongs: () => dispatch(actions.fetchSongs()),
 })
 

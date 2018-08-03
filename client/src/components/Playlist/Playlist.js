@@ -6,16 +6,30 @@ import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import PlaylistSongs from './PlaylistSongs'
 import ListItem from '../core/ListItem'
+import Grid from '@material-ui/core/Grid'
 import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 import { randomString } from '../../core/utility'
 import PlaylistAddSongsDialog from './PlaylistAddSongsDialog'
 import Loader from '../Layout/Loader'
+import PlaylistMenu from './PlaylistMenu'
+import PlaylistAddSongsButton from './PlaylistAddSongsButton'
 
 const styles = theme => ({
+  title: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 26,
+    },
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 40,
+    },
+  },
   icon: {
     color:
       theme.palette.type === 'light' ? theme.palette.text.secondary : theme.palette.text.primary,
+  },
+  buttonIcon: {
+    marginRight: theme.spacing.unit,
   },
 })
 
@@ -113,26 +127,50 @@ class Playlist extends React.Component {
     ))
   }
 
+  play = songId => {
+    console.log('play ', songId)
+  }
+
   render() {
+    const { classes } = this.props
+
     if (!this.props.selectedPlaylist) {
       return <Loader text="Loading playlist" />
     }
 
-    const { title } = this.props.selectedPlaylist
-    return (
-      <div className="container padding-12">
-        <Typography variant="display2">{title}</Typography>
-        {this.props.selectedPlaylist.songIds.length > 8 && (
+    const { title, songs } = this.props.selectedPlaylist
+    const hasSongs = songs.length > 0
+    const ButtonContainer = () =>
+      hasSongs && (
+        <Grid container justify="space-between" style={{ margin: '12px 0' }}>
+          <Button variant="flat" color="primary" onClick={this.play}>
+            <Icon className={classes.buttonIcon}>play_arrow</Icon> Play
+          </Button>
           <Button variant="flat" color="primary" onClick={this.showAddSongDialog}>
             Add songs
           </Button>
-        )}
+        </Grid>
+      )
+
+    return (
+      <div className="container padding-12">
+        <Grid container justify="space-between" alignItems="center">
+          <Typography variant="display3" className={classes.title}>
+            {title}
+          </Typography>
+          <PlaylistMenu playlist={this.props.selectedPlaylist} />
+        </Grid>
+        <ButtonContainer />
         {this.props.selectedPlaylist && (
           <PlaylistSongs key={this.state.renderKey} playlist={this.props.selectedPlaylist} />
         )}
-        <Button variant="flat" color="primary" onClick={this.showAddSongDialog}>
-          Add songs
-        </Button>
+        <ButtonContainer />
+
+        {!hasSongs && (
+          <Grid container justify="center" style={{ marginTop: 40 }}>
+            <PlaylistAddSongsButton clicked={this.showAddSongDialog} />
+          </Grid>
+        )}
 
         <PlaylistAddSongsDialog
           onClose={this.hideAddSongsDialog}

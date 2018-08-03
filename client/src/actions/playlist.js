@@ -11,6 +11,10 @@ export const fetchAndSelectPlaylist = id => async dispatch => {
   dispatch({ type: types.SELECT_PLAYLIST, payload: res.data })
 }
 
+export const selectPlaylist = playlist => dispatch => {
+  dispatch({ type: types.SELECT_PLAYLIST, payload: playlist })
+}
+
 export const addPlaylist = (values, history) => async dispatch => {
   const res = await axios.post('/api/playlists', values)
   if (history) {
