@@ -66,6 +66,18 @@ module.exports = app => {
       res.status(500).send({ error })
     }
   })
+
+  app.delete('/api/playlists/:id', requireLogin, async (req, res) => {
+    try {
+      await Playlist.findOneAndRemove({
+        _id: sanitize(req.params.id),
+        _user: sanitize(req.user._id),
+      }).exec()
+      res.send('Success')
+    } catch (error) {
+      res.status(500).send({ error })
+    }
+  })
 }
 
 async function getSongs(ids) {

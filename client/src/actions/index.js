@@ -25,4 +25,5 @@ export {
   savePlaylistLocal,
   savePlaylistDb,
   clearSelectedPlaylist,
+  deletePlaylist,
 } from './playlist'

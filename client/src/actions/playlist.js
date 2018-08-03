@@ -36,3 +36,11 @@ export const savePlaylistDb = (playlist, history) => async dispatch => {
 export const clearSelectedPlaylist = () => ({
   type: types.CLEAR_SELECTED_PLAYLIST,
 })
+
+export const deletePlaylist = (playlistId, history) => async dispatch => {
+  await axios.delete('/api/playlists/' + playlistId)
+  dispatch({ type: types.DELETE_PLAYLIST, payload: playlistId })
+  if (history) {
+    history.push('/playlists')
+  }
+}
