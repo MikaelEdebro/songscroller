@@ -6,6 +6,7 @@ const passport = require('passport')
 const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
+const handleErrorMiddleware = require('./middlewares/handleError')
 
 // mongoose config
 const mongoose = require('mongoose')
@@ -48,5 +49,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
+
+app.use(handleErrorMiddleware)
 
 app.listen(PORT)

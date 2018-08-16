@@ -27,10 +27,8 @@ export const savePlaylistLocal = playlist => dispatch => {
 }
 
 export const savePlaylistDb = (playlist, history) => async dispatch => {
-  const { title, songIds } = playlist
-  const values = { title, songIds }
-  dispatch({ type: types.SAVE_PLAYLIST_DB, payload: values })
-  const res = await axios.put('/api/playlists/' + playlist._id, values)
+  dispatch({ type: types.SAVE_PLAYLIST_DB, payload: playlist })
+  const res = await axios.put('/api/playlists/' + playlist._id, playlist)
 
   if (history) {
     history.push('/playlists/' + res.data._id)

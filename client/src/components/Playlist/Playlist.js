@@ -75,7 +75,7 @@ class Playlist extends React.Component {
     }
     this.setState({
       songsToAdd: this.props.songs.filter(song =>
-        removeAlreadyAddedSongs(song, this.props.selectedPlaylist.songIds)
+        removeAlreadyAddedSongs(song, this.props.selectedPlaylist.songs.map(s => s._id))
       ),
     })
   }
@@ -84,21 +84,18 @@ class Playlist extends React.Component {
     this.setState({ showAddSongsDialog: false })
   }
 
-  addSongToPlaylist = songId => {
+  addSongToPlaylist = song => {
     const playlist = this.props.selectedPlaylist
-    const songIds = [...playlist.songIds]
-    songIds.push(songId)
 
     // the list of songs to add
     const songsToAdd = [...this.state.songsToAdd]
-    const songIndex = songsToAdd.findIndex(s => s._id === songId)
+    const songIndex = songsToAdd.findIndex(s => s._id === song._id)
     songsToAdd.splice(songIndex, 1)
 
     // add new song to playlist
     const songs = [...playlist.songs]
-    const songToAdd = this.props.songs.find(s => s._id === songId)
-    songs.push(songToAdd)
-    const newPlaylist = { ...playlist, songIds, songs }
+    songs.push(song)
+    const newPlaylist = { ...playlist, songs }
     this.props.savePlaylistLocal(newPlaylist)
 
     this.setState({ renderKey: randomString(5), songsToAdd })
@@ -118,8 +115,8 @@ class Playlist extends React.Component {
     return this.state.songsToAdd.map(song => (
       <ListItem
         key={song._id}
-        clicked={() => this.addSongToPlaylist(song._id)}
-        actionComponent={<AddIcon songId={song._id} />}
+        clicked={() => this.addSongToPlaylist(song)}
+        actionComponent={<AddIcon song={song} />}
         marginBottom
       >
         {song.artist} - {song.title}

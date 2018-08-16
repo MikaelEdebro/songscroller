@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../../actions'
 import PlaylistForm from './PlaylistForm'
 
-class AddPlaylist extends React.Component {
+class EditPlaylist extends React.Component {
   componentDidMount() {
     if (!this.props.songs.length) {
       this.props.fetchSongs()
@@ -28,6 +28,6 @@ const mapDispatchToProps = dispatch => ({
   fetchSongs: () => dispatch(actions.fetchSongs()),
 })
 
-AddPlaylist = connect(mapStateToProps, mapDispatchToProps)(AddPlaylist)
+EditPlaylist = connect(mapStateToProps, mapDispatchToProps)(EditPlaylist)
 
-export default AddPlaylist
+export default EditPlaylist
