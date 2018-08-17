@@ -12,6 +12,8 @@ const styles = theme => ({
     width: 240,
     height: 240,
     boxShadow: theme.shadows[2],
+    textAlign: 'center',
+    margin: '0 auto',
   },
   icon: {
     fontSize: 60,
@@ -28,13 +30,13 @@ const PlaylistAddSongsButton = props => {
       justify="center"
     >
       <Icon className={classes.icon} color="primary">
-        queue_music
+        {props.icon}
       </Icon>
       <Typography variant="title" gutterBottom>
-        Playlist is empty!
+        {props.description}
       </Typography>
       <Button variant="raised" color="primary" onClick={props.clicked}>
-        Add songs
+        {props.buttonText}
       </Button>
     </Grid>
   )

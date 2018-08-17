@@ -13,18 +13,26 @@
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild":
-      "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+      "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "t": "jest --watchAll --runInBand",
+    "test": "jest --runInBand"
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "/client/"],
+    "testEnvironment": "node",
+    "verbose": false,
+    "setupTestFrameworkScriptFile": "./test/setup.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MikaelEdebro/troubadour.git"
+    "url": "git+https://github.com/MikaelEdebro/songscroller.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MikaelEdebro/troubadour/issues"
+    "url": "https://github.com/MikaelEdebro/songscroller/issues"
   },
-  "homepage": "https://github.com/MikaelEdebro/troubadour#readme",
+  "homepage": "https://github.com/MikaelEdebro/songscroller#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-session": "^2.0.0-beta.3",
@@ -39,6 +47,8 @@
   },
   "devDependencies": {
     "concurrently": "^3.6.0",
-    "nodemon": "^1.17.5"
+    "jest": "^23.5.0",
+    "nodemon": "^1.17.5",
+    "supertest": "^3.1.0"
   }
 }

@@ -12,6 +12,7 @@ import SongMenu from './SongMenu'
 import sortBy from 'lodash/sortBy'
 import Loader from '../Layout/Loader'
 import Typography from '@material-ui/core/Typography'
+import AddButtonBig from '../core/AddButtonBig'
 
 const styles = theme => {
   return {
@@ -33,6 +34,7 @@ class SongsContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.props.setIsFetchingSongs()
     this.props.clearSelectedSong()
     this.props.fetchSongs()
   }
@@ -78,11 +80,9 @@ class SongsContainer extends React.Component {
   }
 
   render() {
-    if (!this.props.songs.length) {
-      return <Loader text="Loading Songs" />
-    }
-
     const { classes } = this.props
+    const noSongsAdded = !this.props.songs.length && !this.props.isFetchingSongs
+
     return (
       <div className="container padding-12">
         <Grid container justify="space-between">
@@ -95,7 +95,19 @@ class SongsContainer extends React.Component {
             <SearchSongs query={this.state.query} onChange={this.handleQueryChange} />
           </Grid>
         </Grid>
-        <div className={classes.songsWrapper}>{this.renderSongs()}</div>
+        <div className={classes.songsWrapper}>
+          {this.props.isFetchingSongs ? <Loader text="Loading Songs" /> : this.renderSongs()}
+        </div>
+
+        {noSongsAdded && (
+          <AddButtonBig
+            icon="queue_music"
+            description="You havn't added any songs!"
+            buttonText="Add song"
+            clicked={() => this.goToRoute('/songs/add')}
+          />
+        )}
+
         <Button
           variant="fab"
           color="secondary"
@@ -113,9 +125,11 @@ class SongsContainer extends React.Component {
 
 const mapStateToProps = ({ song }) => ({
   songs: song.songs,
+  isFetchingSongs: song.isFetchingSongs,
 })
 
 const mapDispatchToProps = dispatch => ({
+  setIsFetchingSongs: () => dispatch(actions.setIsFetchingSongs()),
   clearSelectedSong: () => dispatch(actions.clearSelectedSong()),
   fetchSongs: () => dispatch(actions.fetchSongs()),
 })

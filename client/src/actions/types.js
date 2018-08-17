@@ -3,6 +3,7 @@ export const FETCH_USER = 'FETCH_USER'
 
 // song
 export const FETCH_SONGS = 'FETCH_SONGS'
+export const SET_IS_FETCHING_SONGS = 'SET_IS_FETCHING_SONGS'
 export const PLAY = 'PLAY'
 export const PAUSE = 'PAUSE'
 export const REPLAY = 'REPLAY'

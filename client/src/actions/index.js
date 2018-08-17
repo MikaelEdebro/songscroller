@@ -2,6 +2,7 @@ export { fetchUser, editUser } from './user'
 
 export {
   fetchSongs,
+  setIsFetchingSongs,
   fetchAndSelectSong,
   selectSong,
   clearSelectedSong,

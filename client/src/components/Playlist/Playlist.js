@@ -13,7 +13,7 @@ import { randomString } from '../../core/utility'
 import PlaylistAddSongsDialog from './PlaylistAddSongsDialog'
 import Loader from '../Layout/Loader'
 import PlaylistMenu from './PlaylistMenu'
-import PlaylistAddSongsButton from './PlaylistAddSongsButton'
+import AddButtonBig from '../core/AddButtonBig'
 
 const styles = theme => ({
   title: {
@@ -165,7 +165,12 @@ class Playlist extends React.Component {
 
         {!hasSongs && (
           <Grid container justify="center" style={{ marginTop: 40 }}>
-            <PlaylistAddSongsButton clicked={this.showAddSongDialog} />
+            <AddButtonBig
+              icon="queue_music"
+              description="Playlist is empty!"
+              buttonText="Add songs"
+              clicked={this.showAddSongDialog}
+            />
           </Grid>
         )}
 

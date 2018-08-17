@@ -50,6 +50,10 @@ export const fetchSongs = () => async dispatch => {
   dispatch({ type: types.FETCH_SONGS, payload: res.data })
 }
 
+export const setIsFetchingSongs = () => dispatch => {
+  dispatch({ type: types.SET_IS_FETCHING_SONGS })
+}
+
 export const fetchAndSelectSong = songId => async dispatch => {
   const res = await axios.get('/api/songs/' + songId)
   dispatch({ type: types.SELECT_SONG, payload: res.data })
