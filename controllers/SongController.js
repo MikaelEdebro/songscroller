@@ -25,7 +25,7 @@ module.exports = {
       .catch(next)
   },
 
-  addSong(req, res, next) {
+  create(req, res, next) {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
@@ -48,7 +48,7 @@ module.exports = {
       .catch(next)
   },
 
-  editSong(req, res, next) {
+  edit(req, res, next) {
     const artist = sanitize(req.body.artist)
     const title = sanitize(req.body.title)
     const body = sanitize(req.body.body)
@@ -70,7 +70,7 @@ module.exports = {
       .catch(next)
   },
 
-  removeSong(req, res, next) {
+  delete(req, res, next) {
     Song.remove({
       _id: sanitize(req.params.id),
       _user: sanitize(req.user._id),

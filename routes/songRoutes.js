@@ -7,9 +7,9 @@ module.exports = app => {
 
   app.get('/api/songs/:id', requireLogin, SongController.getSongById)
 
-  app.post('/api/songs', requireLogin, validateSong, SongController.addSong)
+  app.post('/api/songs', requireLogin, validateSong, SongController.create)
 
-  app.put('/api/songs/:id', requireLogin, validateSong, SongController.editSong)
+  app.put('/api/songs/:id', requireLogin, validateSong, SongController.edit)
 
-  app.delete('/api/songs/:id', requireLogin, SongController.removeSong)
+  app.delete('/api/songs/:id', requireLogin, SongController.delete)
 }

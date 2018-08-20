@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator/check')
 const sanitize = require('mongo-sanitize')
 
 module.exports = {
-  getPlaylists(req, res, next) {
+  getPlaylistsByUser(req, res, next) {
     Playlist.find({ _user: sanitize(req.user._id) })
       .then(playlists => res.send(playlists))
       .catch(next)
