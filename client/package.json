@@ -42,6 +42,7 @@
     "precommit": "pretty-quick --staged"
   },
   "engines": {
-    "node": "9.5.0"
+    "node": "10.9.0",
+    "npm": "6.2.0"
   }
 }

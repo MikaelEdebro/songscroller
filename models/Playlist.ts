@@ -1,5 +1,12 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+import { default as mongoose, Document } from 'mongoose'
+const Schema = mongoose.Schema
+
+export type PlaylistDocument = Document & {
+  title: string
+  songs: any[]
+  _user: any
+  createdDate: Date
+}
 
 const playlistSchema = new Schema({
   title: { type: String, required: true },
@@ -13,4 +20,4 @@ const playlistSchema = new Schema({
   createdDate: { type: Date, default: new Date() },
 })
 
-mongoose.model('playlist', playlistSchema)
+export default mongoose.model('playlist', playlistSchema)

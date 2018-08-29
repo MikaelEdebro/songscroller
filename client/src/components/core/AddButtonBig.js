@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles'
 const styles = theme => ({
   root: {
     background: theme.palette.grey[100],
+    color: theme.palette.common.black,
     borderRadius: '50%',
     width: 240,
     height: 240,
@@ -32,7 +33,7 @@ const PlaylistAddSongsButton = props => {
       <Icon className={classes.icon} color="primary">
         {props.icon}
       </Icon>
-      <Typography variant="title" gutterBottom>
+      <Typography variant="title" color="inherit" gutterBottom>
         {props.description}
       </Typography>
       <Button variant="raised" color="primary" onClick={props.clicked}>
