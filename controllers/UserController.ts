@@ -1,11 +1,11 @@
-const mongoose = require('mongoose')
-const User = mongoose.model('user')
-const sanitize = require('mongo-sanitize')
+import User from '../models/User'
+import { sanitize } from 'mongo-sanitize'
+import { Request, Response, NextFunction } from 'express'
 const isTestMode = process.env.NODE_ENV === 'test'
 const mockedUser = require('../test/mocks').user
 
-module.exports = {
-  getCurrentUser(req, res) {
+export = {
+  getCurrentUser(req: Request, res: Response) {
     if (isTestMode) {
       res.send(mockedUser)
     }
@@ -13,7 +13,7 @@ module.exports = {
     res.send(req.user)
   },
 
-  editUser(req, res, next) {
+  editUser(req: Request, res: Response, next: NextFunction) {
     User.findOneAndUpdate(
       { _id: sanitize(req.user._id) },
       {

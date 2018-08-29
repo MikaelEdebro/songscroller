@@ -1,13 +1,14 @@
-const passport = require('passport')
-const GoogleStrategy = require('passport-google-oauth20').Strategy
-const FacebookStrategy = require('passport-facebook').Strategy
-const keys = require('../config/keys')
-const mongoose = require('mongoose')
-const User = mongoose.model('user')
+import passport from 'passport'
+import keys from '../config/keys'
+import passportGoogle from 'passport-google-oauth20'
+import passportFacebook from 'passport-facebook'
+import User, { UserDocument } from '../models/User'
+const GoogleStrategy = passportGoogle.Strategy
+const FacebookStrategy = passportFacebook.Strategy
 
-passport.serializeUser((user, done) => done(null, user.id))
+passport.serializeUser((user: UserDocument, done) => done(null, user.id))
 passport.deserializeUser(async (id, done) => {
-  const user = await User.findById(id)
+  const user: any = await User.findById(id)
   done(null, user)
 })
 
@@ -36,7 +37,7 @@ passport.use(
   )
 )
 
-async function callbackMethod(accessToken, refreshToken, profile, done) {
+async function callbackMethod(accessToken: string, refreshToken: string, profile: any, done: any) {
   const existingUser = await User.findOneAndUpdate(
     {
       userId: profile.id,

@@ -8,10 +8,11 @@
     "npm": "6.2.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
+    "start": "node dist/index.js",
+    "server": "tsc-watch --onSuccess \"node dist/index.js\"",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-prebuild": "tsc",
     "heroku-postbuild":
       "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
     "t": "jest --watch",
@@ -36,6 +37,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-session": "^2.0.0-beta.3",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "express-validator": "^5.2.0",
     "helmet": "^3.12.1",
@@ -46,9 +48,23 @@
     "passport-google-oauth20": "^1.0.0"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/cookie-session": "^2.0.35",
+    "@types/dotenv": "^4.0.3",
+    "@types/express": "^4.16.0",
+    "@types/express-validator": "^3.0.0",
+    "@types/mongo-sanitize": "^1.0.0",
+    "@types/mongoose": "^5.2.7",
+    "@types/morgan": "^1.7.35",
+    "@types/node": "^10.9.3",
+    "@types/passport": "^0.4.6",
+    "@types/passport-facebook": "^2.1.8",
+    "@types/supertest": "^2.0.5",
     "concurrently": "^3.6.0",
     "jest": "^23.5.0",
     "nodemon": "^1.17.5",
-    "supertest": "^3.1.0"
+    "supertest": "^3.1.0",
+    "tsc-watch": "^1.0.27",
+    "typescript": "^3.0.1"
   }
 }

@@ -1,8 +1,8 @@
-const requireLogin = require('../middlewares/requireLogin')
-const validateSong = require('../middlewares/validation/validateSong')
-const SongController = require('../controllers/SongController')
+import requireLogin from '../middlewares/requireLogin'
+import validateSong from '../middlewares/validation/validateSong'
+import SongController from '../controllers/SongController'
 
-module.exports = app => {
+export = app => {
   app.get('/api/songs', requireLogin, SongController.getSongsByUser)
 
   app.get('/api/songs/:id', requireLogin, SongController.getSongById)

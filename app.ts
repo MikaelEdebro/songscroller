@@ -1,6 +1,6 @@
-const express = require('express')
-const path = require('path')
-const keys = require('./config/keys')
+import { default as express, Request, Response } from 'express'
+import path from 'path'
+import keys from './config/keys'
 const passport = require('passport')
 const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')
@@ -11,6 +11,7 @@ const handleErrorMiddleware = require('./middlewares/handleError')
 if (process.env.NODE_ENV !== 'test') {
   const mongoose = require('mongoose')
   mongoose.Promise = global.Promise
+  console.log(keys.mongoURI)
   mongoose.connect(keys.mongoURI, {
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 1000,
@@ -47,7 +48,7 @@ require('./routes/playlistRoutes')(app)
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
 
-  app.get('*', (req, res) => {
+  app.get('*', (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }

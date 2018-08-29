@@ -1,10 +1,10 @@
-const mongoose = require('mongoose')
-const Song = mongoose.model('song')
-const sanitize = require('mongo-sanitize')
-const { validationResult } = require('express-validator/check')
+import Song from '../models/Song'
+import { sanitize } from 'mongo-sanitize'
+import { validationResult } from 'express-validator/check'
+import { Request, Response, NextFunction } from 'express'
 
-module.exports = {
-  getSongsByUser(req, res, next) {
+export = {
+  getSongsByUser(req: Request, res: Response, next: NextFunction) {
     Song.find({
       _user: sanitize(req.user._id),
     })
@@ -14,7 +14,7 @@ module.exports = {
       .catch(next)
   },
 
-  getSongById(req, res, next) {
+  getSongById(req: Request, res: Response, next: NextFunction) {
     Song.findOne({
       _id: sanitize(req.params.id),
       _user: sanitize(req.user._id),
@@ -25,7 +25,7 @@ module.exports = {
       .catch(next)
   },
 
-  create(req, res, next) {
+  create(req: Request, res: Response, next: NextFunction) {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() })
@@ -48,7 +48,7 @@ module.exports = {
       .catch(next)
   },
 
-  edit(req, res, next) {
+  edit(req: Request, res: Response, next: NextFunction) {
     const artist = sanitize(req.body.artist)
     const title = sanitize(req.body.title)
     const body = sanitize(req.body.body)
@@ -70,7 +70,7 @@ module.exports = {
       .catch(next)
   },
 
-  delete(req, res, next) {
+  delete(req: Request, res: Response, next: NextFunction) {
     Song.remove({
       _id: sanitize(req.params.id),
       _user: sanitize(req.user._id),

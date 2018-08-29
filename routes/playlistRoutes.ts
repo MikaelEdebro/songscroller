@@ -1,8 +1,8 @@
-const requireLogin = require('../middlewares/requireLogin')
-const validatePlaylist = require('../middlewares/validation/validatePlaylist')
-const PlaylistController = require('../controllers/PlaylistController')
+import requireLogin from '../middlewares/requireLogin'
+import validatePlaylist from '../middlewares/validation/validatePlaylist'
+import PlaylistController from '../controllers/PlaylistController'
 
-module.exports = app => {
+export = app => {
   app.get('/api/playlists', requireLogin, PlaylistController.getPlaylistsByUser)
 
   app.get('/api/playlists/:id', requireLogin, PlaylistController.getPlaylistById)

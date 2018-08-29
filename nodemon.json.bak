@@ -1,0 +1,12 @@
+{
+  "env": {
+    "BASE_URL": "http://localhost:3000",
+    "COOKIE_KEY": "sdjfksdf",
+    "FACEBOOK_CLIENT_ID": "250667428868111",
+    "FACEBOOK_CLIENT_SECRET": "99b22c0bed58a1d9a24a9d29fc5d16fa",
+    "GOOGLE_CLIENT_ID": "565939582121-5016k50pld3mffgrrm8vefdu7cbnuvp5.apps.googleusercontent.com",
+    "GOOGLE_CLIENT_SECRET": "EzYkYkH72wWh1hmwWHilye8s",
+    "MONGO_URI": "mongodb://localhost:27017/songscroller-dev",
+    "NODE_PATH": "src"
+  }
+}

@@ -1,7 +1,8 @@
-const passport = require('passport')
+import passport from 'passport'
+import { Request, Response } from 'express'
 const LOGIN_REDIRECT_URL = '/songs'
 
-module.exports = app => {
+export = app => {
   app.get('/api/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }))
 
   app.get('/api/auth/google/callback', passport.authenticate('google'), (req, res) => {
@@ -18,7 +19,7 @@ module.exports = app => {
     })
   )
 
-  app.get('/api/auth/logout', (req, res) => {
+  app.get('/api/auth/logout', (req: Request, res: Response) => {
     req.logout()
     res.redirect('/')
   })

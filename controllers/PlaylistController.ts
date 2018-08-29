@@ -1,16 +1,16 @@
-const mongoose = require('mongoose')
-const Playlist = mongoose.model('playlist')
-const { validationResult } = require('express-validator/check')
-const sanitize = require('mongo-sanitize')
+import Playlist from '../models/Playlist'
+import { validationResult } from 'express-validator/check'
+import { sanitize } from 'mongo-sanitize'
+import { Request, Response, NextFunction } from 'express'
 
-module.exports = {
-  getPlaylistsByUser(req, res, next) {
+export = {
+  getPlaylistsByUser(req: Request, res: Response, next: NextFunction) {
     Playlist.find({ _user: sanitize(req.user._id) })
       .then(playlists => res.send(playlists))
       .catch(next)
   },
 
-  getPlaylistById(req, res, next) {
+  getPlaylistById(req: Request, res: Response, next: NextFunction) {
     Playlist.findOne({
       _id: sanitize(req.params.id),
       _user: sanitize(req.user._id),
@@ -20,7 +20,7 @@ module.exports = {
       .catch(next)
   },
 
-  create(req, res, next) {
+  create(req: Request, res: Response, next: NextFunction) {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.status(422).send({ errors: errors.array() })
@@ -34,7 +34,7 @@ module.exports = {
       .catch(next)
   },
 
-  edit(req, res, next) {
+  edit(req: Request, res: Response, next: NextFunction) {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.status(422).send({ errors: errors.array() })
@@ -53,7 +53,7 @@ module.exports = {
       .catch(next)
   },
 
-  delete(req, res, next) {
+  delete(req: Request, res: Response, next: NextFunction) {
     Playlist.findOneAndRemove({
       _id: sanitize(req.params.id),
       _user: sanitize(req.user._id),
