@@ -1,10 +1,24 @@
-const request = require('supertest')
-const app = require('../../app')
-const mockUser = require('../mocks').user
-
-process.env.TEST_SUITE = 'usercontroller-test'
+import request from 'supertest'
+import app from '../../app'
+import mockUser from '../mocks/user'
+import { User } from '../../models'
+import mongoose from 'mongoose'
 
 describe('UserController', () => {
+  let db
+
+  beforeAll(async () => {
+    db = await mongoose.connect('mongodb://localhost:27017/songscroller-test')
+  })
+
+  beforeEach(async () => {
+    await User.remove({})
+  })
+
+  afterAll(async () => {
+    db.close()
+  })
+
   test('GET to /api/user/current_user fetches logged in user', async done => {
     request(app)
       .get('/api/user/current_user')
@@ -23,7 +37,6 @@ describe('UserController', () => {
       .send({ settings: { darkMode: true } })
       .end((err, response) => {
         const user = response.body
-        console.log(user)
         expect(user.settings.darkMode).toBe(true)
         done()
       })
