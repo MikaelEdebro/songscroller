@@ -4,6 +4,7 @@ import validatePlaylist from '../middlewares/validation/validatePlaylist'
 import { playlistService } from '../services'
 
 const router = Router()
+
 router.get('/playlists', requireLogin, (req: Request, res: Response, next: NextFunction) => {})
 
 router.get('/playlists/:id', requireLogin, (req: Request, res: Response, next: NextFunction) => {})
