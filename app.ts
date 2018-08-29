@@ -27,7 +27,7 @@ app.use(helmet())
 app.use(bodyParser.json())
 app.use(
   cookieSession({
-    name: 'kdkd',
+    name: 'KSJEEKKSSKM',
     maxAge: 30 * 24 * 60 * 60 * 1000,
     keys: [keys.cookieKey],
   })
@@ -43,7 +43,7 @@ app.use('/api', authController, userController, songController, playlistControll
 
 // serve up react app in prod
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'))
+  app.use(express.static('../client/build'))
 
   app.get('*', (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, '../client/build/index.html'))
