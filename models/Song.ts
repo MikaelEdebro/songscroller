@@ -23,5 +23,4 @@ const songSchema = new Schema({
   createdDate: { type: Date, default: new Date() },
 })
 
-const Song = mongoose.model('song', songSchema)
-export default Song
+export default mongoose.model('song', songSchema)

@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
-const User = mongoose.model('user')
+import { User } from '../models'
 
 export const user = new User({})

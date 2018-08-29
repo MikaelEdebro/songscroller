@@ -1,6 +1,6 @@
 import { check } from 'express-validator/check'
 
-export = [
+export default [
   check('title')
     .not()
     .isEmpty()

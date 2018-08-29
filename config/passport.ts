@@ -1,17 +1,18 @@
 import passport from 'passport'
-import keys from '../config/keys'
+import keys from './keys'
 import passportGoogle from 'passport-google-oauth20'
 import passportFacebook from 'passport-facebook'
 import User, { UserDocument } from '../models/User'
 const GoogleStrategy = passportGoogle.Strategy
 const FacebookStrategy = passportFacebook.Strategy
 
+console.log('REGISTER PASSPORT')
+console.log(keys)
 passport.serializeUser((user: UserDocument, done) => done(null, user.id))
 passport.deserializeUser(async (id, done) => {
   const user: any = await User.findById(id)
   done(null, user)
 })
-
 // Google Auth
 passport.use(
   new GoogleStrategy(

@@ -1,4 +1,4 @@
-import { default as mongoose, Document } from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 const Schema = mongoose.Schema
 
 export type UserDocument = Document & {
@@ -24,5 +24,4 @@ const userSchema = new Schema({
 })
 
 const User = mongoose.model('user', userSchema)
-
 export default User

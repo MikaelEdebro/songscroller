@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 export interface ConfigKeys {
   baseUrl: string
   cookieKey: string

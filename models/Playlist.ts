@@ -20,5 +20,4 @@ const playlistSchema = new Schema({
   createdDate: { type: Date, default: new Date() },
 })
 
-const Playlist = mongoose.model('playlist', playlistSchema)
-export default Playlist
+export default mongoose.model('playlist', playlistSchema)
