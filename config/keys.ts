@@ -21,16 +21,16 @@ let keys: ConfigKeys = {
   facebookClientSecret: process.env.FACEBOOK_CLIENT_SECRET || '',
 }
 
-if (process.env.NODE_ENV === 'test') {
-  keys = {
-    baseUrl: 'http://localhost:3000',
-    cookieKey: 'dev_fsddesdf234323',
-    mongoURI: 'mongodb://songscroller-dev:C36SwfyfF8i2@ds139251.mlab.com:39251/songscroller-dev',
-    googleClientID: '565939582121-5016k50pld3mffgrrm8vefdu7cbnuvp5.apps.googleusercontent.com',
-    googleClientSecret: 'EzYkYkH72wWh1hmwWHilye8s',
-    facebookClientID: '250667428868111',
-    facebookClientSecret: '99b22c0bed58a1d9a24a9d29fc5d16fa',
-  }
-}
+// if (process.env.NODE_ENV === 'test') {
+//   keys = {
+//     baseUrl: 'http://localhost:3000',
+//     cookieKey: 'dev_fsddesdf234323',
+//     mongoURI: 'mongodb://songscroller-dev:C36SwfyfF8i2@ds139251.mlab.com:39251/songscroller-dev',
+//     googleClientID: '565939582121-5016k50pld3mffgrrm8vefdu7cbnuvp5.apps.googleusercontent.com',
+//     googleClientSecret: 'EzYkYkH72wWh1hmwWHilye8s',
+//     facebookClientID: '250667428868111',
+//     facebookClientSecret: '99b22c0bed58a1d9a24a9d29fc5d16fa',
+//   }
+// }
 
 export default keys

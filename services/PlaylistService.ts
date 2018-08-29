@@ -1,4 +1,3 @@
-import { sanitize } from 'mongo-sanitize'
 import { Playlist } from '../models'
 
 export default class PlaylistService {
@@ -21,9 +20,9 @@ export default class PlaylistService {
 
   create = async (playlist: any) => {
     return await this.Playlist.create({
-      title: sanitize(playlist.title),
-      songs: sanitize(playlist.songs),
-      _user: sanitize(playlist._user),
+      title: playlist.title,
+      songs: playlist.songs,
+      _user: playlist._user,
     })
   }
 
@@ -31,8 +30,8 @@ export default class PlaylistService {
     return await this.Playlist.findOneAndUpdate(
       { _id: playlistId, _user: userId },
       {
-        title: sanitize(playlist.title),
-        songs: sanitize(playlist.songs),
+        title: playlist.title,
+        songs: playlist.songs,
       },
       { new: true }
     ).populate('songs')

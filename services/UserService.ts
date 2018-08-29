@@ -1,7 +1,7 @@
-import { sanitize } from 'mongo-sanitize'
 import { Request } from 'express'
 import { User } from '../models'
 import { user as mockedUser } from '../test/mocks'
+
 const isTestMode = process.env.NODE_ENV === 'test'
 
 export default class UserService {
@@ -23,7 +23,7 @@ export default class UserService {
     return await this.User.findOneAndUpdate(
       { _id: userId },
       {
-        settings: sanitize(values),
+        settings: values,
       },
       { new: true }
     )

@@ -5,8 +5,8 @@ import passport from 'passport'
 import cookieSession from 'cookie-session'
 import bodyParser from 'body-parser'
 import helmet from 'helmet'
+import mongoSanitize from 'express-mongo-sanitize'
 import handleErrorMiddleware from './middlewares/handleError'
-import { User, Song, Playlist } from './models'
 import { authController, userController, songController, playlistController } from './controllers'
 
 // mongoose config
@@ -35,8 +35,11 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
+// sanitize req.body to prevent operator injection
+app.use(mongoSanitize())
+
 // controllers
-app.use('/', authController, userController, songController, playlistController)
+app.use('/api', authController, userController, songController, playlistController)
 
 // serve up react app in prod
 if (process.env.NODE_ENV === 'production') {

@@ -1,4 +1,3 @@
-import { sanitize } from 'mongo-sanitize'
 import { Song } from '../models'
 
 export default class SongService {
@@ -22,18 +21,14 @@ export default class SongService {
   }
 
   create = async (userId: string, song: any) => {
-    const sanitizedSong = sanitizeSong(song)
-
     return await this.Song.create({
-      ...sanitizedSong,
+      ...song,
       _user: userId,
     })
   }
 
   edit = async (userId: string, songId: string, song: any) => {
-    const sanitizedSong = sanitizeSong(song)
-
-    return await this.Song.findOneAndUpdate({ _id: songId, _user: userId }, sanitizedSong, {
+    return await this.Song.findOneAndUpdate({ _id: songId, _user: userId }, song, {
       new: true,
     })
   }
@@ -43,15 +38,5 @@ export default class SongService {
       _id: songId,
       _user: userId,
     })
-  }
-}
-
-function sanitizeSong(song: any) {
-  return {
-    artist: sanitize(song.artist),
-    title: sanitize(song.title),
-    body: sanitize(song.body),
-    fontSizes: sanitize(song.fontSizes),
-    useMonospaceFont: sanitize(song.useMonospaceFont),
   }
 }
