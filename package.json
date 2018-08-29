@@ -21,8 +21,7 @@
   "jest": {
     "testPathIgnorePatterns": ["/node_modules/", "/client/"],
     "testEnvironment": "node",
-    "verbose": false,
-    "setupTestFrameworkScriptFile": "./test/setup.js"
+    "verbose": false
   },
   "repository": {
     "type": "git",
