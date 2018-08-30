@@ -8,7 +8,7 @@
     "npm": "6.2.0"
   },
   "scripts": {
-    "start": "node -r ts-node/register ./server/src/index.ts",
+    "start": "ts-node server/src/index.ts",
     "dev": "concurrently \"nodemon\" \"npm start --prefix client\"",
     "heroku-postbuild":
       "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
@@ -52,9 +52,7 @@
     "mongoose": "^5.1.7",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
-    "passport-google-oauth20": "^1.0.0",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.0.1"
+    "passport-google-oauth20": "^1.0.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
@@ -75,6 +73,8 @@
     "jest": "^23.5.0",
     "nodemon": "^1.17.5",
     "supertest": "^3.1.0",
-    "ts-jest": "^23.1.4"
+    "ts-jest": "^23.1.4",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
   }
 }
