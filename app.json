@@ -1,0 +1,47 @@
+{
+  "name": "songscroller",
+  "scripts": {
+  },
+  "env": {
+    "BASE_URL": {
+      "required": true
+    },
+    "COOKIE_KEY": {
+      "required": true
+    },
+    "FACEBOOK_CLIENT_ID": {
+      "required": true
+    },
+    "FACEBOOK_CLIENT_SECRET": {
+      "required": true
+    },
+    "GOOGLE_CLIENT_ID": {
+      "required": true
+    },
+    "GOOGLE_CLIENT_SECRET": {
+      "required": true
+    },
+    "MONGO_URI": {
+      "required": true
+    },
+    "NODE_PATH": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
