@@ -1,6 +1,6 @@
 import { Request } from 'express'
 import { User } from '../models'
-import mockedUser from '../tests/mocks/user'
+import mockedUser from '../../tests/mocks/user'
 
 const isTestMode = process.env.NODE_ENV === 'test'
 

@@ -1,7 +1,7 @@
 import request from 'supertest'
-import app from '../../app'
+import app from '../../src/app'
 import mockUser from '../mocks/user'
-import { User } from '../../models'
+import { User } from '../../src/models'
 import mongoose from 'mongoose'
 
 describe('UserController', () => {

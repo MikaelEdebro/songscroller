@@ -1,6 +1,6 @@
 import request from 'supertest'
-import app from '../../app'
-import { User, Song } from '../../models'
+import app from '../../src/app'
+import { User, Song } from '../../src/models'
 import mockUser from '../mocks/user'
 import mongoose from 'mongoose'
 
