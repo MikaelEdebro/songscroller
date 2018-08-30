@@ -52,7 +52,9 @@
     "mongoose": "^5.1.7",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
-    "passport-google-oauth20": "^1.0.0"
+    "passport-google-oauth20": "^1.0.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
@@ -73,8 +75,6 @@
     "jest": "^23.5.0",
     "nodemon": "^1.17.5",
     "supertest": "^3.1.0",
-    "ts-jest": "^23.1.4",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.0.1"
+    "ts-jest": "^23.1.4"
   }
 }
