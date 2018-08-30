@@ -1,4 +1,4 @@
-import { default as mongoose, Document } from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 const Schema = mongoose.Schema
 
 export type PlaylistDocument = Document & {

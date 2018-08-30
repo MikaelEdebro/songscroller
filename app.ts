@@ -7,7 +7,13 @@ import bodyParser from 'body-parser'
 import helmet from 'helmet'
 import mongoSanitize from 'express-mongo-sanitize'
 import handleErrorMiddleware from './middlewares/handleError'
-import { authController, userController, songController, playlistController } from './controllers'
+import {
+  authController,
+  userController,
+  songController,
+  playlistController,
+  seedController,
+} from './controllers'
 
 // mongoose config
 if (process.env.NODE_ENV !== 'test') {
@@ -39,7 +45,7 @@ app.use(passport.session())
 app.use(mongoSanitize())
 
 // controllers
-app.use('/api', authController, userController, songController, playlistController)
+app.use('/api', authController, userController, songController, playlistController, seedController)
 
 // serve up react app in prod
 if (process.env.NODE_ENV === 'production') {
