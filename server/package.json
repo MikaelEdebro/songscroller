@@ -8,6 +8,7 @@
     "npm": "6.2.0"
   },
   "scripts": {
+    "start:server": "ts-node ./src/index.ts",
     "dev": "concurrently \"nodemon\" \"npm run dev:client\"",
     "dev:client": "cd ../client && npm start",
     "test": "jest --detectOpenHandles",

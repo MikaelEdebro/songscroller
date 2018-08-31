@@ -12,7 +12,7 @@
     "postinstall": "npm run build:client",
     "build:client": "cd ./client && npm run build",
     "start": "npm run start:prod",
-    "start:prod": "cd ./server && ./node_modules/.bin/ts-node ./src/index.ts",
+    "start:prod": "cd server && npm run start:server",
     "dev": "cd ./server && npm run dev",
     "test": "cd ./server && npm run test",
     "test:watch": "cd ./server && npm run test:watch"
