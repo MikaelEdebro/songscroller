@@ -9,9 +9,10 @@ import { Song } from '../models'
 const router = Router()
 
 router.get('/songs', requireLogin, async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.user._id
   let err
   let songs
-  ;[err, songs] = await to(songService.getSongsByUser(req.user._id.toString()))
+  ;[err, songs] = await to(songService.getSongsByUser(userId.toString()))
   if (err) {
     return next(err)
   }
@@ -50,7 +51,23 @@ router.put(
   '/songs/:id',
   requireLogin,
   validateSong,
-  (req: Request, res: Response, next: NextFunction) => {}
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { artist, title, body, useMonospaceFont } = req.body
+    const songValues = {
+      artist,
+      title,
+      body,
+      useMonospaceFont,
+    }
+    let err
+    let song
+    ;[err, song] = await to(songService.edit(req.user._id, req.params.id, songValues))
+    if (err) {
+      return next(err)
+    }
+
+    res.send(song)
+  }
 )
 
 router.delete(

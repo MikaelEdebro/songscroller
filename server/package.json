@@ -10,19 +10,14 @@
   "scripts": {
     "dev": "concurrently \"nodemon\" \"npm run dev:client\"",
     "dev:client": "cd ../client && npm start",
-    "t": "jest --watch --detectOpenHandles",
-    "test": "jest --runInBand"
+    "test": "jest --detectOpenHandles",
+    "test:watch": "jest --watch --detectOpenHandles"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "/client/", "/dist/"],
+    "testPathIgnorePatterns": ["/node_modules/", "/build/"],
     "moduleFileExtensions": ["ts", "tsx", "js"],
     "transform": {
       "\\.(ts|tsx)$": "ts-jest"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfigFile": "tsconfig.json"
-      }
     },
     "testEnvironment": "node",
     "verbose": false,

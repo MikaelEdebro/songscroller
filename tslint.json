@@ -25,7 +25,8 @@
     "no-var-requires": false,
     "align": false,
     "no-empty": false,
-    "whitespace": false
+    "whitespace": false,
+    "interface-name": false
   },
   "rulesDirectory": []
 }
