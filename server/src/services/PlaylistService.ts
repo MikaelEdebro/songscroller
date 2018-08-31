@@ -18,11 +18,11 @@ export default class PlaylistService {
     }).populate('songs')
   }
 
-  create = async (playlist: any) => {
+  create = async (userId: string, playlist: any) => {
     return await this.Playlist.create({
       title: playlist.title,
       songs: playlist.songs,
-      _user: playlist._user,
+      _user: userId,
     })
   }
 

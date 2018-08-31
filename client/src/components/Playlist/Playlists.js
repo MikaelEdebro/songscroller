@@ -7,6 +7,7 @@ import AddIcon from '@material-ui/icons/Add'
 import Typography from '@material-ui/core/Typography'
 import ListItem from '../core/ListItem'
 import PlaylistMenu from './PlaylistMenu'
+import AddButtonBig from '../core/AddButtonBig'
 
 const styles = theme => {
   return {
@@ -42,12 +43,24 @@ class Playlists extends React.Component {
 
   render() {
     const { classes } = this.props
+    const noPlaylistsAdded = !this.props.playlists.length
+
     return (
       <div className="container padding-12">
         <Typography variant="display3" gutterBottom>
           Playlists
         </Typography>
         <div className={classes.playlistsWrapper}>{this.renderPlaylists()}</div>
+
+        {noPlaylistsAdded && (
+          <AddButtonBig
+            icon="playlist_play"
+            description="You havn't added any playlists!"
+            buttonText="Add playlist"
+            clicked={() => this.props.history.push('/playlists/add')}
+          />
+        )}
+
         <Button
           variant="fab"
           color="secondary"
