@@ -58,6 +58,5 @@ typings/
 .env
 
 # custom files and folders
-nodemon.json
 build
 dist
