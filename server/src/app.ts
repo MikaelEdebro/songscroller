@@ -4,6 +4,7 @@ import keys from './config/keys'
 import passport from 'passport'
 import cookieSession from 'cookie-session'
 import bodyParser from 'body-parser'
+import compression from 'compression'
 import helmet from 'helmet'
 import mongoSanitize from 'express-mongo-sanitize'
 import handleErrorMiddleware from './middlewares/handleError'
@@ -33,6 +34,7 @@ require('./config/passport')
 const app = express()
 app.use(helmet())
 app.use(bodyParser.json())
+app.use(compression())
 app.use(
   cookieSession({
     name: 'KSJEEKKSSKM',
