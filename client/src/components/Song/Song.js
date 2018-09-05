@@ -38,19 +38,15 @@ const BodyWrapper = styled.div`
 `
 
 class Song extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      formattedBody: new SongFormatter(this.props.song.body)
-        .removeWhitespaceOnEndOfRow()
-        .replaceTabsForSpaces()
-        .highlightChordRows()
-        .highlightChords()
-        .replaceRowBreaks()
-        .divideIntoSections()
-        .getFormattedSong(),
-    }
+  state = {
+    formattedBody: new SongFormatter(this.props.song.body)
+      .removeWhitespaceOnEndOfRow()
+      .replaceTabsForSpaces()
+      .highlightChordRows()
+      .highlightChords()
+      .replaceRowBreaks()
+      .divideIntoSections()
+      .getFormattedSong(),
   }
 
   componentDidUpdate(prevProps, prevState) {

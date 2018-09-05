@@ -21,6 +21,7 @@ class SongContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.props.clearSelectedSong()
     this.props.fetchAndSelectSong(this.props.match.params.id)
 
     window.addEventListener('resize', this.updateViewportWidth)
@@ -217,6 +218,7 @@ const mapDispatchToProps = dispatch => ({
   toggleControls: value => dispatch(actions.toggleControls(value)),
   scrollComplete: () => dispatch(actions.scrollComplete()),
   editSong: (songId, values) => dispatch(actions.editSong(songId, values)),
+  clearSelectedSong: () => dispatch(actions.clearSelectedSong()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongContainer)
