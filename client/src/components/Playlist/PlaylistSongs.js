@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { reorder } from '../../core/utility'
 import * as actions from '../../actions'
@@ -70,8 +71,8 @@ class PlaylistSongs extends Component {
     this.props.savePlaylistLocal(playlist)
   }
 
-  handleSongClick = () => {
-    console.log('song click')
+  handleSongClick = songId => {
+    this.props.history.push(`/songs/${songId}?playlist=true`)
   }
 
   deleteSongFromPlaylist = songIndex => {
@@ -115,7 +116,7 @@ class PlaylistSongs extends Component {
                       style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                     >
                       <ListItem
-                        clicked={this.handleSongClick}
+                        clicked={() => this.handleSongClick(item._id)}
                         actionComponent={<DeleteIcon songIndex={index} />}
                       >
                         {index + 1}. {item.artist} - {item.title}
@@ -140,5 +141,6 @@ const mapDispatchToProps = dispatch => ({
 
 PlaylistSongs = connect(null, mapDispatchToProps)(PlaylistSongs)
 PlaylistSongs = withStyles(styles)(PlaylistSongs)
+PlaylistSongs = withRouter(PlaylistSongs)
 
 export default PlaylistSongs

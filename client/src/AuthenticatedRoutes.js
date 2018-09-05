@@ -43,7 +43,7 @@ export default props => (
     <Route exact path="/dashboard" component={Dashboard} />
     <Route exact path="/songs/add" component={AddSong} />
     <Route exact path="/songs/edit/:id" component={EditSong} />
-    <Route exact path="/songs/:id" component={SongContainer} />
+    <Route exact path="/songs/:id" component={SongContainer} key={document.location.href} />
     <Route exact path="/songs" component={SongsContainer} key={document.location.href} />
     <Route exact path="/playlists/add" component={AddPlaylist} />
     <Route exact path="/playlists/edit/:id" component={EditPlaylist} />

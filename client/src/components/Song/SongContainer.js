@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
+import * as qs from 'query-string'
 import Song from './Song'
 import SongControls from './SongControls'
 import Wrapper from '../../hoc/Wrapper'
@@ -129,6 +129,24 @@ class SongContainer extends React.Component {
     this.props.toggleControls(!this.props.showControls)
   }
 
+  changeSongInPlaylist = number => {
+    const playlistSongs = this.props.selectedPlaylist.songs
+    const currentSongIndex = playlistSongs.findIndex(s => s._id === this.props.match.params.id)
+    if (currentSongIndex < 0) {
+      return
+    }
+    let nextSongIndex = currentSongIndex + number
+    if (nextSongIndex >= playlistSongs.length) {
+      nextSongIndex = 0
+    }
+    if (nextSongIndex < 0) {
+      nextSongIndex = playlistSongs.length - 1
+    }
+
+    const nextSong = this.props.selectedPlaylist.songs[nextSongIndex]
+    this.props.history.push(`/songs/${nextSong._id}?playlist=true`)
+  }
+
   render() {
     const fontSize = getFontSize(this.props.selectedSong)
     return (
@@ -154,19 +172,23 @@ class SongContainer extends React.Component {
           showSettings={this.state.showSettings}
           toggleSettings={this.toggleSettings}
           scrollSpeed={this.state.scrollSpeed}
+          isPlaylistMode={qs.parse(document.location.search).playlist}
+          nextSongInPlaylist={() => this.changeSongInPlaylist(1)}
+          previousSongInPlaylist={() => this.changeSongInPlaylist(-1)}
         />
       </Wrapper>
     )
   }
 }
 
-const mapStateToProps = ({ song }) => ({
+const mapStateToProps = ({ song, playlist }) => ({
   selectedSong: song.selectedSong,
   showControls: song.showControls,
   isPaused: song.isPaused,
   isScrolling: song.isScrolling,
   isInReplayTransition: song.isInReplayTransition,
   shouldSaveUpdatedSong: song.shouldSaveUpdatedSong,
+  selectedPlaylist: playlist.selectedPlaylist,
 })
 
 const mapDispatchToProps = dispatch => ({

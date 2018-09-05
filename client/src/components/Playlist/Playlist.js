@@ -124,8 +124,9 @@ class Playlist extends React.Component {
     ))
   }
 
-  play = songId => {
-    console.log('play ', songId)
+  play = () => {
+    const firstSongId = this.props.selectedPlaylist.songs[0]._id
+    this.props.history.push(`/songs/${firstSongId}?playlist=true`)
   }
 
   render() {
