@@ -10,7 +10,6 @@ import * as actions from '../../../actions'
 class PlaylistForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault()
-    console.log('submit', this.props.playlistFormValues)
 
     const playlist = {
       ...this.props.selectedPlaylist,

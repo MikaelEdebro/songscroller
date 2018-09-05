@@ -1,14 +1,26 @@
 import express, { Request, Response, NextFunction } from 'express'
 import requireLogin from '../middlewares/requireLogin'
+import requireAdminStatus from '../middlewares/requireAdminStatus'
 import { seedService } from '../services'
 const router = express.Router()
 
-router.post(
+router.get(
   '/seed/songs',
   requireLogin,
-  async (req: Request, res: Response, next: NextFunction) => {
-    await seedService.seedSongs(req.user._id)
-    res.send({})
+  requireAdminStatus,
+  async (req: any, res: Response, next: NextFunction) => {
+    await seedService.seedSongs(req.user._id.toString())
+    res.send('Songs seeded correctly')
+  }
+)
+
+router.get(
+  '/seed/songs/delete',
+  requireLogin,
+  requireAdminStatus,
+  async (req: any, res: Response, next: NextFunction) => {
+    await seedService.removeSeedData(req.user._id.toString())
+    res.send('Songs removed correctly')
   }
 )
 

@@ -10,6 +10,7 @@ export type SongDocument = Document & {
   useMonospaceFont: boolean
   _user: typeof Schema.Types.ObjectId
   createdDate: Date
+  isSeedData: boolean
 }
 
 const songSchema = new Schema({
@@ -21,6 +22,7 @@ const songSchema = new Schema({
   useMonospaceFont: { type: Boolean, default: true },
   _user: { type: Schema.Types.ObjectId, ref: 'User' },
   createdDate: { type: Date, default: new Date() },
+  isSeedData: Boolean,
 })
 
 export default mongoose.model('song', songSchema)

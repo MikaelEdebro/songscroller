@@ -7,6 +7,6 @@ import { User, Song, Playlist } from '../models'
 const userService = new UserService(User)
 const songService = new SongService(Song)
 const playlistService = new PlaylistService(Playlist)
-const seedService = new SeedService()
+const seedService = new SeedService(Song)
 
 export { userService, songService, playlistService, seedService }
