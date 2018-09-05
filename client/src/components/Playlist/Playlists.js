@@ -16,6 +16,7 @@ const styles = theme => {
       position: 'fixed',
       bottom: '10px',
       right: '10px',
+      background: 'linear-gradient(135.41deg, #B46DCF 8.4%, #651882 97.09%)',
     },
     playlistsWrapper: {
       paddingBottom: 70,

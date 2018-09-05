@@ -31,6 +31,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
   },
   playButton: {
+    background: 'linear-gradient(135.41deg, #B46DCF 8.4%, #651882 97.09%)',
     [theme.breakpoints.down('xs')]: {
       width: 50,
       height: 50,
@@ -116,7 +117,7 @@ const SongControls = props => {
                 title={props.isScrolling ? 'Pause' : 'Play'}
                 className={classes.playButton}
               >
-                <Icon style={{ fontSize: 36 }} className={classes.icon}>
+                <Icon style={{ fontSize: 36, color: 'white' }} className={classes.icon}>
                   {props.isScrolling ? 'pause' : 'play_arrow'}
                 </Icon>
               </Button>
@@ -127,9 +128,7 @@ const SongControls = props => {
                 title="Replay"
                 className={classes.iconButton}
               >
-                <Icon style={{ fontSize: 34 }} className={classes.replayButton}>
-                  replay
-                </Icon>
+                <Icon className={classes.replayButton}>replay</Icon>
               </IconButton>
             </Grid>
           </Grid>

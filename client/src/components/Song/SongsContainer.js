@@ -21,6 +21,7 @@ const styles = theme => {
       position: 'fixed',
       bottom: 10,
       right: 10,
+      background: 'linear-gradient(135.41deg, #B46DCF 8.4%, #651882 97.09%)',
     },
     songsWrapper: {
       paddingBottom: 70,

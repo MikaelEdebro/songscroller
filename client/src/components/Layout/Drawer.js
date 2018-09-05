@@ -12,6 +12,7 @@ import Switch from '@material-ui/core/Switch'
 import Icon from '@material-ui/core/Icon'
 import Divider from '@material-ui/core/Divider'
 import { toggleFullscreen } from '../../core/ui-helpers'
+import Logo from './Logo'
 
 const Drawer = props => (
   <SwipeableDrawer
@@ -19,6 +20,7 @@ const Drawer = props => (
     onClose={() => props.toggleDrawer(false)}
     onOpen={() => props.toggleDrawer(true)}
   >
+    <Logo adjustSize padding={'10px 10px 0'} maxWidth={'240px'} />
     <List component="nav">
       <ListItem button onClick={() => props.goToRoute('/songs')}>
         <ListItemIcon>
