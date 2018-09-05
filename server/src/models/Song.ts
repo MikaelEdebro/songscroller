@@ -1,17 +1,18 @@
 import mongoose, { Document } from 'mongoose'
 const Schema = mongoose.Schema
 
-export type SongDocument = Document & {
+export type SongSchema = {
   artist: string
   title: string
   body: string
-  seconds: number
-  fontSizes: number[]
-  useMonospaceFont: boolean
-  _user: typeof Schema.Types.ObjectId
-  createdDate: Date
-  isSeedData: boolean
+  seconds?: number
+  fontSizes?: number[]
+  useMonospaceFont?: boolean
+  _user?: typeof Schema.Types.ObjectId
+  createdDate?: Date
+  isSeedData?: boolean
 }
+export type SongDocument = Document & SongSchema
 
 const songSchema = new Schema({
   artist: String,

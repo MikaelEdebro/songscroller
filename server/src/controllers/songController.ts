@@ -4,6 +4,7 @@ import validateSong from '../middlewares/validation/validateSong'
 import { songService } from '../services'
 import to from 'await-to-js'
 import { validationResult } from 'express-validator/check'
+import { SongSchema } from '../models/Song'
 
 const router = Router()
 
@@ -50,12 +51,15 @@ router.put(
   requireLogin,
   validateSong,
   async (req: any, res: Response, next: NextFunction) => {
-    const { artist, title, body, useMonospaceFont } = req.body
-    const songValues = {
+    const { artist, title, body, useMonospaceFont, fontSizes } = req.body
+    const songValues: SongSchema = {
       artist,
       title,
       body,
       useMonospaceFont,
+    }
+    if (fontSizes.length) {
+      songValues.fontSizes = fontSizes
     }
     let err
     let song
