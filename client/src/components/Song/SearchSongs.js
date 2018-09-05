@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
 
 const SearchSongsInput = styled.div`
-  display: block;
+  display: inline-block;
   position: relative;
   max-width: 400px;
   margin: 0 auto 20px;
@@ -31,13 +31,13 @@ const searchSongs = ({ query, onChange }) => (
       value={query}
       onChange={event => onChange(event.target.value)}
     />
-    {query ? (
+    {query && (
       <ClearInput>
         <IconButton color="inherit" onClick={() => onChange('')} aria-label="Clear">
           <Icon>clear</Icon>
         </IconButton>
       </ClearInput>
-    ) : null}
+    )}
   </SearchSongsInput>
 )
 

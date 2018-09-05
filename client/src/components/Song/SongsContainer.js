@@ -86,13 +86,13 @@ class SongsContainer extends React.Component {
 
     return (
       <div className="container padding-12">
-        <Grid container justify="space-between">
-          <Grid item xs={6} sm={6}>
+        <Grid container>
+          <Grid item xs={6}>
             <Typography variant="display2" gutterBottom>
               Songs
             </Typography>
           </Grid>
-          <Grid item align="right" xs={6} sm={6}>
+          <Grid item align="right" xs={6}>
             <SearchSongs query={this.state.query} onChange={this.handleQueryChange} />
           </Grid>
         </Grid>
