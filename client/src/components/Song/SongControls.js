@@ -106,7 +106,6 @@ const SongControls = props => {
               </IconButton>
             </Grid>
           )}
-
           <Grid item>
             <Grid container alignItems="center">
               <Button
@@ -121,15 +120,6 @@ const SongControls = props => {
                   {props.isScrolling ? 'pause' : 'play_arrow'}
                 </Icon>
               </Button>
-
-              <IconButton
-                color="inherit"
-                onClick={props.replay}
-                title="Replay"
-                className={classes.iconButton}
-              >
-                <Icon className={classes.replayButton}>replay</Icon>
-              </IconButton>
             </Grid>
           </Grid>
           {props.isPlaylistMode && (
@@ -144,6 +134,14 @@ const SongControls = props => {
               </IconButton>
             </Grid>
           )}
+          <IconButton
+            color="inherit"
+            onClick={props.replay}
+            title="Replay"
+            className={classes.iconButton}
+          >
+            <Icon className={classes.replayButton}>replay</Icon>
+          </IconButton>
         </Grid>
         <Grid item xs={2} sm={3} align="right">
           <IconButton
