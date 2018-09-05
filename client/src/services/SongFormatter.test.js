@@ -108,6 +108,19 @@ describe('SongFormatter', () => {
     const formattedSong = formatSong(song)
     expect(formattedSong).toContain('<chord>G\\B</chord>')
   })
+
+  test('divides into sections for desktop formatting', () => {
+    const song = `
+    A    A7     G\\B    C                          D
+    preguntar -me urge-, ?que tipo de adjetivos
+
+    A    G   F7
+    Sing along
+    `
+
+    const formattedSong = formatSong(song)
+    expect(formattedSong).toContain('<br><br><section>')
+  })
 })
 
 function formatSong(song) {
@@ -117,5 +130,6 @@ function formatSong(song) {
     .highlightChordRows()
     .highlightChords()
     .replaceRowBreaks()
+    .divideIntoSections()
     .getFormattedSong()
 }

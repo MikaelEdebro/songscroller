@@ -58,5 +58,13 @@ export default class SongFormatter {
     return this
   }
 
+  divideIntoSections = () => {
+    this.song = `<section>${this.song.replace(
+      /<br><br>/g,
+      '</section><br><br><section>'
+    )}</section>`
+    return this
+  }
+
   getFormattedSong = () => this.song
 }

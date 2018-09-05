@@ -48,6 +48,7 @@ class Song extends React.Component {
         .highlightChordRows()
         .highlightChords()
         .replaceRowBreaks()
+        .divideIntoSections()
         .getFormattedSong(),
     }
   }
