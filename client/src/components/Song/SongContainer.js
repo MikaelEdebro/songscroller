@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as qs from 'query-string'
+import qs from 'query-string'
 import Song from './Song'
 import SongControls from './SongControls'
 import Wrapper from '../../hoc/Wrapper'
