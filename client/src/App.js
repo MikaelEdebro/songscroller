@@ -3,7 +3,7 @@ import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Layout from './components/Layout/Layout'
-import Landing from './components/Landing'
+import Landing from './components/LoginPage'
 import * as actions from './actions'
 import ScrollToTop from './hoc/ScrollToTop'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'

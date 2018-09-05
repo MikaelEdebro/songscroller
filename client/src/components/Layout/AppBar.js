@@ -82,7 +82,7 @@ class ButtonAppBar extends React.Component {
               <Icon>menu</Icon>
             </IconButton>
             <Typography variant="title" color="inherit" className={classes.flex}>
-              <Logo />
+              <Logo textOnly />
             </Typography>
 
             <IconButton

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import siteConfig from '../../siteConfig'
+import logoUrl from '../../assets/songscroller-logo.svg'
 
 const LogoWrapper = styled.div`
   height: 100%;
@@ -23,12 +24,7 @@ const LogoWrapper = styled.div`
 const Logo = props => (
   <LogoWrapper>
     <Link to={props.isAuthenticated ? '/dashboard' : '/'}>
-      {/* <img
-        src="http://www.djdesignerlab.com/wp-content/uploads/2013/07/paperclip_logo_1.jpg"
-        alt=""
-        width="180"
-      /> */}
-      {siteConfig.name}
+      {props.textOnly ? siteConfig.name : <img src={logoUrl} alt={siteConfig.name} />}
     </Link>
   </LogoWrapper>
 )
