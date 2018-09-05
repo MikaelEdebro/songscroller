@@ -1,5 +1,5 @@
-function tick() {
-  console.log('hehe')
+const Private = ({ component: Component, test: gargamel }) => {
+  console.log(Component, gargamel)
 }
 
-setInterval(tick, 1000)
+Private({ component: 'Yeah', test: true })

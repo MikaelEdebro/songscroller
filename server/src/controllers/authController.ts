@@ -26,7 +26,7 @@ router.get(
 
 router.get('/auth/logout', (req: Request, res: Response) => {
   req.logout()
-  res.redirect('/')
+  res.redirect('/?logout=true')
 })
 
 export default router

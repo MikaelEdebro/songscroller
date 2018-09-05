@@ -1,9 +1,9 @@
 import React from 'react'
-import { Route, withRouter, Switch, Redirect } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Layout from './components/Layout/Layout'
-import Landing from './components/LoginPage'
+import LoginPage from './components/LoginPage'
 import * as actions from './actions'
 import ScrollToTop from './hoc/ScrollToTop'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
@@ -11,10 +11,12 @@ import deepPurple from '@material-ui/core/colors/deepPurple'
 import pink from '@material-ui/core/colors/pink'
 import { defaultUserSettings } from './core/constants'
 import AuthenticatedRoutes from './AuthenticatedRoutes'
+import qs from 'query-string'
 
 class App extends React.Component {
   componentWillMount() {
     this.props.fetchUser()
+    this.isLogout = qs.parse(document.location.search).logout
   }
 
   getUserSettings = () => {
@@ -39,12 +41,11 @@ class App extends React.Component {
   render() {
     let routes = (
       <Switch>
-        <Route exact path="/" component={Landing} />
-        <Route render={() => <Redirect to="/" />} />
+        <Route exact path="/" component={LoginPage} />
       </Switch>
     )
 
-    if (this.props.isAuthenticated) {
+    if (this.props.isAuthenticated && !this.isLogout) {
       routes = <AuthenticatedRoutes />
     }
 
