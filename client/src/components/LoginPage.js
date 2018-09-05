@@ -9,7 +9,7 @@ import Logo from './Layout/Logo'
 
 const LoginPageWrapper = styled.div`
   padding-top: 30px;
-  text-align: center;
+  text-align: right;
   max-width: 320px;
   margin: 0 auto;
 
@@ -57,6 +57,7 @@ const LoginButtonWrapper = styled.div`
   margin: 0 -28px;
   height: 80vh;
   padding: 80px 10px;
+  text-align: center;
 `
 
 const LoginTagline = styled.div`
