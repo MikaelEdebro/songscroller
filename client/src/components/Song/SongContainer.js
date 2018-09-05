@@ -23,8 +23,8 @@ class SongContainer extends React.Component {
   componentDidMount() {
     this.props.fetchAndSelectSong(this.props.match.params.id)
 
-    // todo: add debounce/throtlle
     window.addEventListener('resize', this.updateViewportWidth)
+    window.addEventListener('keydown', this.handleKeyboardPress)
 
     setInterval(() => {
       if (this.props.shouldSaveUpdatedSong) {
@@ -35,6 +35,7 @@ class SongContainer extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateViewportWidth)
+    window.removeEventListener('keydown', this.handleKeyboardPress)
 
     if (this.props.shouldSaveUpdatedSong) {
       this.saveEditedSong(this.props.selectedSong)
@@ -49,6 +50,20 @@ class SongContainer extends React.Component {
       body,
       fontSizes,
     })
+  }
+
+  handleKeyboardPress = event => {
+    const key = event.code.toUpperCase()
+    if (key === 'SPACE') {
+      event.preventDefault()
+      if (this.props.isScrolling) {
+        this.props.toggleControls(true)
+        this.props.pause()
+      } else {
+        this.props.toggleControls(false)
+        this.startScroll()
+      }
+    }
   }
 
   updateViewportWidth = () => {

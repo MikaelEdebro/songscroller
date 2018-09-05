@@ -114,7 +114,7 @@ const SongControls = props => {
                 color="secondary"
                 aria-label={props.isScrolling ? 'Pause' : 'Play'}
                 onClick={props.isScrolling ? props.pause : props.play}
-                title={props.isScrolling ? 'Pause' : 'Play'}
+                title={(props.isScrolling ? 'Pause' : 'Play') + ' (Space)'}
                 className={classes.playButton}
               >
                 <Icon style={{ fontSize: 36, color: 'white' }} className={classes.icon}>
