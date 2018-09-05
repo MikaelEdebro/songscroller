@@ -21,6 +21,9 @@ const styles = theme => ({
     maxWidth: '1024px',
     margin: '0 auto',
   },
+  appBar: {
+    background: 'linear-gradient(135.41deg, #B46DCF 8.4%, #651882 97.09%)',
+  },
   flex: {
     flex: 1,
   },
@@ -71,7 +74,7 @@ class ButtonAppBar extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
             <IconButton
               onClick={() => this.toggleDrawer(true)}
