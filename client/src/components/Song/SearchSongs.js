@@ -16,7 +16,6 @@ const SearchSongsInput = styled.div`
     border: none;
     font-size: 20px;
     width: 100%;
-    text-align: center;
   }
 `
 const ClearInput = styled.div`
