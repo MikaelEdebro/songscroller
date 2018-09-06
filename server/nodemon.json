@@ -1,6 +1,9 @@
 {
   "ignore": ["**/*.test.ts", "**/*.spec.ts", ".git", "node_modules"],
   "watch": ["./src"],
-  "exec": "node --inspect -r ts-node/register ./src/index.ts",
-  "ext": "ts"
+  "exec": "node --inspect --inspect-port=0 -r ts-node/register ./src/index.ts",
+  "ext": "ts",
+  "env": {
+    "NODE_ENV": "development"
+  }
 }

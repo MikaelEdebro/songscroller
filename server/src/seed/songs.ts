@@ -54,7 +54,9 @@ C  G                Am   F
 Oh baby baby it's a wild world
 G                F             C           D  E Am  D7  G  Cmaj7  F  Dm7
 I'll always remember youlike a child, girl
+
 Am  D7  G  Cmaj7  F  Dm7
+
 E              Am
 Baby I love you
 Am                 D7              G
