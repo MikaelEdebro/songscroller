@@ -1,12 +1,13 @@
 import mongoose, { Document } from 'mongoose'
 const Schema = mongoose.Schema
 
-export type PlaylistDocument = Document & {
+export type PlaylistSchema = {
   title: string
   songs: any[]
   _user: any
   createdDate: Date
 }
+export type PlaylistDocument = Document & PlaylistSchema
 
 const playlistSchema = new Schema({
   title: { type: String, required: true },
