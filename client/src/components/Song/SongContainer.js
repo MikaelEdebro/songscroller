@@ -7,6 +7,8 @@ import Wrapper from '../../hoc/Wrapper'
 import * as actions from '../../actions'
 import { getFontSize } from '../../core/song-helpers'
 import Loader from '../Layout/Loader'
+import AddButtonBig from '../core/AddButtonBig'
+import Grid from '@material-ui/core/Grid'
 
 class SongContainer extends React.Component {
   startTime = null
@@ -169,29 +171,41 @@ class SongContainer extends React.Component {
       <Wrapper>
         {this.props.selectedSong ? (
           <Song song={this.props.selectedSong} clicked={this.handleSongClick} fontSize={fontSize} />
+        ) : this.props.songNotFound ? (
+          <Grid container justify="center" style={{ marginTop: 40 }}>
+            <AddButtonBig
+              icon="error"
+              description="Song not found!"
+              buttonText="Go back"
+              clicked={this.props.history.goBack}
+              style={{ marginTop: 20 }}
+            />
+          </Grid>
         ) : (
           <Loader text="Loading Song" />
         )}
 
-        <SongControls
-          show={this.props.showControls}
-          song={this.props.selectedSong || {}}
-          fontSize={fontSize}
-          changeFontSize={this.props.changeFontSize}
-          changeScrollSpeed={this.props.changeScrollSpeed}
-          transposeSong={this.props.transposeSong}
-          play={this.props.isPaused ? this.startScroll : this.play}
-          pause={this.props.pause}
-          replay={this.replay}
-          isPaused={this.props.isPaused}
-          isScrolling={this.props.isScrolling}
-          showSettings={this.state.showSettings}
-          toggleSettings={this.toggleSettings}
-          scrollSpeed={this.state.scrollSpeed}
-          isPlaylistMode={qs.parse(document.location.search).playlist}
-          nextSongInPlaylist={() => this.changeSongInPlaylist(1)}
-          previousSongInPlaylist={() => this.changeSongInPlaylist(-1)}
-        />
+        {this.props.selectedSong && (
+          <SongControls
+            show={this.props.showControls}
+            song={this.props.selectedSong || {}}
+            fontSize={fontSize}
+            changeFontSize={this.props.changeFontSize}
+            changeScrollSpeed={this.props.changeScrollSpeed}
+            transposeSong={this.props.transposeSong}
+            play={this.props.isPaused ? this.startScroll : this.play}
+            pause={this.props.pause}
+            replay={this.replay}
+            isPaused={this.props.isPaused}
+            isScrolling={this.props.isScrolling}
+            showSettings={this.state.showSettings}
+            toggleSettings={this.toggleSettings}
+            scrollSpeed={this.state.scrollSpeed}
+            isPlaylistMode={qs.parse(document.location.search).playlist}
+            nextSongInPlaylist={() => this.changeSongInPlaylist(1)}
+            previousSongInPlaylist={() => this.changeSongInPlaylist(-1)}
+          />
+        )}
       </Wrapper>
     )
   }
@@ -204,6 +218,7 @@ const mapStateToProps = ({ song, playlist }) => ({
   isScrolling: song.isScrolling,
   isInReplayTransition: song.isInReplayTransition,
   shouldSaveUpdatedSong: song.shouldSaveUpdatedSong,
+  songNotFound: song.songNotFound,
   selectedPlaylist: playlist.selectedPlaylist,
 })
 

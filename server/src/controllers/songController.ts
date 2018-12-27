@@ -9,9 +9,7 @@ import { SongSchema } from '../models/Song'
 const router = Router()
 
 router.get('/songs', requireLogin, async (req: any, res: Response, next: NextFunction) => {
-  let err
-  let songs
-  ;[err, songs] = await to(songService.getSongsByUser(req.user._id.toString()))
+  const [err, songs] = await to(songService.getSongsByUser(req.user._id.toString()))
   if (err) {
     return next(err)
   }
@@ -20,7 +18,10 @@ router.get('/songs', requireLogin, async (req: any, res: Response, next: NextFun
 })
 
 router.get('/songs/:id', requireLogin, async (req: any, res: Response, next: NextFunction) => {
-  const song = await songService.getSongById(req.user._id.toString(), req.params.id)
+  const [err, song] = await to(songService.getSongById(req.user._id.toString(), req.params.id))
+  if (err) {
+    return next(err)
+  }
 
   res.send(song)
 })

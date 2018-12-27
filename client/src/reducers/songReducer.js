@@ -11,6 +11,7 @@ const initialState = {
   shouldSaveUpdatedSong: false,
   shouldReFetchSongs: false,
   isFetchingSongs: true,
+  songNotFound: false,
 }
 
 const changeFontSize = (state, action) => {
@@ -64,6 +65,7 @@ const songReducer = (state = initialState, action) => {
         isPaused: false,
         isScrolling: false,
         isInReplayTransition: false,
+        songNotFound: false,
       })
     case types.CLEAR_SELECTED_SONG:
       return updateObject(state, { selectedSong: undefined })
@@ -104,6 +106,8 @@ const songReducer = (state = initialState, action) => {
       return updateObject(state, { shouldReFetchSongs: true })
     case types.DELETE_SONG:
       return updateObject(state, { shouldReFetchSongs: true })
+    case types.SONG_NOT_FOUND:
+      return updateObject(state, { songNotFound: true })
     default:
       return state
   }

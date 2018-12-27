@@ -1,5 +1,6 @@
 import * as types from './types'
 import axios from '../axios-instance'
+import to from 'await-to-js'
 
 export const play = () => ({
   type: types.PLAY,
@@ -55,8 +56,12 @@ export const setIsFetchingSongs = () => dispatch => {
 }
 
 export const fetchAndSelectSong = songId => async dispatch => {
-  const res = await axios.get('/api/songs/' + songId)
-  dispatch({ type: types.SELECT_SONG, payload: res.data })
+  const [err, res] = await to(axios.get('/api/songs/' + songId))
+  if (err) {
+    dispatch({ type: types.SONG_NOT_FOUND })
+  } else if (res && res.data) {
+    dispatch({ type: types.SELECT_SONG, payload: res.data })
+  }
 }
 
 export const selectSong = song => dispatch => {

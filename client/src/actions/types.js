@@ -18,6 +18,7 @@ export const SCROLL_COMPLETE = 'SCROLL_COMPLETE'
 export const EDIT_COMPLETE = 'EDIT_COMPLETE'
 export const ADD_SONG = 'ADD_SONG'
 export const DELETE_SONG = 'DELETE_SONG'
+export const SONG_NOT_FOUND = 'SONG_NOT_FOUND'
 
 // playlist
 export const FETCH_PLAYLISTS = 'FETCH_PLAYLISTS'
