@@ -19,7 +19,6 @@ const EditSong = Loadable({
   loader: () => import('./components/Song/Edit/EditSong'),
   loading: Loader,
 })
-const Dashboard = Loadable({ loader: () => import('./components/Dashboard'), loading: Loader })
 const Playlist = Loadable({
   loader: () => import('./components/Playlist/Playlist'),
   loading: Loader,
@@ -39,7 +38,6 @@ const EditPlaylist = Loadable({
 
 export default props => (
   <Switch>
-    <Route exact path="/dashboard" component={Dashboard} />
     <Route exact path="/songs/add" component={AddSong} />
     <Route exact path="/songs/edit/:id" component={EditSong} />
     <Route exact path="/songs/:id" component={SongContainer} key={document.location.href} />
@@ -48,6 +46,6 @@ export default props => (
     <Route exact path="/playlists/edit/:id" component={EditPlaylist} />
     <Route exact path="/playlists/:id" component={Playlist} />
     <Route exact path="/playlists" component={Playlists} />
-    <Route render={() => <Redirect to="/dashboard" />} />
+    <Route render={() => <Redirect to="/songs" />} />
   </Switch>
 )
